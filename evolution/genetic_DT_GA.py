@@ -1,0 +1,104 @@
+import random
+import numpy as np
+from evolution.crossover import single_point_crossover
+from evolution.mutation import random_reset_mutation
+from evolution.selection import tournament_selection
+from evolution.encode_decode import generate_population, decode
+from core.metrics import evaluate_tree
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from core.DT_genes import SPLIT_CRITERIA, STOPPING_CRITERIA, MV_SPLIT, MV_DISTRIBUTION, MV_CLASSIFICATION, PRUNNING_GENES
+# from evolution.encode_decode import VAR_DOMAINS
+from evolution.crossover import single_point_crossover
+
+
+
+
+# Define search space per gene 
+VAR_DOMAINS = [
+    range(len(SPLIT_CRITERIA)),
+    range(len(STOPPING_CRITERIA)),
+    range(1, 21),  # stopping param domain
+    range(len(MV_SPLIT)),
+    range(len(MV_DISTRIBUTION)),
+    range(len(MV_CLASSIFICATION)),
+    range(len(PRUNNING_GENES)),
+    range(1, 11),  # pruning param domain
+]
+
+# ---- FITNESS FUNCTION ----
+def fitness(individual, X_train, X_test, y_train, y_test):
+    """Decode the individual into a tree and return its F1 score."""
+    try:
+        tree = decode(individual)
+        metrics = evaluate_tree(tree, X_train, y_train, X_test, y_test)
+        return metrics["f1"]  # you can swap for recall/specificity
+    except Exception as e:
+        print(f" Error evaluating individual {individual}: {e}")
+        return 0  # penalize invalid configurations
+
+
+# ---- SIMPLE GENETIC ALGORITHM ----
+def genetic_DT_GA(X_train, X_test, y_train, y_test,
+                  mu=10, lambd=20, generations=20,
+                  crossover_prob=1.0, mutation_prob=0.1):
+    
+    population = generate_population(mu)
+    best_history = []
+
+    for gen in range(generations):
+        # Evaluate current population
+        fitness_values = [fitness(ind, X_train, X_test, y_train, y_test) for ind in population]
+        best_val = max(fitness_values)
+        best_ind = population[np.argmax(fitness_values)]
+        best_history.append(best_val)
+        print(f"Gen {gen+1}: best F1 = {best_val:.4f}")
+
+        # Generate offspring
+        offspring = []
+        for _ in range(lambd):
+            # Parent selection
+            p1 = tournament_selection(population, fitness_values, k=3)
+            p2 = tournament_selection(population, fitness_values, k=3)
+
+            # Crossover
+            c1, c2 = single_point_crossover(
+                p1,
+                p2,
+                VAR_DOMAINS,
+                prob=crossover_prob)
+
+            # Mutation (modulo to keep genes in range)
+            c1 = [random.choice(list(VAR_DOMAINS[i])) if random.random() < mutation_prob else c1[i] % len(VAR_DOMAINS[i]) for i in range(len(c1))]
+            c2 = [random.choice(list(VAR_DOMAINS[i])) if random.random() < mutation_prob else c2[i] % len(VAR_DOMAINS[i]) for i in range(len(c2))]
+
+            offspring.append(c1)
+            offspring.append(c2)
+
+        # Combine and select best mu
+        candidates = population + offspring
+        candidate_fitness = [fitness(ind, X_train, X_test, y_train, y_test) for ind in candidates]
+
+        best_indices = np.argsort(candidate_fitness)[-mu:]
+        population = [candidates[i] for i in best_indices]
+
+    best_fitness = max(candidate_fitness)
+    best_individual = candidates[np.argmax(candidate_fitness)]
+    return best_individual, best_fitness, best_history
+
+
+# ---- DEMO ----
+if __name__ == "__main__":
+    print(" Running Simple Genetic Algorithm for Decision Trees 🌳")
+
+    # Load a simple dataset
+    X, y = load_iris(return_X_y=True)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+    # Run the GA
+    best_ind, best_fit, history = genetic_DT_GA(X_train, X_test, y_train, y_test,
+                                                mu=8, lambd=16, generations=10)
+
+    print("\n Best Individual:", best_ind)
+    print(" Best F1 Score:", best_fit)
+    print(" Fitness history:", history)

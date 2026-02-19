@@ -1,0 +1,205 @@
+# -*- coding: utf-8 -*-
+"""
+Decision Tree Builder + Gene Decoder
+Integrates:
+ - SplitCriterion
+ - StoppingCriterion
+ - MissingValues
+ - Pruning
+ - Node
+ - Gene maps from DT_genes.py
+"""
+
+import numpy as np
+import pandas as pd
+from core.Node import Node
+from core.SplitCriteria import SplitCriterion
+from core.StoppingCriteria import StoppingCriterion
+from core.PruningStrategies import Pruning
+from core.MissingValues import MissingValues
+
+
+
+from core.DT_genes import (
+        SPLIT_CRITERIA, STOPPING_CRITERIA,
+        MV_SPLIT, MV_DISTRIBUTION, MV_CLASSIFICATION, PRUNNING_GENES
+    )
+
+# ============================================================
+# GENE DECODER
+# ============================================================
+class GeneDecoder:
+    """
+    Decodes a genetic configuration (dict or list) into
+    the operational components of a decision tree.
+    """
+    def __init__(self, gene: dict):
+        self.gene = gene
+
+    def decode(self, X):
+        split_criterion = SplitCriterion(SPLIT_CRITERIA[self.gene["split"]])
+
+        stopping = StoppingCriterion(
+            n_tot_samples=len(X),
+            criterion=STOPPING_CRITERIA[self.gene["stop"]],
+            param=self.gene.get("stop_param", 2)
+        )
+
+        mv = MissingValues(
+            mv_split=MV_SPLIT[self.gene["mv_split"]],
+            mv_distrib=MV_DISTRIBUTION[self.gene["mv_distrib"]],
+            mv_classif=MV_CLASSIFICATION[self.gene["mv_classif"]],
+            split_criterion=split_criterion
+        )
+
+        pruning = Pruning(
+            method=PRUNNING_GENES[self.gene["prune"]],
+            param=self.gene.get("prune_param", 0)
+        )
+
+        return DecisionTree(split_criterion, stopping, mv, pruning)
+
+
+# ============================================================
+# DECISION TREE
+# ============================================================
+
+class DecisionTree:
+    """
+    A modular Decision Tree that builds itself based on decoded
+    genetic configuration.
+    """
+    def __init__(self, split_criterion, stopping, mv, pruning):
+        self.split_criterion = split_criterion
+        self.stopping = stopping
+        self.mv = mv
+        self.pruning = pruning
+        self.root = None
+
+
+    def fit(self, X, y, depth=0):
+        X = pd.DataFrame(X)
+        y = pd.Series(y)
+        self.root = self._build_tree(X, y, depth)
+
+        # Apply pruning if defined
+        if self.pruning.method is not None:
+            self.root = self.pruning.prune(self.root, X.to_numpy(), y.to_numpy())
+        return self
+
+    def _build_tree(self, X, y, depth):
+        
+        if y is None or len(y) == 0:
+            # Create a "dummy" leaf with a safe fallback class
+            label = 0
+            return Node(label=label, samples=0, class_distribution=np.array([]))
+
+        # Stop conditions 
+        if self.stopping.stop(y.to_numpy(), depth) or len(np.unique(y)) == 1:
+            label = np.bincount(y).argmax()
+            return Node(label=label, samples=len(y), class_distribution=np.bincount(y))
+
+        # Find best split 
+        best_feat, best_thr, best_gain = self._best_split(X, y)
+        if best_feat is None or best_thr is None:
+            label = np.bincount(y).argmax()
+            return Node(label=label, samples=len(y), class_distribution=np.bincount(y))
+
+        # Perform split
+        (X_left, y_left), (X_right, y_right) = self.mv.apply_split_with_mv(X, y, best_feat, best_thr)
+
+        
+        if len(y_left) == 0 or len(y_right) == 0:
+            label = np.bincount(y).argmax()
+            return Node(label=label, samples=len(y), class_distribution=np.bincount(y))
+
+        # Recurse 
+        left_node = self._build_tree(X_left, y_left, depth + 1)
+        right_node = self._build_tree(X_right, y_right, depth + 1)
+
+        node = Node(feature=best_feat, threshold=best_thr,
+                    left=left_node, right=right_node,
+                    gain=best_gain, samples=len(y),
+                    class_distribution=np.bincount(y))
+
+        # Partition weights for missing-value prediction 
+        n_left, n_right = len(y_left), len(y_right)
+        total = max(n_left + n_right, 1)
+        node.left_weight = n_left / total
+        node.right_weight = n_right / total
+
+        return node
+
+
+
+
+
+
+    # ----------------------------------------------------------
+    def _best_split(self, X, y):
+        best_gain = -np.inf
+        best_feat, best_thr = None, None
+
+        for feature in X.columns:
+            X_proc, y_proc, X_col = self.mv.handle_split(X, y, feature)
+            thresholds = np.unique(X_col)
+            for thr in thresholds:
+                gain = self.split_criterion.calculate(y_proc.to_numpy(), X_col.to_numpy(), thr)
+                if gain > best_gain:
+                    best_gain, best_feat, best_thr = gain, feature, thr
+        return best_feat, best_thr, best_gain
+
+    # ----------------------------------------------------------
+    def predict(self, X):
+        X = pd.DataFrame(X)
+        return np.array([self._predict_one(row, self.root) for _, row in X.iterrows()])
+
+    def _predict_one(self, x, node):
+        if node.is_leaf:
+            return node.leaf_value
+
+        val = x[node.feature]
+        # Handle missing values during prediction
+        if pd.isna(val):
+            if self.mv.mv_classif == "explore_all":
+                votes = self.mv.predict_explore_all(x.to_numpy(), node)
+                return max(votes, key=votes.get)
+            elif self.mv.mv_classif == "most_probable_path":
+                return self.mv._predict_most_probable(x.to_numpy(), node)
+
+        # Standard decision path
+        if val <= node.threshold:
+            return self._predict_one(x, node.left)
+        else:
+            return self._predict_one(x, node.right)
+
+    # ----------------------------------------------------------
+    def print_tree(self, node=None, depth=0):
+        """ Utility for printing the tree structure. """
+        if node is None:
+            node = self.root
+        prefix = "  " * depth
+        if node.is_leaf:
+            print(f"{prefix}Leaf -> Class {node.label} ({node.samples} samples)")
+        else:
+            print(f"{prefix}[X{node.feature} <= {node.threshold:.3f}] gain={node.gain:.4f}")
+            self.print_tree(node.left, depth + 1)
+            self.print_tree(node.right, depth + 1)
+
+
+    def count_nodes(self):
+        """Return total number of nodes in the tree."""
+        if self.root is None:
+            return 0
+        return self._count_nodes_recursive(self.root)
+
+    def _count_nodes_recursive(self, node):
+        if node is None:
+            return 0
+        if node.is_leaf:
+            return 1
+        return (
+            1
+            + self._count_nodes_recursive(node.left)
+            + self._count_nodes_recursive(node.right)
+        )
