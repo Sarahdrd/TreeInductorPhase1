@@ -37,7 +37,7 @@ class MissingValues:
         self.mv_classif = mv_classif
         self.split_criteria = split_criterion
     
-    # HANDLING MISSING VALUES DURING SPLIT CRITERION EVALUATION
+    # --- HANDLING MISSING VALUES DURING SPLIT CRITERION EVALUATION ---
     # core/MissingValues.py
     def handle_split(self, X, y, feature):
         feature = self._standardize_feature_name(feature)
@@ -161,7 +161,7 @@ class MissingValues:
         
         return X_copy, y, X_copy[feature]
     
-    # HANDLING MISSING VALUES DURING DISTRIBUTION
+    # --- HANDLING MISSING VALUES DURING DISTRIBUTION ---
     # How the distribution is done after we find the best split 
     def apply_split_with_mv(self, X, y, feature, split_value):
         if self.mv_distrib == 'ignore_all':
