@@ -150,20 +150,24 @@ def genetic_DT_GA(datasets,
                   mu=10, lambd=20, generations=20,
                   crossover_prob=1.0, mutation_prob=0.1):
     
+    # Generate initial population
     population = generate_population(mu)
     best_history = []
 
+    # Evaluate initial population
+    fitness_values = [fitness(ind, datasets) for ind in population]
+
     for gen in range(generations):
-        # Evaluate current population
-        fitness_values = [fitness(ind, datasets) for ind in population]
+        
+        # Best individual on this generation...
         best_val = max(fitness_values)
         best_ind = population[np.argmax(fitness_values)]
         best_history.append(best_val)
-        print(f"Gen {gen+1}: best score = {best_val:.4f}")
+        print(f"Gen {gen}: best score = {best_val:.4f}")
 
         # Generate offspring
         offspring = []
-        for _ in range(lambd):
+        for _ in range(lambd // 2):
             # Parent selection
             p1 = tournament_selection(population, fitness_values, k=3)
             p2 = tournament_selection(population, fitness_values, k=3)
@@ -182,12 +186,16 @@ def genetic_DT_GA(datasets,
             offspring.append(c1)
             offspring.append(c2)
 
-        # Combine and select best mu
+        # Combine and evaluate offspring
         candidates = population + offspring
-        candidate_fitness = [fitness(ind, datasets) for ind in candidates]
+        candidate_fitness = fitness_values + [fitness(ind, datasets) for ind in offspring]
 
+        # Update population - select best mu
         best_indices = np.argsort(candidate_fitness)[-mu:]
         population = [candidates[i] for i in best_indices]
+
+        # Update fitness values with previous evaluations
+        fitness_values = [candidate_fitness[i] for i in best_indices]
 
     best_fitness = max(candidate_fitness)
     best_individual = candidates[np.argmax(candidate_fitness)]
