@@ -203,3 +203,19 @@ class DecisionTree:
             + self._count_nodes_recursive(node.left)
             + self._count_nodes_recursive(node.right)
         )
+    
+    def get_depth(self):
+        """Return tree depth"""
+        if self.root is None:
+            return 0
+        return self._get_depth_recursive(self.root)
+    
+    def _get_depth_recursive(self, node):
+        if node is None:
+            return 0
+        if node.is_leaf:
+            return 1
+        return 1 + max(
+            self._get_depth_recursive(node.left),
+            self._get_depth_recursive(node.right),
+        )
