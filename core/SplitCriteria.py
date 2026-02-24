@@ -307,25 +307,31 @@ def gain_ratio(y, X, t):
 
 # ---------- MAIN CLASS ----------
 class SplitCriterion:
+    _METHODS = {
+        "gini": gini_split,
+        "g_stat": g_stat,
+        "mantaras": mantaras,
+        "hg_distribution": hg_distribution,
+        "chv_criterion": chv_criterion,
+        "dcsm": dcsm,
+        "chi_square": chi_square,
+        "mpi": mpi,
+        "ort": ort_criterion,
+        "twoing": twoing,
+        "cair": cair,
+        "gain_ratio": gain_ratio,
+    }
+
     def __init__(self, criterion="gini"):
         self.criterion = criterion
 
     def calculate(self, y, X_column, threshold):
-        methods = {
-            "information_gain": lambda: information_gain(y, np.where(X_column <= threshold)[0], np.where(X_column > threshold)[0]),
-            "gini": lambda: gini_split(y, X_column, threshold),
-            "g_stat": lambda: g_stat(y, X_column, threshold),
-            "mantaras": lambda: mantaras(y, X_column, threshold),
-            "hg_distribution": lambda: hg_distribution(y, X_column, threshold),
-            "chv_criterion": lambda: chv_criterion(y, X_column, threshold),
-            "dcsm": lambda: dcsm(y, X_column, threshold),
-            "chi_square": lambda: chi_square(y, X_column, threshold),
-            "mpi": lambda: mpi(y, X_column, threshold),
-            "ort": lambda: ort_criterion(y, X_column, threshold),
-            "twoing": lambda: twoing(y, X_column, threshold),
-            "cair": lambda: cair(y, X_column, threshold),
-            "gain_ratio": lambda: gain_ratio(y, X_column, threshold)
-        }
-        if self.criterion not in methods:
+        if self.criterion == "information_gain":
+            left = np.where(X_column <= threshold)[0]
+            right = np.where(X_column > threshold)[0]
+            return information_gain(y, left, right)
+
+        fn = self._METHODS.get(self.criterion)
+        if fn is None:
             raise ValueError(f"Unsupported criterion: {self.criterion}")
-        return methods[self.criterion]()
+        return fn(y, X_column, threshold)
