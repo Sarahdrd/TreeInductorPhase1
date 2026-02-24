@@ -1,3 +1,4 @@
+# genetic_DT_GA.py
 import random
 import numpy as np
 from evolution.crossover import single_point_crossover
@@ -10,6 +11,7 @@ from sklearn.model_selection import train_test_split
 from core.DT_genes import SPLIT_CRITERIA, STOPPING_CRITERIA, MV_SPLIT, MV_DISTRIBUTION, MV_CLASSIFICATION, PRUNNING_GENES
 # from evolution.encode_decode import VAR_DOMAINS
 from evolution.crossover import single_point_crossover
+from sklearn.model_selection import StratifiedKFold
 
 
 
@@ -26,20 +28,73 @@ VAR_DOMAINS = [
     range(1, 11),  # pruning param domain
 ]
 
-# ---- FITNESS FUNCTION ----
-def fitness(individual, X_train, X_test, y_train, y_test):
-    """Decode the individual into a tree and return its F1 score."""
+# Old fitnees function, i swapped for the SDD :*
+#def fitness(individual, X_train, X_test, y_train, y_test):
+#    """Decode the individual into a tree and return its F1 score."""
+#    try:
+#        tree = decode(individual)
+#        metrics = evaluate_tree(tree, X_train, y_train, X_test, y_test)
+#        return metrics["f1"]  # you can swap for recall/specificity
+#    except Exception as e:
+#        print(f" Error evaluating individual {individual}: {e}")
+#        return 0  # penalize invalid configurations
+
+
+# New and improved fitness function using SDD 
+def fitness(individual, X, y, k_folds=5):
+    """
+    Fitness guided by Standard Deviation of Differences (SDD).
+    Promotes configurations that generalize across folds.
+    """
     try:
-        tree = decode(individual)
-        metrics = evaluate_tree(tree, X_train, y_train, X_test, y_test)
-        return metrics["f1"]  # you can swap for recall/specificity
+        skf = StratifiedKFold(n_splits=k_folds, shuffle=True, random_state=42)
+
+        scores = []
+
+        # Evaluate individual on multiple folds to get a distribution of performance
+        for train_idx, test_idx in skf.split(X, y):
+            X_train, X_test = X[train_idx], X[test_idx]
+            y_train, y_test = y[train_idx], y[test_idx]
+
+            tree = decode(individual)
+            metrics = evaluate_tree(tree, X_train, y_train, X_test, y_test)
+
+            scores.append(metrics["f1"])
+
+        scores = np.array(scores)
+
+        # Compute "best" per fold 
+        # For now approximate best = max score achieved by this individual
+        # maybe swap for population-best or baseline ill see
+        best = np.max(scores)
+
+        # Percentage differences xi 
+        xi = np.abs(scores - best) / ((scores + best) / 2 + 1e-8)
+
+        # SDD 
+        SDD = np.std(xi)
+
+        mean_perf = np.mean(scores)
+
+        # final fitness
+        fitness_value = mean_perf - SDD
+
+        return fitness_value
+
     except Exception as e:
         print(f" Error evaluating individual {individual}: {e}")
-        return 0  # penalize invalid configurations
+        return 0
+
+
+
+
+
+
+
 
 
 # ---- SIMPLE GENETIC ALGORITHM ----
-def genetic_DT_GA(X_train, X_test, y_train, y_test,
+def genetic_DT_GA(X, y,
                   mu=10, lambd=20, generations=20,
                   crossover_prob=1.0, mutation_prob=0.1):
     
@@ -48,7 +103,7 @@ def genetic_DT_GA(X_train, X_test, y_train, y_test,
 
     for gen in range(generations):
         # Evaluate current population
-        fitness_values = [fitness(ind, X_train, X_test, y_train, y_test) for ind in population]
+        fitness_values = [fitness(ind, X, y) for ind in population]
         best_val = max(fitness_values)
         best_ind = population[np.argmax(fitness_values)]
         best_history.append(best_val)
@@ -77,7 +132,7 @@ def genetic_DT_GA(X_train, X_test, y_train, y_test,
 
         # Combine and select best mu
         candidates = population + offspring
-        candidate_fitness = [fitness(ind, X_train, X_test, y_train, y_test) for ind in candidates]
+        candidate_fitness = [fitness(ind, X, y) for ind in candidates]
 
         best_indices = np.argsort(candidate_fitness)[-mu:]
         population = [candidates[i] for i in best_indices]

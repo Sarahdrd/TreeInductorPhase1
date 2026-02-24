@@ -1,4 +1,4 @@
-# evolution/selection.py
+# selection.py
 import random
 import numpy as np
 from pymoo.core.sampling import Sampling

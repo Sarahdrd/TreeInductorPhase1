@@ -1,4 +1,4 @@
-# evolution/mutation.py
+# mutation.py
 import random
 
 def random_reset_mutation(individual, var_domains, prob=0.1):

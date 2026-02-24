@@ -1,8 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Apr  7 12:14:19 2025
-
-"""
+# encode_decode.py
 
 import random
 import numpy as np

@@ -1,6 +1,4 @@
-# evolution/crossover.py
-import random
-
+# crossover.py
 import random
 
 def single_point_crossover(parent1, parent2, var_domains, prob=1.0):
