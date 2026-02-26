@@ -1,4 +1,5 @@
 # genetic_DT_GA.py
+import time
 import random
 import numpy as np
 from evolution.crossover import single_point_crossover
@@ -155,22 +156,27 @@ def genetic_DT_GA(datasets,
     best_history = []
 
     # Evaluate initial population
+    t0 = time.time()
     fitness_values = [fitness(ind, datasets) for ind in population]
 
-    for gen in range(generations):
+    # Best initial individual
+    best_val = max(fitness_values)
+    best_history.append(best_val)
+    best_individual = population[np.argmax(fitness_values)]
+    print(f"Gen {0}: best score = {best_val:.4f}, Execution time = {round(time.time() - t0, 4)} seconds.")
+    print(f"Best Genome:", best_individual)
+
+    for gen in range(1, generations+1):
         
-        # Best individual on this generation...
-        best_val = max(fitness_values)
-        best_ind = population[np.argmax(fitness_values)]
-        best_history.append(best_val)
-        print(f"Gen {gen}: best score = {best_val:.4f}")
+        # Set t0
+        t0 = time.time()
 
         # Generate offspring
         offspring = []
         for _ in range(lambd // 2):
             # Parent selection
-            p1 = tournament_selection(population, fitness_values, k=3)
-            p2 = tournament_selection(population, fitness_values, k=3)
+            p1 = tournament_selection(population, fitness_values, k=2)
+            p2 = tournament_selection(population, fitness_values, k=2)
 
             # Crossover
             c1, c2 = single_point_crossover(
@@ -197,9 +203,16 @@ def genetic_DT_GA(datasets,
         # Update fitness values with previous evaluations
         fitness_values = [candidate_fitness[i] for i in best_indices]
 
-    best_fitness = max(candidate_fitness)
-    best_individual = candidates[np.argmax(candidate_fitness)]
-    return best_individual, best_fitness, best_history
+        # Best individual on this generation...
+        best_val = max(fitness_values)
+        best_individual = population[np.argmax(fitness_values)]
+        best_history.append(best_val)
+        print(f"Gen {gen}: best score = {best_val:.4f}, Execution time = {round(time.time() - t0, 4)} seconds.")
+        print(f"Best Genome:", best_individual)
+
+    #best_fitness = max(candidate_fitness)
+    #best_individual = candidates[np.argmax(candidate_fitness)]
+    return best_individual, best_val, best_history
 
 
 # ---- DEMO ----
