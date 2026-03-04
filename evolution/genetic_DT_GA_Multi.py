@@ -133,6 +133,8 @@ algo_genome: list[int],
 
     # Main work
     fold_scores: list[float] = []
+    n_nodes: list[int] = []
+    depths: list[int] = []
     for fold_indx, (tr, va) in enumerate(splits):
 
         # Instantiate a fresh algorithhm per fold
@@ -159,13 +161,24 @@ algo_genome: list[int],
         # Get F1
         fold_scores.append(metrics["f1"])
 
+        # Get depth and nodes
+        n_nodes.append(algo.n_nodes_)
+        depths.append(algo.max_depth_)
+
     duration = time.perf_counter() - start
+
+    # Compute trees stats
+    mean_n_nodes = np.mean(n_nodes)
+    std_n_nodes = np.std(n_nodes)
+    mean_depth = np.mean(depths)
+    std_depth = np.std(depths)
+    tree_data = [mean_n_nodes, std_n_nodes, mean_depth, std_depth]
 
     # Right now, the algorithm was testes on the current dataset k times
     #mean = float(np.mean(scores))
     #std = float(np.std(scores, ddof=1)) if len(scores) > 1 else 0.0
 
-    return algo_genome, dataset_name, fold_scores, [duration, decode_time, fit_time, metrics_time], pid
+    return algo_genome, dataset_name, fold_scores, tree_data, [duration, decode_time, fit_time, metrics_time], pid
 
 
 # -------------------------
@@ -204,6 +217,8 @@ def evaluation(
     results = {str(a): {} for a in algorithms}
     job_times = []
 
+    print("------------------------------")
+
     with ProcessPoolExecutor(max_workers=n_workers) as ex:
         futs = []
         for algo, ds_name, ds_path in jobs:
@@ -220,11 +235,12 @@ def evaluation(
 
         for fut in as_completed(futs):
             try:
-                algo_name, ds_name, fold_scores, times, pid = fut.result()
+                algo_name, ds_name, fold_scores, tree_data, times, pid = fut.result()
                 results[str(algo_name)][ds_name] = fold_scores
-                job_times.append((str(algo_name), ds_name, times, pid))
+                job_times.append((str(algo_name), ds_name, times, pid, tree_data[0], tree_data[2]))
                 print(f"[DONE] {str(algo_name):20s} {ds_name:20s} \t {times[0]:.2f}s")
                 print(f"times: decode {times[1]:.2f}s | fit {times[2]:.2f}s | metrics {times[3]:.2f}s (pid={pid})")
+                print(f"Mean No. Nodes: {tree_data[0]} +- {tree_data[1]:.2f} | Mean Depth: {tree_data[2]} +- {tree_data[3]:.2f}")
 
             except Exception as e:
                 traceback.print_exc()
@@ -235,7 +251,7 @@ def evaluation(
     # Identify slowest job
     job_times.sort(key=lambda x: x[2][0], reverse=True)
     print("\n=== Slowest jobs ===")
-    for algo, ds, t, pid in job_times[:10]:
+    for algo, ds, t, pid, mean_nodes, mean_depth in job_times[:10]:
         print(f"{t[0]:8.2f}s | {algo:20s} | {ds}")
 
     # Compute fitness based on fold_scores
@@ -270,7 +286,7 @@ def evaluation(
 
         sdd = np.sqrt( sum(diff) / (N - 1) )
         print("SDD:", sdd, "\n")
-        fitness.append(sdd)
+        fitness.append(-sdd)
 
     return fitness
 
@@ -294,6 +310,7 @@ def evolve_trees(datasets,
     best_individual = population[np.argmax(fitness_values)]
     print(f"Gen {0}: best score = {best_val:.4f}, Execution time = {round(time.time() - t0, 4)} seconds.")
     print(f"Best Genome:", best_individual)
+    #print("------------------------------")
 
     for gen in range(1, generations + 1):
 
@@ -341,5 +358,6 @@ def evolve_trees(datasets,
         best_history.append(best_val)
         print(f"Gen {gen}: best score = {best_val:.4f}, Execution time = {round(time.time() - t0, 4)} seconds.")
         print(f"Best Genome:", best_individual)
+    print("------------------------------")
 
     return best_individual, best_val, best_history

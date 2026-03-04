@@ -76,8 +76,14 @@ class DecisionTree:
         self.pruning = pruning
         self.root = None
 
+        self.n_nodes_ = 0
+        self.max_depth_ = 0
+
 
     def fit(self, X, y, depth=0):
+        self.n_nodes_ = 0
+        self.max_depth_ = 0
+
         X = pd.DataFrame(X)
         y = pd.Series(y)
         self.root = self._build_tree(X, y, depth)
@@ -88,7 +94,10 @@ class DecisionTree:
         return self
 
     def _build_tree(self, X, y, depth):
-        
+
+        self.n_nodes_ += 1
+        self.max_depth_ = max(self.max_depth_, depth)
+
         if y is None or len(y) == 0:
             # Create a "dummy" leaf with a safe fallback class
             label = 0
@@ -132,19 +141,31 @@ class DecisionTree:
 
 
 
-
-
-
     # ----------------------------------------------------------
+    def _get_thresholds(self, x, k):
+
+        qs = np.linspace(0.05, 0.95, num=k)
+        thresholds = np.unique(np.quantile(x, qs))
+        return thresholds
+
+
     def _best_split(self, X, y):
         best_gain = -np.inf
         best_feat, best_thr = None, None
 
         for feature in X.columns:
             X_proc, y_proc, X_col = self.mv.handle_split(X, y, feature)
-            thresholds = np.unique(X_col)
+
+            # Avoid NaNs
+            X_col = X_col.to_numpy()
+            X_col = X_col[np.isfinite(X_col)]
+            if X_col.size == 0:
+                continue
+
+            k = 32 if len(y_proc) > 500 else 16 if len(y_proc) > 100 else 8
+            thresholds = self._get_thresholds(X_col, k)
             for thr in thresholds:
-                gain = self.split_criterion.calculate(y_proc.to_numpy(), X_col.to_numpy(), thr)
+                gain = self.split_criterion.calculate(y_proc.to_numpy(), X_col, thr)
                 if gain > best_gain:
                     best_gain, best_feat, best_thr = gain, feature, thr
         return best_feat, best_thr, best_gain

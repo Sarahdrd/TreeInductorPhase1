@@ -54,7 +54,7 @@ def main():
     # Genetic parameters
     mu = 10
     lambd = 10
-    generations = 2
+    generations = 25
 
     print("Starting Evolutionary Process...")
     print(f"Experiment with mu={mu}, lambda={lambd} for {generations} generations.")
