@@ -12,6 +12,7 @@ from core.DT_genes import SPLIT_CRITERIA, STOPPING_CRITERIA, MV_SPLIT, MV_DISTRI
 # from evolution.encode_decode import VAR_DOMAINS
 from evolution.crossover import single_point_crossover
 from sklearn.model_selection import StratifiedKFold
+import time
 
 
 
@@ -105,7 +106,8 @@ def _mean_f1_on_dataset(individual, X, y, k_folds=5, seed=42):
 
 
 # Even newer fitness function, now SDD approach: mean - std of scores across datasets
-
+# si esta bien ya lo revise, es poco diferente al paper
+# i guess i could call it Internal Consistency Across Datasets
 def fitness(individual, datasets, k_folds=5):
     """
     datasets: list of tuples (X, y, name) or (X, y)
@@ -125,22 +127,26 @@ def fitness(individual, datasets, k_folds=5):
         perf = np.array(perf)
 
         # Define "best" per instance set 
+        # este best el mejor dataset del individuo
+        # favorece arboles que funcionan parecido en todos los datasets
+        # tipo consistencia interna del metodo, para escalar seria medir consitencia respecto al optimo
         best = np.max(perf)
 
         # percentage diffs 
-        xi = np.abs(perf - best) / ((perf + best) / 2 + 1e-8)
+        xi = np.abs(perf - best) / ((perf + best) / 2) * 100
 
         SDD = float(np.std(xi))
         mean_perf = float(np.mean(perf))
 
-        return mean_perf - SDD
+        # mean performance = f1 promedio across datsets
+        # SDD variabilidad entre datasets 
+        return - SDD
+    
+
 
     except Exception as e:
         print(f" Error evaluating individual {individual}: {e}")
         return 0
-
-
-
 
 
 
@@ -156,14 +162,15 @@ def genetic_DT_GA(datasets,
 
     # Evaluate initial population
     fitness_values = [fitness(ind, datasets) for ind in population]
-
+    # total_start = time.time() # total time tracking
     for gen in range(generations):
         
+        gen_start = time.time()
+
         # Best individual on this generation...
         best_val = max(fitness_values)
         best_ind = population[np.argmax(fitness_values)]
         best_history.append(best_val)
-        print(f"Gen {gen}: best score = {best_val:.4f}")
 
         # Generate offspring
         offspring = []
@@ -196,9 +203,16 @@ def genetic_DT_GA(datasets,
 
         # Update fitness values with previous evaluations
         fitness_values = [candidate_fitness[i] for i in best_indices]
+        
+        gen_time = time.time() - gen_start
+
+        print(f"Gen {gen}: best score = {best_val:.4f} | time = {gen_time:.2f}s")
+
 
     best_fitness = max(candidate_fitness)
     best_individual = candidates[np.argmax(candidate_fitness)]
+
+
     return best_individual, best_fitness, best_history
 
 

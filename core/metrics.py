@@ -30,15 +30,15 @@ def evaluate_tree(tree, X_train, y_train, X_test, y_test):
         tree.fit(X_train, y_train)
         y_pred = tree.predict(X_test)
 
-        labels = np.unique(np.concatenate([y_test, y_pred]))
+        all_labels = np.unique(y_train)
 
-        f1 = f1_score(y_test, y_pred, average='macro', zero_division=0)
-        recall = recall_score(y_test, y_pred, average='macro', zero_division=0)
-        precision = precision_score(y_test, y_pred, average='macro', zero_division=0)
+        f1 = f1_score(y_test, y_pred, labels=all_labels, average="macro", zero_division=0)
+        recall = recall_score(y_test, y_pred, labels=all_labels, average="macro", zero_division=0)
+        precision = precision_score(y_test, y_pred, labels=all_labels, average="macro", zero_division=0)
         accuracy = accuracy_score(y_test, y_pred)
-        balanced_acc = balanced_accuracy_score(y_test, y_pred)
+        recall_per_class = recall_score(y_test,y_pred,labels=all_labels,average=None,zero_division=0)
+        balanced_acc = np.mean(recall_per_class)
         mcc = matthews_corrcoef(y_test, y_pred)
-
         specificity = compute_macro_specificity(y_test, y_pred)
 
         # Tree structure

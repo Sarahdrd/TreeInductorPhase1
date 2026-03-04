@@ -1,7 +1,7 @@
 # mutation.py
 import random
 
-def random_reset_mutation(individual, var_domains, prob=0.1):
+def random_reset_mutation(individual, var_domains, prob=0.2):
     """
     individual: lista de genes (ints)
     var_domains: lista de iterables con las opciones válidas por gen
@@ -11,4 +11,4 @@ def random_reset_mutation(individual, var_domains, prob=0.1):
     for i, domain in enumerate(var_domains):
         if random.random() < prob:
             mutant[i] = random.choice(list(domain))
-    return mutant
+    return mutant 

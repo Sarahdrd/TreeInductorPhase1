@@ -270,11 +270,18 @@ class MissingValues:
             most_common_by_class = X.groupby(y)[feature].mean()
 
         # ✅ Fill missing values per class
+        # If numeric, cast once to float BEFORE filling
+        if pd.api.types.is_numeric_dtype(X_filled[feature]):
+            X_filled[feature] = X_filled[feature].astype(float)
+
+        # Fill missing values per class
         for class_label in most_common_by_class.index:
             mask = (y == class_label) & X_filled[feature].isnull()
             fill_value = most_common_by_class[class_label]
+
             if pd.notna(fill_value):
                 X_filled.loc[mask, feature] = fill_value
+
 
         # ✅ Split instances into left/right partitions
         left_mask = X_filled[feature] <= split_value
@@ -411,12 +418,16 @@ class MissingValues:
 
         # ✅ Randomly assign missing instances according to probabilities
         rng = np.random.default_rng(seed=42)  # Reproducible random sampling
-
+        #
+        
         # Calculate number of samples for each branch
         n_missing = len(X_missing)
         n_left = int(np.round(left_prob * n_missing))
         n_right = n_missing - n_left
 
+        idx_left = np.array([], dtype=int)  # Always define before condition
+        idx_right = np.array([], dtype=int)
+        
         if n_missing > 0:
             if n_left > 0:
                 idx_left = rng.choice(X_missing.index, size=n_left, replace=False)
@@ -424,15 +435,18 @@ class MissingValues:
                 y_left = pd.concat([y_left, y_missing.loc[idx_left]], ignore_index=True)
 
             if n_right > 0:
-                idx_right = [i for i in X_missing.index if i not in idx_left]
+                remaining = np.setdiff1d(X_missing.index, idx_left)
+                idx_right = remaining[:n_right]
+
                 X_right = pd.concat([X_right, X_missing.loc[idx_right]], ignore_index=True)
                 y_right = pd.concat([y_right, y_missing.loc[idx_right]], ignore_index=True)
-
-        # ✅ Reset indices after concatenation
+                # ✅ Reset indices after concatenation
         X_left = X_left.reset_index(drop=True)
         y_left = y_left.reset_index(drop=True)
         X_right = X_right.reset_index(drop=True)
         y_right = y_right.reset_index(drop=True)
+
+        if len(X_left) == 0 or len(X_right) == 0: print("WARNING: empty split detected")
 
         return (X_left, y_left), (X_right, y_right)
 
