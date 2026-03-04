@@ -76,6 +76,58 @@ def evaluate_tree(tree, X_train, y_train, X_test, y_test):
             "depth": None
         }
 
+
+def evaluate_tree_new(tree, X_test, y_test):
+
+    try:
+        y_pred = tree.predict(X_test)
+
+        labels = np.unique(np.concatenate([y_test, y_pred]))
+
+        f1 = f1_score(y_test, y_pred, average='macro', zero_division=0)
+        recall = recall_score(y_test, y_pred, average='macro', zero_division=0)
+        precision = precision_score(y_test, y_pred, average='macro', zero_division=0)
+        accuracy = accuracy_score(y_test, y_pred)
+        balanced_acc = balanced_accuracy_score(y_test, y_pred)
+        mcc = matthews_corrcoef(y_test, y_pred)
+
+        specificity = compute_macro_specificity(y_test, y_pred)
+
+        # Tree structure
+        root = getattr(tree, "tree_", None)
+        if root is None:
+            root = getattr(tree, "root", None)
+
+        n_nodes = count_nodes(root)
+
+        depth = tree.get_depth() if hasattr(tree, "get_depth") else None
+
+        return {
+            "accuracy": accuracy,
+            "balanced_accuracy": balanced_acc,
+            "precision": precision,
+            "recall": recall,
+            "f1": f1,
+            "specificity": specificity,
+            "mcc": mcc,
+            "n_nodes": n_nodes,
+            "depth": depth
+        }
+
+    except Exception as e:
+        print(f" Error during evaluation: {e}")
+        return {
+            "accuracy": 0.0,
+            "balanced_accuracy": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "specificity": 0.0,
+            "mcc": 0.0,
+            "n_nodes": 9999,
+            "depth": None
+        }
+
 def compute_macro_specificity(y_true, y_pred):
     mcm = multilabel_confusion_matrix(y_true, y_pred)
     specificities = []
