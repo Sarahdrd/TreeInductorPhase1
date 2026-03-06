@@ -283,20 +283,30 @@ class DecisionTree:
 
 
     # ----------------------------------------------------------
+    def _get_thresholds(self, x, k):
+
+        qs = np.linspace(0.05, 0.95, num=k)
+        thresholds = np.unique(np.quantile(x, qs))
+        return thresholds
+
+
     def _best_split(self, X, y):
         best_gain = -np.inf
         best_feat, best_thr = None, None
 
         for feature in X.columns:
             X_proc, y_proc, X_col = self.mv.handle_split(X, y, feature)
-            for thr in np.unique(X_col.dropna()):
-                gain = self.split_criterion.calculate(
-                    y_proc.to_numpy(),
-                    X_col.to_numpy(),
-                    thr
-                )
 
+            # Avoid NaNs
+            X_col = X_col.to_numpy()
+            X_col = X_col[np.isfinite(X_col)]
+            if X_col.size == 0:
+                continue
 
+            k = 32 if len(y_proc) > 500 else 16 if len(y_proc) > 100 else 8
+            thresholds = self._get_thresholds(X_col, k)
+            for thr in thresholds:
+                gain = self.split_criterion.calculate(y_proc.to_numpy(), X_col, thr)
                 if gain > best_gain:
                     best_gain = gain
                     best_feat = feature
