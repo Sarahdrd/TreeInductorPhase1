@@ -196,41 +196,74 @@ class DecisionTree:
         y_out = pd.concat(y_aug_parts, ignore_index=True)
 
         return X_out, y_out
+    
+
+
+    def _make_leaf(self, y):
+        """
+        Create a leaf node with majority class prediction.
+        """
+        if y is None or len(y) == 0:
+            return Node(label=0, samples=0, class_distribution=np.array([]))
+
+        y_np = y.to_numpy() if hasattr(y, "to_numpy") else y
+
+        class_dist = np.bincount(y_np)
+        label = class_dist.argmax()
+
+        return Node(
+            label=label,
+            samples=len(y_np),
+            class_distribution=class_dist
+        )
         
     #
     def _build_tree(self, X, y, depth):
-        
+
+        ########
+        MAX_DEPTH_HARD = 50
+
+        # 1  safety limit
+        if depth >= MAX_DEPTH_HARD:
+            return self._make_leaf(y)
+
+        # 2️ Dataset safety
         if y is None or len(y) == 0:
-            # Create dummy leaf with a safe fallback class
             label = 0
             return Node(label=label, samples=0, class_distribution=np.array([]))
 
-        # Stop conditions 
+        # 3️ Normal stopping criteria
         if self.stopping.stop(y.to_numpy(), depth) or len(np.unique(y)) == 1:
             label = np.bincount(y).argmax()
             return Node(label=label, samples=len(y), class_distribution=np.bincount(y))
 
-        # Find best split 
+        # 4️ Find best split
         best_feat, best_thr, best_gain = self._best_split(X, y)
+
         if best_feat is None or best_thr is None:
-            label = np.bincount(y).argmax()
-            return Node(label=label, samples=len(y), class_distribution=np.bincount(y))
+            return self._make_leaf(y)
 
-        # Perform split
-        (X_left, y_left), (X_right, y_right) = self.mv.apply_split_with_mv(X, y, best_feat, best_thr)
+        # 5️ Perform split
+        (X_left, y_left), (X_right, y_right) = self.mv.apply_split_with_mv(
+            X, y, best_feat, best_thr
+        )
 
-        # Local augmentation only if a child partition is very small
+        # 6️ Validate split BEFORE recursion
+        if len(y_left) == 0 or len(y_right) == 0:
+            return self._make_leaf(y)
+
+        if len(y_left) == len(y) or len(y_right) == len(y):
+            return self._make_leaf(y)
+
+        # 7️ Local augmentation (safe now)
         X_left, y_left = self._augment_if_needed(X_left, y_left)
         X_right, y_right = self._augment_if_needed(X_right, y_right)
 
-        if len(y_left) == 0 or len(y_right) == 0:
-            label = np.bincount(y).argmax()
-            return Node(label=label, samples=len(y), class_distribution=np.bincount(y))
-
-        # Recurse 
+        # 8️ Recurse
         left_node = self._build_tree(X_left, y_left, depth + 1)
         right_node = self._build_tree(X_right, y_right, depth + 1)
 
+        
         node = Node(feature=best_feat, threshold=best_thr,
                     left=left_node, right=right_node,
                     gain=best_gain, samples=len(y),
@@ -256,12 +289,23 @@ class DecisionTree:
 
         for feature in X.columns:
             X_proc, y_proc, X_col = self.mv.handle_split(X, y, feature)
-            thresholds = np.unique(X_col)
-            for thr in thresholds:
-                gain = self.split_criterion.calculate(y_proc.to_numpy(), X_col.to_numpy(), thr)
+            for thr in np.unique(X_col.dropna()):
+                gain = self.split_criterion.calculate(
+                    y_proc.to_numpy(),
+                    X_col.to_numpy(),
+                    thr
+                )
+
+
                 if gain > best_gain:
-                    best_gain, best_feat, best_thr = gain, feature, thr
+                    best_gain = gain
+                    best_feat = feature
+                    best_thr = thr
+
+
         return best_feat, best_thr, best_gain
+
+
 
     # ----------------------------------------------------------
     def predict(self, X):

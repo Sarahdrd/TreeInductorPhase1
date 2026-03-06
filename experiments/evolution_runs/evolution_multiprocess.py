@@ -1,3 +1,5 @@
+import multiprocessing
+multiprocessing.set_start_method("spawn", force=True)
 import os
 import sys
 import time
@@ -49,12 +51,13 @@ def main():
         "iris": data_path / "iris.csv",
         "wine_red": data_path / "winequality_red.csv",
         "breast_cancer": data_path / "breast_cancer.csv",
+        "hepatitis": data_path / "hepatitis.csv"
     }
 
     # Genetic parameters
     mu = 10
     lambd = 10
-    generations = 2
+    generations = 50
 
     print("Starting Evolutionary Process...")
     print(f"Experiment with mu={mu}, lambda={lambd} for {generations} generations.")
@@ -82,4 +85,6 @@ def main():
     plt.show()
 
 if __name__ == "__main__":
+    import multiprocessing
+    multiprocessing.freeze_support()
     main()

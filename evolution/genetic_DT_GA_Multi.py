@@ -154,7 +154,7 @@ algo_genome: list[int],
         # Predict and get metrics
         t0 = time.perf_counter()
         metrics = evaluate_tree_new(algo, X[va], y[va])
-        metrics_time = time.perf_counter() - t0
+        metrics_time += time.perf_counter() - t0
 
         # Get F1
         fold_scores.append(metrics["f1"])
