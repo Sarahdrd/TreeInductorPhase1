@@ -1,6 +1,7 @@
 import os
 import sys
 import time
+import random
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -38,6 +39,7 @@ def main():
     Main process
     """
 
+    random.seed(42)
     # Build set of datasets
     #iris = load_iris(return_X_y=True)
     #wine = load_wine(return_X_y=True)
