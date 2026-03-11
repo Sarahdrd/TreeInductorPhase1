@@ -56,17 +56,29 @@ def main():
         "hepatitis": data_path / "hepatitis.csv"
     }
 
+    unseen_datasets = {
+        "car": data_path / "car.csv",
+        "glass": data_path / "glass.csv"}
+
     # Genetic parameters
     mu = 10
     lambd = 10
-    generations = 50
+    generations = 15
 
     print("Starting Evolutionary Process...")
     print(f"Experiment with mu={mu}, lambda={lambd} for {generations} generations.")
     print("Datasets to be trained on:", [e for e in datasets.keys()])
 
     evo_t0 = time.time()
-    best_gene, best_fit, history = evolve_trees(datasets, mu=mu, lambd=lambd, generations=generations)
+    
+    best_gene, best_fit, history, fitness_rank_history, generalization_history = evolve_trees(
+        datasets,
+        unseen_datasets,
+        mu=mu,
+        lambd=lambd,
+        generations=generations
+)
+
     evo_tf = time.time()
 
     print("Total time (s):", round(evo_tf - evo_t0, 4))
@@ -85,6 +97,41 @@ def main():
     plt.ylabel("Fitness (Mean − SDD across datasets)")
     plt.grid(True)
     plt.show()
+
+
+    # Graph 1 — SDD Evolution
+    plt.figure()
+
+    plt.plot(fitness_rank_history["best"], label="Best Individual")
+    plt.plot(fitness_rank_history["median"], label="Median Individual")
+    plt.plot(fitness_rank_history["worst"], label="Worst Individual")
+
+    plt.title("Evolution of SDD Across Generations")
+    plt.xlabel("Generation")
+    plt.ylabel("Fitness (−SDD)")
+    plt.legend()
+    plt.grid(True)
+
+
+    # Graph 2 — Generalization
+    plt.figure()
+
+    plt.plot(generalization_history["best"], label="Best Individual")
+    plt.plot(generalization_history["median"], label="Median Individual")
+    plt.plot(generalization_history["worst"], label="Worst Individual")
+
+    plt.title("Generalization Performance on Unseen Datasets")
+    plt.xlabel("Generation")
+    plt.ylabel("Mean F1 Score")
+    plt.legend()
+    plt.grid(True)
+
+    plt.show()
+
+
+
+
+
 
 if __name__ == "__main__":
     import multiprocessing

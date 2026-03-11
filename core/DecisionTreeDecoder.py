@@ -80,6 +80,9 @@ class DecisionTree:
         self.pruning = pruning
         self.root = None
 
+        self._depth = 0
+        self._node = 0
+
         # Local node level augmentation for small child partitions
         # Always on, only triggered when a child node has few samples.
         self.augment = augment
@@ -221,7 +224,9 @@ class DecisionTree:
     def _build_tree(self, X, y, depth):
 
         ########
-        MAX_DEPTH_HARD = 50
+        MAX_DEPTH_HARD = 25# Absolute max depth to prevent infinite recursion in edge cases
+        self._depth = max(self._depth, depth)
+        self._node += 1
 
         # 1  safety limit
         if depth >= MAX_DEPTH_HARD:

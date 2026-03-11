@@ -87,17 +87,29 @@ def _stratified_kfold_indices(
 
     return splits
 
-
-def _load_dataset_csv(path: Path, target_col: str) -> tuple[NDArray[np.float64], NDArray[np.float64]]:
+#
+def _load_dataset_csv(path: Path, target_col: str):
 
     df = pd.read_csv(path)
+
     if target_col not in df.columns:
-        raise ValueError(f"target_col='{target_col}' not found in {path}.\n Columns: {list(df.columns)[:20]}")
+        raise ValueError(
+            f"target_col='{target_col}' not found in {path}.\n"
+            f"Columns: {list(df.columns)[:20]}"
+        )
 
-    y = LabelEncoder().fit_transform(df[target_col].to_numpy())
-    X = df.drop(columns=[target_col]).to_numpy()
+    y = LabelEncoder().fit_transform(df[target_col].astype(str))
+
+    X_df = df.drop(columns=[target_col])
+
+    # ensure numeric features
+    for col in X_df.columns:
+        if not pd.api.types.is_numeric_dtype(X_df[col]):
+            X_df[col] = LabelEncoder().fit_transform(X_df[col].astype(str))
+
+    X = X_df.to_numpy(dtype=float)
+
     return X, y
-
 
 # -------------------------
 # Worker Job
@@ -133,6 +145,8 @@ algo_genome: list[int],
 
     # Main work
     fold_scores: list[float] = []
+    depths = []
+    nodes = []
     for fold_indx, (tr, va) in enumerate(splits):
 
         # Instantiate a fresh algorithhm per fold
@@ -159,13 +173,20 @@ algo_genome: list[int],
         # Get F1
         fold_scores.append(metrics["f1"])
 
+        # Get structure
+        depths.append(algo._depth)
+        nodes.append(algo._node)
+
     duration = time.perf_counter() - start
+
+    depth_avg = np.mean(depths)
+    nodes_avg = np.mean(nodes)
 
     # Right now, the algorithm was testes on the current dataset k times
     #mean = float(np.mean(scores))
     #std = float(np.std(scores, ddof=1)) if len(scores) > 1 else 0.0
 
-    return algo_genome, dataset_name, fold_scores, [duration, decode_time, fit_time, metrics_time], pid
+    return algo_genome, dataset_name, fold_scores, [duration, decode_time, fit_time, metrics_time], pid, [depth_avg, nodes_avg]
 
 
 # -------------------------
@@ -220,11 +241,12 @@ def evaluation(
 
         for fut in as_completed(futs):
             try:
-                algo_name, ds_name, fold_scores, times, pid = fut.result()
+                algo_name, ds_name, fold_scores, times, pid, structure = fut.result()
                 results[str(algo_name)][ds_name] = fold_scores
                 job_times.append((str(algo_name), ds_name, times, pid))
                 print(f"[DONE] {str(algo_name):20s} {ds_name:20s} \t {times[0]:.2f}s")
                 print(f"times: decode {times[1]:.2f}s | fit {times[2]:.2f}s | metrics {times[3]:.2f}s (pid={pid})")
+                print(f"structure: depth {structure[0]:.2f} | nodes {structure[1]:.2f}")
 
             except Exception as e:
                 traceback.print_exc()
@@ -275,13 +297,56 @@ def evaluation(
     return fitness
 
 
+
+def evaluate_on_unseen(gene, unseen_datasets, k=5, seed=123):
+    from sklearn.model_selection import StratifiedKFold
+
+    results = {}
+
+    for name, dataset_path in unseen_datasets.items():
+
+        X, y = _load_dataset_csv(dataset_path, target_col="target")
+
+        skf = StratifiedKFold(n_splits=k, shuffle=True, random_state=seed)
+
+        scores = []
+
+        for tr, te in skf.split(X, y):
+
+            algo = decode(gene)
+            algo.fit(X[tr], y[tr])
+
+            m = evaluate_tree_new(algo, X[te], y[te])
+            scores.append(m["f1"])
+
+        results[name] = float(np.mean(scores))
+
+    return results
+
+
+
 def evolve_trees(datasets,
-                 mu=10, lambd=10, generations=10,
-                 crossover_prob=1.0, mutation_prob=0.1):
+                 unseen_datasets,
+                 mu=10,
+                 lambd=10,
+                 generations=10,
+                 crossover_prob=1.0,
+                 mutation_prob=0.1):
+    
+
 
     # Generate initial population
     population = generate_population(mu)
     best_history = []
+    fitness_rank_history = {
+        "best": [],
+        "median": [],
+        "worst": []}
+
+    generalization_history = {
+        "best": [],
+        "median": [],
+        "worst": [] }
 
     # Evaluate initial population
     t0 = time.time()
@@ -339,7 +404,37 @@ def evolve_trees(datasets,
         best_val = max(fitness_values)
         best_individual = population[np.argmax(fitness_values)]
         best_history.append(best_val)
+
+        sorted_idx = np.argsort(fitness_values)
+
+        worst_idx = sorted_idx[0]
+        median_idx = sorted_idx[len(sorted_idx)//2]
+        best_idx = sorted_idx[-1]
+
+        worst_gene = population[worst_idx]
+        median_gene = population[median_idx]
+        best_gene = population[best_idx]
+
+        # store SDD fitness
+        fitness_rank_history["best"].append(fitness_values[best_idx])
+        fitness_rank_history["median"].append(fitness_values[median_idx])
+        fitness_rank_history["worst"].append(fitness_values[worst_idx])
+
+        # evaluate generalization
+        gen_best = evaluate_on_unseen(best_gene, unseen_datasets)
+        gen_med  = evaluate_on_unseen(median_gene, unseen_datasets)
+        gen_worst = evaluate_on_unseen(worst_gene, unseen_datasets)
+
+        generalization_history["best"].append(np.mean(list(gen_best.values())))
+        generalization_history["median"].append(np.mean(list(gen_med.values())))
+        generalization_history["worst"].append(np.mean(list(gen_worst.values())))
+
         print(f"Gen {gen}: best score = {best_val:.4f}, Execution time = {round(time.time() - t0, 4)} seconds.")
         print(f"Best Genome:", best_individual)
 
-    return best_individual, best_val, best_history
+    return (
+        best_individual,
+        best_val,
+        best_history,
+        fitness_rank_history,
+        generalization_history)
