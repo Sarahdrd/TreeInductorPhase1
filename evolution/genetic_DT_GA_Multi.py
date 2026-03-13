@@ -347,6 +347,12 @@ def evolve_trees(datasets,
         "best": [],
         "median": [],
         "worst": [] }
+    
+    generalization_sdd_history = {
+        "best": [],
+        "median": [],
+        "worst": []
+        }
 
     # Evaluate initial population
     t0 = time.time()
@@ -429,6 +435,32 @@ def evolve_trees(datasets,
         generalization_history["median"].append(np.mean(list(gen_med.values())))
         generalization_history["worst"].append(np.mean(list(gen_worst.values())))
 
+
+        def compute_sdd(scores_dict):
+            values = list(scores_dict.values())
+            N = len(values)
+
+            b_i = 1.0
+            xi_values = []
+
+            for mean_f1 in values:
+                xi = 100 * abs(mean_f1 - b_i) / np.mean([mean_f1, b_i])
+                xi_values.append(xi)
+
+            x_bar = np.mean(xi_values)
+            diff = [(xi - x_bar)**2 for xi in xi_values]
+
+            sdd = np.sqrt(sum(diff) / (N - 1))
+            return sdd
+
+        best_sdd_unseen = compute_sdd(gen_best)
+        med_sdd_unseen  = compute_sdd(gen_med)
+        worst_sdd_unseen = compute_sdd(gen_worst)
+
+        generalization_sdd_history["best"].append(-best_sdd_unseen)
+        generalization_sdd_history["median"].append(-med_sdd_unseen)
+        generalization_sdd_history["worst"].append(-worst_sdd_unseen)
+
         print(f"Gen {gen}: best score = {best_val:.4f}, Execution time = {round(time.time() - t0, 4)} seconds.")
         print(f"Best Genome:", best_individual)
 
@@ -437,4 +469,5 @@ def evolve_trees(datasets,
         best_val,
         best_history,
         fitness_rank_history,
-        generalization_history)
+        generalization_history, 
+        generalization_sdd_history)

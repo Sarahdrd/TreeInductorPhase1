@@ -56,14 +56,15 @@ def main():
         "hepatitis": data_path / "hepatitis.csv"
     }
 
-    unseen_datasets = {
-        "car": data_path / "car.csv",
-        "glass": data_path / "glass.csv"}
+    unseen_datasets = { "car": data_path / "car.csv", 
+                       "glass": data_path / "glass.csv", 
+                       "anneal": data_path / "anneal.csv", 
+                       "wine_white": data_path / "winequality_white.csv"}
 
     # Genetic parameters
-    mu = 10
-    lambd = 10
-    generations = 15
+    mu = 20
+    lambd = 20
+    generations = 30
 
     print("Starting Evolutionary Process...")
     print(f"Experiment with mu={mu}, lambda={lambd} for {generations} generations.")
@@ -71,7 +72,7 @@ def main():
 
     evo_t0 = time.time()
     
-    best_gene, best_fit, history, fitness_rank_history, generalization_history = evolve_trees(
+    best_gene, best_fit, history, fitness_rank_history, generalization_history, generalization_sdd_history = evolve_trees(
         datasets,
         unseen_datasets,
         mu=mu,
@@ -91,29 +92,42 @@ def main():
         scores = eval_gene_on_dataset(best_gene, X, y, k=5)
         print(f"{name}: mean F1={scores.mean():.4f}, std F1={scores.std():.4f}, folds={scores}")
 
+
+    ### VISUALIZATION ###
+    # -----------------------------
+    # Graph 1 — Best Fitness Evolution
+    # -----------------------------
+    plt.figure()
+
     plt.plot(history, marker="o")
+
     plt.title("Evolution of Multi-Dataset Generalization Fitness")
     plt.xlabel("Generation")
     plt.ylabel("Fitness (Mean − SDD across datasets)")
     plt.grid(True)
-    plt.show()
 
 
-    # Graph 1 — SDD Evolution
+
+    # -----------------------------
+    # Graph 2 — Training SDD Evolution
+    # -----------------------------
     plt.figure()
 
     plt.plot(fitness_rank_history["best"], label="Best Individual")
     plt.plot(fitness_rank_history["median"], label="Median Individual")
     plt.plot(fitness_rank_history["worst"], label="Worst Individual")
 
-    plt.title("Evolution of SDD Across Generations")
+    plt.title("Evolution of SDD Across Generations (Training Datasets)")
     plt.xlabel("Generation")
     plt.ylabel("Fitness (−SDD)")
     plt.legend()
     plt.grid(True)
 
 
-    # Graph 2 — Generalization
+
+    # -----------------------------
+    # Graph 3 — Generalization F1
+    # -----------------------------
     plt.figure()
 
     plt.plot(generalization_history["best"], label="Best Individual")
@@ -126,9 +140,42 @@ def main():
     plt.legend()
     plt.grid(True)
 
+
+
+    # -----------------------------
+    # Graph 4 — Unseen Dataset SDD
+    # -----------------------------
+    plt.figure()
+
+    plt.plot(generalization_sdd_history["best"], label="Best Individual")
+    plt.plot(generalization_sdd_history["median"], label="Median Individual")
+    plt.plot(generalization_sdd_history["worst"], label="Worst Individual")
+
+    plt.title("SDD Evolution on Unseen Datasets")
+    plt.xlabel("Generation")
+    plt.ylabel("Fitness (−SDD)")
+    plt.legend()
+    plt.grid(True)
+
+
+
+    # -----------------------------
+    # Graph 5 — Training vs Unseen SDD
+    # -----------------------------
+    plt.figure()
+
+    plt.plot(fitness_rank_history["best"], label="Training SDD (Best)")
+    plt.plot(generalization_sdd_history["best"], label="Unseen SDD (Best)")
+
+    plt.title("Training vs Unseen Dataset Consistency")
+    plt.xlabel("Generation")
+    plt.ylabel("Fitness (−SDD)")
+    plt.legend()
+    plt.grid(True)
+
+
+
     plt.show()
-
-
 
 
 
