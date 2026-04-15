@@ -86,12 +86,14 @@ def main():
     print("Best gene:", best_gene)
     print("Fitness (mean - SDD):", best_fit)
 
-    # Report generalization across datasets 
+    # Report generalization across datasets
     for name, dataset_path in datasets.items():
-        X, y = _load_dataset_csv(dataset_path, target_col="target")
-        scores = eval_gene_on_dataset(best_gene, X, y, k=5)
-        print(f"{name}: mean F1={scores.mean():.4f}, std F1={scores.std():.4f}, folds={scores}")
+        target_col = None if target_cols is None else target_cols.get(name, None)
 
+        X, y = _load_dataset_csv(dataset_path, target_col=target_col)
+        scores = eval_gene_on_dataset(best_gene, X, y, k=5)
+
+        print(f"{name}: mean F1={scores.mean():.4f}, std F1={scores.std():.4f}, folds={scores}")
 
     ### VISUALIZATION ###
     # -----------------------------

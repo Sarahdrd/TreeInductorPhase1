@@ -87,22 +87,37 @@ def _stratified_kfold_indices(
 
     return splits
 
-#
-def _load_dataset_csv(path: Path, target_col: str):
+##
+def _load_dataset_csv(path: Path, target_col=None):
 
     df = pd.read_csv(path)
 
+    # Resolver target_col automáticamente
+    if target_col is None:
+        target_col = df.columns[-1]
+
+    elif isinstance(target_col, int):
+        target_col = df.columns[target_col]
+
+    elif isinstance(target_col, str):
+        if target_col not in df.columns:
+            print(f" '{target_col}' not found in {path.name}, using last column instead.")
+            target_col = df.columns[-1]
+
+    # Validación final
     if target_col not in df.columns:
         raise ValueError(
             f"target_col='{target_col}' not found in {path}.\n"
-            f"Columns: {list(df.columns)[:20]}"
+            f"Columns: {list(df.columns)}"
         )
 
+    # Target
     y = LabelEncoder().fit_transform(df[target_col].astype(str))
 
+    # Features
     X_df = df.drop(columns=[target_col])
 
-    # ensure numeric features
+    # Encode categóricos
     for col in X_df.columns:
         if not pd.api.types.is_numeric_dtype(X_df[col]):
             X_df[col] = LabelEncoder().fit_transform(X_df[col].astype(str))
@@ -110,7 +125,6 @@ def _load_dataset_csv(path: Path, target_col: str):
     X = X_df.to_numpy(dtype=float)
 
     return X, y
-
 # -------------------------
 # Worker Job
 # -------------------------
@@ -298,21 +312,23 @@ def evaluation(
 
 
 
-def evaluate_on_unseen(gene, unseen_datasets, k=5, seed=123):
+def evaluate_on_unseen(gene, unseen_datasets, k=5, seed=123, target_cols=None):
     from sklearn.model_selection import StratifiedKFold
+    import numpy as np
 
     results = {}
 
     for name, dataset_path in unseen_datasets.items():
+        # Si no se especifica nada para ese dataset, usar None
+        # y que _load_dataset_csv resuelva automáticamente
+        target_col = None if target_cols is None else target_cols.get(name, None)
 
-        X, y = _load_dataset_csv(dataset_path, target_col="target")
+        X, y = _load_dataset_csv(dataset_path, target_col=target_col)
 
         skf = StratifiedKFold(n_splits=k, shuffle=True, random_state=seed)
-
         scores = []
 
         for tr, te in skf.split(X, y):
-
             algo = decode(gene)
             algo.fit(X[tr], y[tr])
 

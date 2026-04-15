@@ -7,6 +7,7 @@ import numpy as np
 from copy import deepcopy
 from sklearn.model_selection import train_test_split
 from scipy.stats import norm
+from core.split_utils import safe_train_test_split
 
 class Pruning:
     """
@@ -96,7 +97,9 @@ class Pruning:
     # ------------------------------------------------------
     def _REP(self, tree, X, y):
         val_size = (self.param * 0.4 + 10) / 100
-        _, Xv, _, yv = train_test_split(X, y, test_size=val_size, stratify=y, random_state=42)
+        
+        _, Xv, _, yv = safe_train_test_split( X, y, test_size=val_size, random_state=42, prefer_stratify=True)
+
         return self._rep_node(tree, tree, Xv, yv)
 
     def _rep_node(self, node, tree, Xv, yv):
@@ -184,7 +187,7 @@ class Pruning:
     # ------------------------------------------------------
     def _CCP(self, tree, X, y):
         val_size = min(max(self.param / 100.0, 0.1), 0.5)
-        _, Xv, _, yv = train_test_split(X, y, test_size=val_size, stratify=y, random_state=42)
+        _, Xv, _, yv = safe_train_test_split( X, y, test_size=val_size, random_state=42, prefer_stratify=True)
         seq = self._ccp_sequence(tree, X, y)
         return self._select_best(seq, Xv, yv)
 
@@ -235,7 +238,7 @@ class Pruning:
     # ------------------------------------------------------
     def _EBP(self, tree, X, y):
         val_size = min(max(self.param / 100.0, 0.1), 0.5)
-        _, Xv, _, yv = train_test_split(X, y, test_size=val_size, stratify=y, random_state=42)
+        _, Xv, _, yv = safe_train_test_split( X, y, test_size=val_size, random_state=42, prefer_stratify=True)
         cf = np.clip(self.param / 100, 0.01, 0.5)
         z = norm.ppf(1 - cf)
         return self._ebp_node(tree, tree, Xv, yv, z)
