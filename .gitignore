@@ -3,5 +3,13 @@ __pycache__
 # Data
 *.csv
 
+# Results
+results/
+
+# Images
+*.png
+*.jpg
+*.pdf
+
 # Jupyter Notebook
 .ipynb_checkpoints
