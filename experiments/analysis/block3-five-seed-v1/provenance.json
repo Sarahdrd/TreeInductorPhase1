@@ -1,0 +1,124 @@
+{
+  "analysis_source_sha256": {
+    "block3_analysis.py": "c264f10b7b563d6d02c39744dacc4870dafed42ed3de4056e7efb12924e6c05b",
+    "block3_figures.py": "e9f9b16eb4a91e9a8261c691be6df4a3a073155236e52d7e49756cac8473d98d",
+    "canonical_scoring.py": "181f38234ebefe0b004d280d91e6013c1ef8e48d58349090bf85ce2e79eec80b"
+  },
+  "boundary_definition": "rank midpoint 12.5; descriptive score midpoint of ranks 12 and 13, not an additional classification threshold",
+  "canonical_models": [
+    "decision_tree_default",
+    "decision_tree_balanced",
+    "logistic_regression",
+    "logistic_regression_balanced"
+  ],
+  "historical": {
+    "alternative_reference": "results/new_characterization_experiments/tables/dataset_experimental_profile.csv",
+    "historical_internal_reconstruction": true,
+    "metadata": {
+      "cv": {
+        "n_repeats": 3,
+        "n_splits": 5,
+        "random_state": 42
+      },
+      "model_configurations": {
+        "decision_tree_balanced": {
+          "ccp_alpha": 0.0,
+          "class_weight": "balanced",
+          "criterion": "gini",
+          "max_depth": null,
+          "max_features": null,
+          "max_leaf_nodes": null,
+          "min_impurity_decrease": 0.0,
+          "min_samples_leaf": 1,
+          "min_samples_split": 2,
+          "min_weight_fraction_leaf": 0.0,
+          "random_state": 42,
+          "splitter": "best"
+        },
+        "decision_tree_default": {
+          "ccp_alpha": 0.0,
+          "class_weight": null,
+          "criterion": "gini",
+          "max_depth": null,
+          "max_features": null,
+          "max_leaf_nodes": null,
+          "min_impurity_decrease": 0.0,
+          "min_samples_leaf": 1,
+          "min_samples_split": 2,
+          "min_weight_fraction_leaf": 0.0,
+          "random_state": 42,
+          "splitter": "best"
+        },
+        "dummy_most_frequent": {
+          "random_state": 42,
+          "strategy": "most_frequent"
+        },
+        "dummy_stratified": {
+          "random_state": 42,
+          "strategy": "stratified"
+        },
+        "logistic_regression": {
+          "C": 1.0,
+          "class_weight": null,
+          "fit_intercept": true,
+          "max_iter": 5000,
+          "penalty": "l2",
+          "random_state": 42,
+          "solver": "lbfgs",
+          "tol": 0.0001
+        },
+        "logistic_regression_balanced": {
+          "C": 1.0,
+          "class_weight": "balanced",
+          "fit_intercept": true,
+          "max_iter": 5000,
+          "penalty": "l2",
+          "random_state": 42,
+          "solver": "lbfgs",
+          "tol": 0.0001
+        }
+      },
+      "n_jobs": 1,
+      "numpy": "2.4.1",
+      "pandas": "2.3.3",
+      "python": "3.12.12",
+      "random_seed": 42,
+      "runtime_definition": "wall-clock seconds for complete 15-evaluation cross_validate call",
+      "scipy": "1.17.0",
+      "sklearn": "1.8.0"
+    },
+    "metadata_path": "results\\dataset_statistics\\reproducibility.json",
+    "metadata_sha256": "dd410f6a812a7891e0d09c83a6567be7a29cb9cd752766284cadbe2727f0bac5",
+    "path": "results\\dataset_statistics\\dataset_experimental_profile.csv",
+    "reference_note": "The later cleaned-notebook reproduction is distinct; historical means the manuscript-era stored profile, not a claim of independently verified publication bytes.",
+    "sha256": "679af07efa5d39076e4925e7b8a5063056a68d3437f37d3a56ab79284737a211"
+  },
+  "primary_variability": "mean of five within-seed sample SDs per model, then mean of four models",
+  "repeated_cv_note": "Folds are dependent; no inferential p-values or independent-replicate tests",
+  "sensitivity_variability": "pooled sample SD of 75 scores per model, then mean of four models",
+  "std_ddof": 1,
+  "validation": {
+    "canonical_records": 5100,
+    "datasets": 17,
+    "environment_id": "fb2fa26df42df065c94dfc5dc9c149a4c7b0cd241c5925e6da1c506a9ce07d5a",
+    "failed_or_pilot_included": 0,
+    "models": 16,
+    "record_files": 20400,
+    "record_inventory_sha256": "18c4eddd4074b9220f7aa55d156653131e0a4b0ed3df06ab527152d8d418c05a",
+    "run_manifest_sha256": "88f8cb9415479380290438ddcfaeaaebad030032ea921e8f5cd0232fd53e5000",
+    "scores_per_dataset_model": 75,
+    "scores_per_dataset_model_seed": 15,
+    "selected_canonical_models": [
+      "decision_tree_default",
+      "decision_tree_balanced",
+      "logistic_regression",
+      "logistic_regression_balanced"
+    ],
+    "successful_records": 20400,
+    "unique_evaluation_ids": 20400
+  },
+  "weights": [
+    0.7,
+    0.3
+  ]
+}

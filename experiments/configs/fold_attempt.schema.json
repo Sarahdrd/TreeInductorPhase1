@@ -1,0 +1,195 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Checksummed fold attempt envelope v1",
+  "type": "object",
+  "required": [
+    "payload",
+    "sha256"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "payload": {
+      "type": "object",
+      "required": [
+        "record_version",
+        "attempt",
+        "execution_status",
+        "runtime_seconds",
+        "warnings",
+        "started_at",
+        "finished_at",
+        "configuration_id",
+        "implementation_id",
+        "evaluation_id",
+        "purpose",
+        "experiment_id",
+        "protocol_version",
+        "dataset",
+        "dataset_fingerprint",
+        "model",
+        "model_configuration",
+        "seed",
+        "repeat",
+        "fold",
+        "split_id",
+        "macro_f1",
+        "environment_id"
+      ],
+      "properties": {
+        "record_version": {
+          "const": "fold-attempt-v1"
+        },
+        "attempt": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "execution_status": {
+          "enum": [
+            "success",
+            "failed"
+          ]
+        },
+        "runtime_seconds": {
+          "type": "number",
+          "minimum": 0
+        },
+        "warnings": {
+          "type": "array"
+        },
+        "purpose": {
+          "enum": [
+            "pilot",
+            "official"
+          ]
+        },
+        "dataset": {
+          "enum": [
+            "banknote",
+            "tic_tac_toe",
+            "breast_cancer",
+            "iris",
+            "semeion",
+            "car",
+            "ionosphere",
+            "credit_approval",
+            "balance_scale",
+            "cylinder_bands",
+            "anneal",
+            "parkinsons",
+            "sonar",
+            "haberman",
+            "glass",
+            "wine_red",
+            "heart_disease"
+          ],
+          "type": "string"
+        },
+        "dataset_fingerprint": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "environment_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "experiment_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "fold": {
+          "maximum": 5,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "model": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "model_configuration": {
+          "minProperties": 1,
+          "type": "object"
+        },
+        "protocol_version": {
+          "const": "revision2-five-seed-v1"
+        },
+        "repeat": {
+          "maximum": 3,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "seed": {
+          "enum": [
+            42,
+            7,
+            21,
+            84,
+            123
+          ],
+          "type": "integer"
+        },
+        "split_id": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "oneOf": [
+        {
+          "allOf": [
+            {
+              "$ref": "fold_result.schema.json"
+            },
+            {
+              "properties": {
+                "execution_status": {
+                  "const": "success"
+                },
+                "error": {
+                  "type": "null"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "object",
+          "required": [
+            "execution_status",
+            "macro_f1",
+            "error"
+          ],
+          "properties": {
+            "execution_status": {
+              "const": "failed"
+            },
+            "macro_f1": {
+              "type": "null"
+            },
+            "error": {
+              "type": "object",
+              "required": [
+                "type",
+                "message",
+                "traceback"
+              ],
+              "properties": {
+                "type": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "traceback": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  }
+}

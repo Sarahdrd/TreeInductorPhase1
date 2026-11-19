@@ -1,0 +1,12 @@
+# Unified environment on Python 3.12.14; see RIPPER_RECOVERY.md for smoke-test scope.
+numpy==2.5.3
+pandas==3.0.5
+scipy==1.18.1
+scikit-learn==1.9.0
+matplotlib==3.11.1
+joblib==1.6.0
+threadpoolctl==3.6.0
+nbformat==5.11.1
+ipython==9.17.1
+packaging==26.3
+wittgenstein==0.3.5

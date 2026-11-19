@@ -1,0 +1,21 @@
+{
+  "name": "wittgenstein",
+  "version": "0.3.5",
+  "requires_python": ">=3.8",
+  "requires_dist": [
+    "pandas",
+    "numpy"
+  ],
+  "source": "https://pypi.org/pypi/wittgenstein/0.3.5/json",
+  "artifacts": [
+    {
+      "filename": "wittgenstein-0.3.5.tar.gz",
+      "digests": {
+        "blake2b_256": "c995663f06524e016761f506b39c91dd55a3e14480a67ee5ffcbfae0aaf2d682",
+        "md5": "a6458b8dbd6c5a6e87441dfe0bf57c72",
+        "sha256": "6191655b7374925403a58a732cdd250c95cd3b2bb3a05f37d024cd24626c3c7e"
+      },
+      "url": "https://files.pythonhosted.org/packages/c9/95/663f06524e016761f506b39c91dd55a3e14480a67ee5ffcbfae0aaf2d682/wittgenstein-0.3.5.tar.gz"
+    }
+  ]
+}

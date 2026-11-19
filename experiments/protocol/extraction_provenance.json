@@ -1,0 +1,9 @@
+{
+  "notebook": "experiments/New_Characterization_Experiments.ipynb",
+  "sha256": "1d29761e49887fbe604053a13026e240e8ddb46207df599d4b0a31cc4196b443",
+  "cells_zero_based": {
+    "datasets.py": 6,
+    "preprocessing.py": 9
+  },
+  "method": "AST-selected definitions, source text copied verbatim; no evaluation cells executed"
+}

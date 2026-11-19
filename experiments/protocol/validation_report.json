@@ -1,0 +1,148 @@
+{
+  "archives": 85,
+  "cross_model_historical_pairing": "Unverified: historical SVM/RIPPER records lack exact partitions",
+  "dataset_count": 17,
+  "excluded_count": 3,
+  "historical_comparisons": [
+    {
+      "csv_bytes_match": true,
+      "dataset": "anneal",
+      "filtered_fingerprint_matches": false,
+      "partitions_matched": 15,
+      "reference": "results/new_characterization_experiments/tables/cv_partitions.csv",
+      "seed": 42
+    },
+    {
+      "csv_bytes_match": true,
+      "dataset": "balance_scale",
+      "filtered_fingerprint_matches": true,
+      "partitions_matched": 15,
+      "reference": "results/new_characterization_experiments/tables/cv_partitions.csv",
+      "seed": 42
+    },
+    {
+      "csv_bytes_match": true,
+      "dataset": "banknote",
+      "filtered_fingerprint_matches": true,
+      "partitions_matched": 15,
+      "reference": "results/new_characterization_experiments/tables/cv_partitions.csv",
+      "seed": 42
+    },
+    {
+      "csv_bytes_match": true,
+      "dataset": "breast_cancer",
+      "filtered_fingerprint_matches": true,
+      "partitions_matched": 15,
+      "reference": "results/new_characterization_experiments/tables/cv_partitions.csv",
+      "seed": 42
+    },
+    {
+      "csv_bytes_match": true,
+      "dataset": "car",
+      "filtered_fingerprint_matches": false,
+      "partitions_matched": 15,
+      "reference": "results/new_characterization_experiments/tables/cv_partitions.csv",
+      "seed": 42
+    },
+    {
+      "csv_bytes_match": true,
+      "dataset": "credit_approval",
+      "filtered_fingerprint_matches": false,
+      "partitions_matched": 15,
+      "reference": "results/new_characterization_experiments/tables/cv_partitions.csv",
+      "seed": 42
+    },
+    {
+      "csv_bytes_match": true,
+      "dataset": "cylinder_bands",
+      "filtered_fingerprint_matches": false,
+      "partitions_matched": 15,
+      "reference": "results/new_characterization_experiments/tables/cv_partitions.csv",
+      "seed": 42
+    },
+    {
+      "csv_bytes_match": true,
+      "dataset": "glass",
+      "filtered_fingerprint_matches": true,
+      "partitions_matched": 15,
+      "reference": "results/new_characterization_experiments/tables/cv_partitions.csv",
+      "seed": 42
+    },
+    {
+      "csv_bytes_match": true,
+      "dataset": "haberman",
+      "filtered_fingerprint_matches": true,
+      "partitions_matched": 15,
+      "reference": "results/new_characterization_experiments/tables/cv_partitions.csv",
+      "seed": 42
+    },
+    {
+      "csv_bytes_match": true,
+      "dataset": "heart_disease",
+      "filtered_fingerprint_matches": true,
+      "partitions_matched": 15,
+      "reference": "results/new_characterization_experiments/tables/cv_partitions.csv",
+      "seed": 42
+    },
+    {
+      "csv_bytes_match": true,
+      "dataset": "ionosphere",
+      "filtered_fingerprint_matches": true,
+      "partitions_matched": 15,
+      "reference": "results/new_characterization_experiments/tables/cv_partitions.csv",
+      "seed": 42
+    },
+    {
+      "csv_bytes_match": true,
+      "dataset": "iris",
+      "filtered_fingerprint_matches": true,
+      "partitions_matched": 15,
+      "reference": "results/new_characterization_experiments/tables/cv_partitions.csv",
+      "seed": 42
+    },
+    {
+      "csv_bytes_match": true,
+      "dataset": "parkinsons",
+      "filtered_fingerprint_matches": true,
+      "partitions_matched": 15,
+      "reference": "results/new_characterization_experiments/tables/cv_partitions.csv",
+      "seed": 42
+    },
+    {
+      "csv_bytes_match": true,
+      "dataset": "semeion",
+      "filtered_fingerprint_matches": true,
+      "partitions_matched": 15,
+      "reference": "results/new_characterization_experiments/tables/cv_partitions.csv",
+      "seed": 42
+    },
+    {
+      "csv_bytes_match": true,
+      "dataset": "sonar",
+      "filtered_fingerprint_matches": true,
+      "partitions_matched": 15,
+      "reference": "results/new_characterization_experiments/tables/cv_partitions.csv",
+      "seed": 42
+    },
+    {
+      "csv_bytes_match": true,
+      "dataset": "tic_tac_toe",
+      "filtered_fingerprint_matches": false,
+      "partitions_matched": 15,
+      "reference": "results/new_characterization_experiments/tables/cv_partitions.csv",
+      "seed": 42
+    },
+    {
+      "csv_bytes_match": true,
+      "dataset": "wine_red",
+      "filtered_fingerprint_matches": true,
+      "partitions_matched": 15,
+      "reference": "results/new_characterization_experiments/tables/cv_partitions.csv",
+      "seed": 42
+    }
+  ],
+  "models_fitted": 0,
+  "notebook_code_cells_parsed": 58,
+  "partitions": 1275,
+  "rankings_computed": 0
+}

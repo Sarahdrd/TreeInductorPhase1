@@ -1,0 +1,147 @@
+def build_preprocessor(X, for_linear=False):
+    numeric_cols = X.select_dtypes(include=[np.number]).columns.tolist()
+    categorical_cols = [c for c in X.columns if c not in numeric_cols]
+
+    numeric_steps = [("imputer", SimpleImputer(strategy="median"))]
+    if for_linear:
+        numeric_steps.append(("scaler", StandardScaler()))
+
+    # Use sparse_output when available; fall back for older scikit-learn.
+    try:
+        onehot = OneHotEncoder(handle_unknown="ignore", sparse_output=False)
+    except TypeError:
+        onehot = OneHotEncoder(handle_unknown="ignore", sparse=False)
+
+    transformers = []
+    if numeric_cols:
+        transformers.append(("num", Pipeline(numeric_steps), numeric_cols))
+    if categorical_cols:
+        transformers.append((
+            "cat",
+            Pipeline([
+                ("imputer", SimpleImputer(strategy="most_frequent")),
+                ("onehot", onehot),
+            ]),
+            categorical_cols,
+        ))
+
+    return ColumnTransformer(transformers, remainder="drop")
+
+
+# PAPER-DEFINED common protocol. Runtime = elapsed seconds for all 15 CV fits
+# and scores for a strategy (including pipeline and scheduling overhead).
+CV_N_SPLITS, CV_N_REPEATS, CV_RANDOM_STATE = 5, 3, 42
+N_JOBS = 1  # serial execution makes warning capture and timing auditable
+NON_DUMMY_BASELINE_MODELS = ['decision_tree_default', 'decision_tree_balanced',
+                            'logistic_regression', 'logistic_regression_balanced']
+TREE_BASELINE_MODELS = NON_DUMMY_BASELINE_MODELS[:2]
+DUMMY_REFERENCE_MODELS = ['dummy_most_frequent', 'dummy_stratified']
+TREE_CONFIG = dict(criterion='gini', splitter='best', max_depth=None,
+                   min_samples_split=2, min_samples_leaf=1, max_features=None,
+                   min_weight_fraction_leaf=0.0, max_leaf_nodes=None,
+                   min_impurity_decrease=0.0, class_weight=None, ccp_alpha=0.0,
+                   random_state=42)
+LR_CONFIG = dict(penalty='l2', C=1.0, solver='lbfgs', max_iter=5000,
+                 tol=1e-4, class_weight=None, random_state=42, fit_intercept=True)
+MODEL_CONFIGS = {
+    'decision_tree_default': TREE_CONFIG,
+    'decision_tree_balanced': {**TREE_CONFIG, 'class_weight': 'balanced'},
+    'logistic_regression': LR_CONFIG,
+    'logistic_regression_balanced': {**LR_CONFIG, 'class_weight': 'balanced'},
+    'dummy_most_frequent': dict(strategy='most_frequent', random_state=42),
+    'dummy_stratified': dict(strategy='stratified', random_state=42),
+}
+def make_baseline(name, X):
+    config = MODEL_CONFIGS[name]
+    if name in DUMMY_REFERENCE_MODELS:
+        return DummyClassifier(**config)
+    linear = name.startswith('logistic')
+    estimator = LogisticRegression(**config) if linear else DecisionTreeClassifier(**config)
+    return Pipeline([('preprocess', build_preprocessor(X, for_linear=linear)),
+                     ('model', estimator)])
+
+def evaluate_baselines(data, cv_seed=42, include_dummy=True):
+    from sklearn.model_selection import RepeatedStratifiedKFold
+    rows, audits = [], []
+    models = NON_DUMMY_BASELINE_MODELS + (DUMMY_REFERENCE_MODELS if include_dummy else [])
+    for name, obj in data.items():
+        X, y = obj['X'], obj['y']
+        minimum = int(np.bincount(y).min())
+        eligible = minimum >= CV_N_SPLITS
+        issue = '' if eligible else f'min_class_count={minimum} < 5'
+        audits.append(dict(dataset=name, min_class_count=minimum, comparable_cv=eligible,
+                           cv_issue=issue, cv_n_splits=5, cv_n_repeats=3, cv_seed=cv_seed))
+        splits = list(RepeatedStratifiedKFold(n_splits=5, n_repeats=3,
+                      random_state=cv_seed).split(X, y)) if eligible else []
+        for model_name in models:
+            row = dict(dataset=name, model=model_name, cv_seed=cv_seed, cv_folds=5,
+                cv_repeats=3, n_scores=0, scores=[], error=issue, warnings='',
+                f1_macro_mean=np.nan, f1_macro_std=np.nan, f1_macro_min=np.nan,
+                f1_macro_max=np.nan, runtime_seconds=np.nan, mean_tree_nodes=np.nan,
+                mean_tree_depth=np.nan, mean_tree_leaves=np.nan)
+            caught = []
+            if eligible:
+                try:
+                    start = time.perf_counter()
+                    with warnings.catch_warnings(record=True) as caught:
+                        warnings.simplefilter('always')
+                        result = cross_validate(make_baseline(model_name, X), X, y,
+                            cv=splits, scoring=make_scorer(f1_score, average='macro', zero_division=0),
+                            n_jobs=N_JOBS, error_score='raise',
+                            return_estimator=model_name in TREE_BASELINE_MODELS)
+                    scores = result['test_score']
+                    assert len(scores) == 15 and np.isfinite(scores).all(), 'Invalid CV scores'
+                    row.update(n_scores=len(scores), scores=scores.tolist(),
+                        f1_macro_mean=scores.mean(), f1_macro_std=scores.std(ddof=1),
+                        f1_macro_min=scores.min(), f1_macro_max=scores.max(),
+                        runtime_seconds=time.perf_counter()-start)
+                    if model_name in TREE_BASELINE_MODELS:
+                        trees = [e.named_steps['model'].tree_ for e in result['estimator']]
+                        row.update(mean_tree_nodes=np.mean([t.node_count for t in trees]),
+                            mean_tree_depth=np.mean([t.max_depth for t in trees]),
+                            mean_tree_leaves=np.mean([t.n_leaves for t in trees]))
+                except Exception as exc:
+                    row['error'] = repr(exc)
+                    print(f'[FIT ERROR] {name}/{model_name}: {exc}')
+                row['warnings'] = '\n'.join(sorted({f'{w.category.__name__}: {w.message}' for w in caught}))
+                if row['warnings']:
+                    print(f'[WARNINGS] {name}/{model_name}: {row["warnings"][:300]}')
+            rows.append(row)
+        print(f'CV seed {cv_seed}: {name} completed; comparable={eligible}')
+    return pd.DataFrame(rows), pd.DataFrame(audits)
+
+def successful_rows(frame):
+    return (frame['error'].fillna('').eq('') & frame['n_scores'].eq(15)
+            & frame['scores'].map(lambda s: len(s) == 15 and np.isfinite(s).all())
+            & frame[['f1_macro_mean', 'f1_macro_std']].notna().all(axis=1))
+
+def aggregate_baselines(frame, audit):
+    good = frame.loc[successful_rows(frame) & frame.model.isin(NON_DUMMY_BASELINE_MODELS)]
+    agg = good.groupby('dataset').agg(n_successful_non_dummy_models=('model','nunique'),
+        baseline_macro_f1_mean=('f1_macro_mean','mean'),
+        baseline_macro_f1_best=('f1_macro_mean','max'),
+        baseline_macro_f1_worst=('f1_macro_mean','min'),
+        mean_model_cv_f1_std=('f1_macro_std','mean')).reset_index()
+    agg = audit.merge(agg, on='dataset', how='left', validate='one_to_one')
+    complete = frame[frame.model.isin(NON_DUMMY_BASELINE_MODELS)].groupby('dataset').apply(
+        lambda g: len(g) == 4 and set(g.model) == set(NON_DUMMY_BASELINE_MODELS)
+        and successful_rows(g).all())
+    agg['complete_non_dummy_protocol'] = agg.dataset.map(complete).fillna(False).astype(bool)
+    agg['ranking_eligible'] = (agg.comparable_cv & agg.min_class_count.ge(5)
+        & agg.complete_non_dummy_protocol
+        & agg[['baseline_macro_f1_mean','mean_model_cv_f1_std']].notna().all(axis=1))
+    agg['ranking_exclusion_reason'] = agg.apply(lambda r: '' if r.ranking_eligible else
+        (r.cv_issue or 'Incomplete four-model protocol: inspect baseline_results.csv errors and score counts'), axis=1)
+    # Partial models remain in baseline_df for inspection, never canonical aggregates.
+    agg.loc[~agg.ranking_eligible, ['baseline_macro_f1_mean','baseline_macro_f1_best',
+        'baseline_macro_f1_worst','mean_model_cv_f1_std']] = np.nan
+    agg['baseline_macro_f1_spread'] = agg.baseline_macro_f1_best - agg.baseline_macro_f1_worst
+    agg['cv_variability'] = agg.mean_model_cv_f1_std
+    dummy = frame.loc[successful_rows(frame) & frame.model.isin(DUMMY_REFERENCE_MODELS)]
+    agg['best_dummy_macro_f1'] = agg.dataset.map(dummy.groupby('dataset').f1_macro_mean.max())
+    agg['baseline_gain_over_dummy'] = agg.baseline_macro_f1_mean - agg.best_dummy_macro_f1
+    return agg
+
+baseline_df, cv_audit_df = evaluate_baselines(loaded)
+baseline_characteristics_df = aggregate_baselines(baseline_df, cv_audit_df)
+display(baseline_characteristics_df)

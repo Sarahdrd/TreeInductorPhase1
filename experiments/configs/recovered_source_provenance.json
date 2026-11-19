@@ -1,0 +1,28 @@
+{
+  "source_path": "C:\\Users\\sarah\\Downloads\\Methodology_Only_Tree.ipynb",
+  "user_reference_name": "Methodology_Only_Tree(3).ipynb",
+  "actual_attachment_name": "Methodology_Only_Tree.ipynb",
+  "notebook_sha256": "e46ea59f278bdb50ce06d85ebb6680b80ad5635ff7d87a2d7a7af997cc7b8948",
+  "section": "Cross-Model Validation",
+  "cells_zero_based": [
+    9,
+    14,
+    16
+  ],
+  "extraction": "AST-selected definitions and original import guard; no top-level compatibility/evaluation calls executed",
+  "preserved_symbols": [
+    "RipperPreprocessor",
+    "SklearnRIPPER",
+    "make_svm_model",
+    "make_cross_model",
+    "check_ripper_compatibility",
+    "check_cross_predictions",
+    "SVM_CONFIG",
+    "RIPPER_CONFIG"
+  ],
+  "snapshots": {
+    "cross_model_cell_14.py.txt": "61ac0d0027928e1cf77ecce473bae467235d176856c508a826b70299620a8648",
+    "cross_model_cell_16.py.txt": "e2aa3ac8c4264724e996cbc2acc0eaaf91f8c8132825e0dbe47dea8ab9a365ef",
+    "preprocessing_cell_9.py.txt": "ee9abb30a8adf5725fda4bd8e821e44e4216fb97d7d38e8ce5c7cd6acdbd7bc0"
+  }
+}

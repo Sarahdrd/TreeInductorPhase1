@@ -1,0 +1,87 @@
+{
+  "dataset": "breast_cancer",
+  "dataset_fingerprint": "7ceaafe4cb9281187de513d146f61a39f21fd9788d2877eb5ab069a3d53b8a64",
+  "environment_id": "ace526dac3dfa856db171d41ed22d01130ce438535dc90d736e157e3e7977294",
+  "file_sha256": "c82846b9525d3a61936a095bbfa0ba02b9b6657973d80b3ef5f645f1166c2017",
+  "index_base": 0,
+  "partitions": [
+    {
+      "fold": 1,
+      "repeat": 1,
+      "split_id": "157fba39500edad1695234c2901e40b543df542e18ede95fb85047c999df4e5f"
+    },
+    {
+      "fold": 2,
+      "repeat": 1,
+      "split_id": "3555809518c5cfef15360310926a54e2efd7703bc0e6118ec376ea0df2239a1f"
+    },
+    {
+      "fold": 3,
+      "repeat": 1,
+      "split_id": "30f27ff5ff7ec92db585eca875f43797e9c5f45d774a494614990af330e7c5e7"
+    },
+    {
+      "fold": 4,
+      "repeat": 1,
+      "split_id": "bf4f1d94cc6e293a1b2ea7bb663061570dc5092d99fe3b90ac42c2b7f7efc415"
+    },
+    {
+      "fold": 5,
+      "repeat": 1,
+      "split_id": "d8d71eaf80893803a20ac9667ca82dd200473888294c10bafad8d86a03a45163"
+    },
+    {
+      "fold": 1,
+      "repeat": 2,
+      "split_id": "1ace494c64dcb957e25b614f691decab4d0fd9488420e67088daaef19a74e85d"
+    },
+    {
+      "fold": 2,
+      "repeat": 2,
+      "split_id": "4e1283acd234e6127a4edc41bb5e3b07cefeeb13805eda524fd498ef9e0a2cca"
+    },
+    {
+      "fold": 3,
+      "repeat": 2,
+      "split_id": "8d0125b2d99670b843e92120fcd295009eeaa6d7a3896a6b50650edcd1ecdd78"
+    },
+    {
+      "fold": 4,
+      "repeat": 2,
+      "split_id": "74222999683310414c23fe9e340214439b6cc127f31681697715dd6fe7e6425e"
+    },
+    {
+      "fold": 5,
+      "repeat": 2,
+      "split_id": "56fb4a1138a96fc23f7e32336f50d5004ef19726fa2c0e7f29999cc357e17e57"
+    },
+    {
+      "fold": 1,
+      "repeat": 3,
+      "split_id": "f4322acbc219250e251ff597cf5d7557405888397cbfea61226e107b300d812d"
+    },
+    {
+      "fold": 2,
+      "repeat": 3,
+      "split_id": "ab698da97600a7e800171f4bcad87949475aaa7fd1bfc6799b0a62f0be4c6065"
+    },
+    {
+      "fold": 3,
+      "repeat": 3,
+      "split_id": "086674a205d90fe3ffcdc8aba571cf2a467991ffe2444fd20497324dd4631274"
+    },
+    {
+      "fold": 4,
+      "repeat": 3,
+      "split_id": "de0cf6a258dae3599fd6d1b5fe91b0922e5d4193a2c53020aeef44246849ab01"
+    },
+    {
+      "fold": 5,
+      "repeat": 3,
+      "split_id": "231e873633cfcf81667c6803fd372f4aafe4e4e04ddf4e23fd617cde9c1f8ae1"
+    }
+  ],
+  "protocol_version": "revision2-five-seed-v1",
+  "row_order": "CSV order after missing-target filtering and index reset",
+  "seed": 21
+}

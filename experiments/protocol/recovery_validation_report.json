@@ -1,0 +1,119 @@
+{
+  "status": "passed",
+  "tests_run": 12,
+  "failures": 0,
+  "errors": 0,
+  "test_output": "test_binary_multiclass_feature_types (experiments.protocol.test_recovered_models.RecoveryTests.test_binary_multiclass_feature_types) ... ok\ntest_fold_local_preprocessing (experiments.protocol.test_recovered_models.RecoveryTests.test_fold_local_preprocessing) ... ok\ntest_original_compatibility_check (experiments.protocol.test_recovered_models.RecoveryTests.test_original_compatibility_check) ... ok\ntest_parameters_clone_and_tags (experiments.protocol.test_recovered_models.RecoveryTests.test_parameters_clone_and_tags) ... ok\ntest_source_fidelity (experiments.protocol.test_recovered_models.RecoveryTests.test_source_fidelity) ... ok\ntest_svm_pipeline_binary_multiclass_missing (experiments.protocol.test_recovered_models.RecoveryTests.test_svm_pipeline_binary_multiclass_missing) ... ok\ntest_entire_saved_benchmark (experiments.protocol.test_infrastructure.InfrastructureTests.test_entire_saved_benchmark) ... ok\ntest_extracted_source_matches_notebooks (experiments.protocol.test_infrastructure.InfrastructureTests.test_extracted_source_matches_notebooks) ... ok\ntest_invalid_splits_and_order (experiments.protocol.test_infrastructure.InfrastructureTests.test_invalid_splits_and_order) ... ok\ntest_model_configs_without_fit (experiments.protocol.test_infrastructure.InfrastructureTests.test_model_configs_without_fit) ... ok\ntest_record_schema_and_duplicate_rejection (experiments.protocol.test_infrastructure.InfrastructureTests.test_record_schema_and_duplicate_rejection) ... ok\ntest_roundtrip_and_refuse_overwrite (experiments.protocol.test_infrastructure.InfrastructureTests.test_roundtrip_and_refuse_overwrite) ... ok\n\n----------------------------------------------------------------------\nRan 12 tests in 2.005s\n\nOK\n",
+  "warnings": [
+    "For backward compatibility, 'str' dtypes are included by select_dtypes when 'object' dtype is specified. This behavior is deprecated and will be removed in a future version. Explicitly pass 'str' to `include` to select them, or to `exclude` to remove them and silence this warning.\nSee https://pandas.pydata.org/docs/user_guide/migration-3-strings.html#string-migration-select-dtypes for details on how to write code that works with pandas 2 and 3."
+  ],
+  "original_compatibility": {
+    "status": "complete",
+    "error": "",
+    "warnings": [
+      "For backward compatibility, 'str' dtypes are included by select_dtypes when 'object' dtype is specified. This behavior is deprecated and will be removed in a future version. Explicitly pass 'str' to `include` to select them, or to `exclude` to remove them and silence this warning.\nSee https://pandas.pydata.org/docs/user_guide/migration-3-strings.html#string-migration-select-dtypes for details on how to write code that works with pandas 2 and 3.",
+      "For backward compatibility, 'str' dtypes are included by select_dtypes when 'object' dtype is specified. This behavior is deprecated and will be removed in a future version. Explicitly pass 'str' to `include` to select them, or to `exclude` to remove them and silence this warning.\nSee https://pandas.pydata.org/docs/user_guide/migration-3-strings.html#string-migration-select-dtypes for details on how to write code that works with pandas 2 and 3.",
+      "For backward compatibility, 'str' dtypes are included by select_dtypes when 'object' dtype is specified. This behavior is deprecated and will be removed in a future version. Explicitly pass 'str' to `include` to select them, or to `exclude` to remove them and silence this warning.\nSee https://pandas.pydata.org/docs/user_guide/migration-3-strings.html#string-migration-select-dtypes for details on how to write code that works with pandas 2 and 3.",
+      "For backward compatibility, 'str' dtypes are included by select_dtypes when 'object' dtype is specified. This behavior is deprecated and will be removed in a future version. Explicitly pass 'str' to `include` to select them, or to `exclude` to remove them and silence this warning.\nSee https://pandas.pydata.org/docs/user_guide/migration-3-strings.html#string-migration-select-dtypes for details on how to write code that works with pandas 2 and 3.",
+      "For backward compatibility, 'str' dtypes are included by select_dtypes when 'object' dtype is specified. This behavior is deprecated and will be removed in a future version. Explicitly pass 'str' to `include` to select them, or to `exclude` to remove them and silence this warning.\nSee https://pandas.pydata.org/docs/user_guide/migration-3-strings.html#string-migration-select-dtypes for details on how to write code that works with pandas 2 and 3.",
+      "For backward compatibility, 'str' dtypes are included by select_dtypes when 'object' dtype is specified. This behavior is deprecated and will be removed in a future version. Explicitly pass 'str' to `include` to select them, or to `exclude` to remove them and silence this warning.\nSee https://pandas.pydata.org/docs/user_guide/migration-3-strings.html#string-migration-select-dtypes for details on how to write code that works with pandas 2 and 3.",
+      "For backward compatibility, 'str' dtypes are included by select_dtypes when 'object' dtype is specified. This behavior is deprecated and will be removed in a future version. Explicitly pass 'str' to `include` to select them, or to `exclude` to remove them and silence this warning.\nSee https://pandas.pydata.org/docs/user_guide/migration-3-strings.html#string-migration-select-dtypes for details on how to write code that works with pandas 2 and 3.",
+      "For backward compatibility, 'str' dtypes are included by select_dtypes when 'object' dtype is specified. This behavior is deprecated and will be removed in a future version. Explicitly pass 'str' to `include` to select them, or to `exclude` to remove them and silence this warning.\nSee https://pandas.pydata.org/docs/user_guide/migration-3-strings.html#string-migration-select-dtypes for details on how to write code that works with pandas 2 and 3.",
+      "For backward compatibility, 'str' dtypes are included by select_dtypes when 'object' dtype is specified. This behavior is deprecated and will be removed in a future version. Explicitly pass 'str' to `include` to select them, or to `exclude` to remove them and silence this warning.\nSee https://pandas.pydata.org/docs/user_guide/migration-3-strings.html#string-migration-select-dtypes for details on how to write code that works with pandas 2 and 3.",
+      "For backward compatibility, 'str' dtypes are included by select_dtypes when 'object' dtype is specified. This behavior is deprecated and will be removed in a future version. Explicitly pass 'str' to `include` to select them, or to `exclude` to remove them and silence this warning.\nSee https://pandas.pydata.org/docs/user_guide/migration-3-strings.html#string-migration-select-dtypes for details on how to write code that works with pandas 2 and 3.",
+      "For backward compatibility, 'str' dtypes are included by select_dtypes when 'object' dtype is specified. This behavior is deprecated and will be removed in a future version. Explicitly pass 'str' to `include` to select them, or to `exclude` to remove them and silence this warning.\nSee https://pandas.pydata.org/docs/user_guide/migration-3-strings.html#string-migration-select-dtypes for details on how to write code that works with pandas 2 and 3.",
+      "For backward compatibility, 'str' dtypes are included by select_dtypes when 'object' dtype is specified. This behavior is deprecated and will be removed in a future version. Explicitly pass 'str' to `include` to select them, or to `exclude` to remove them and silence this warning.\nSee https://pandas.pydata.org/docs/user_guide/migration-3-strings.html#string-migration-select-dtypes for details on how to write code that works with pandas 2 and 3."
+    ]
+  },
+  "historical_manifest_comparison": {
+    "svm_rbf": {
+      "parameter_differences": {
+        "probability": {
+          "historical": false,
+          "current": "deprecated"
+        }
+      },
+      "current_parameters": {
+        "C": 1.0,
+        "break_ties": false,
+        "cache_size": 200,
+        "class_weight": null,
+        "coef0": 0.0,
+        "decision_function_shape": "ovr",
+        "degree": 3,
+        "gamma": "scale",
+        "kernel": "rbf",
+        "max_iter": -1,
+        "probability": "deprecated",
+        "random_state": null,
+        "shrinking": true,
+        "tol": 0.001,
+        "verbose": false
+      },
+      "historical_implementation_hash": "a8265edbc23b5e326418298ed733b22c447eb9bc483f41df42154f8d1b1536e9",
+      "current_implementation_hash": "327ef2b13a6ea1017076c994fa23c53d091d297e8d915e59713c072c23e52860",
+      "implementation_hash_matches": false
+    },
+    "ripper": {
+      "parameter_differences": {},
+      "current_parameters": {
+        "alpha": 1.0,
+        "verbosity": 0,
+        "prune_size": 0.33,
+        "n_discretize_bins": 10,
+        "min_ruleset_samples": null,
+        "max_rule_conds": null,
+        "dl_allowance": 64,
+        "max_rules": null,
+        "random_state": 42,
+        "k": 2,
+        "max_total_conds": null
+      },
+      "historical_implementation_hash": "818c22ab75049c9b5a764ad1e8318b2c5974313ccf3c675713450d3bb43bb22b",
+      "current_implementation_hash": "171afb09bb71432d96007b320975bf2dfc90fc8cc050fc0135e1bb1123cbe851",
+      "implementation_hash_matches": false
+    }
+  },
+  "environment": {
+    "python": "3.12.14",
+    "packages": {
+      "numpy": "2.5.3",
+      "pandas": "3.0.5",
+      "scipy": "1.18.1",
+      "scikit-learn": "1.9.0",
+      "matplotlib": "3.11.1",
+      "joblib": "1.6.0",
+      "threadpoolctl": "3.6.0",
+      "wittgenstein": "0.3.5",
+      "nbformat": "5.11.1",
+      "ipython": "9.17.1"
+    },
+    "platform": "Windows-11-10.0.26300-SP0",
+    "executable": "C:\\Users\\sarah\\OneDrive\\Documentos\\DCC_Thesis_codes\\AutoML_DecisionTrees\\.venv\\Scripts\\python.exe",
+    "environment_id": "fb2fa26df42df065c94dfc5dc9c149a4c7b0cd241c5925e6da1c506a9ce07d5a"
+  },
+  "package_changes": {
+    "wittgenstein": {
+      "before": null,
+      "after": "0.3.5"
+    }
+  },
+  "install_command": "uv --no-cache pip install --python .venv/Scripts/python.exe --no-deps wittgenstein==0.3.5",
+  "installed_requires_dist": [
+    "pandas",
+    "numpy"
+  ],
+  "scope": "10 small fixture pipeline fits: 2 original smoke, 6 RIPPER feature/class cases, 2 SVM; no full CV, benchmark evaluation or rankings",
+  "svm_probability_difference": "sklearn 1.9 sentinel deprecated resolves to effective False; factory unchanged",
+  "historical_pairing": "Still unverified for SVM/RIPPER: recovered source does not supply saved exact historical indices",
+  "preservation": {
+    "existing_files_checked": 5065,
+    "changed_files": [],
+    "recovered_notebook_unchanged": true
+  },
+  "dependency_check": {
+    "command": "uv --no-cache pip check --python .venv/Scripts/python.exe",
+    "packages_checked": 55,
+    "status": "All installed packages are compatible"
+  }
+}

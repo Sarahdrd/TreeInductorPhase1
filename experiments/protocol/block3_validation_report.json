@@ -1,0 +1,20 @@
+{
+  "tests_passed": 6,
+  "tests_failed": 0,
+  "official_successes_validated": 20400,
+  "canonical_scores": 5100,
+  "official_record_files_unchanged": 20400,
+  "historical_files_unchanged": 5064,
+  "authorized_notebook": "experiments/New_Characterization_Experiments.ipynb",
+  "original_notebook_cells_unchanged": 23,
+  "appended_cells": 9,
+  "new_display_cells_executed": 4,
+  "split_files_unchanged": 170,
+  "all_notebook_code_cells_parse": 62,
+  "notebook_schema_valid": true,
+  "environment_unchanged": true,
+  "models_fitted": 0,
+  "splits_generated": 0,
+  "historical_rankings_overwritten": 0,
+  "publication_plots": 4
+}

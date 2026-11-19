@@ -1,0 +1,199 @@
+{
+  "checked": [
+    {
+      "compatible": true,
+      "installed": "2.5.3",
+      "package": "pandas",
+      "requirement": "numpy>=1.26.0; python_version < \"3.14\""
+    },
+    {
+      "compatible": true,
+      "installed": "2.9.0.post0",
+      "package": "pandas",
+      "requirement": "python-dateutil>=2.8.2"
+    },
+    {
+      "compatible": true,
+      "installed": "2026.3",
+      "package": "pandas",
+      "requirement": "tzdata; sys_platform == \"win32\""
+    },
+    {
+      "compatible": true,
+      "installed": "2.5.3",
+      "package": "scipy",
+      "requirement": "numpy<2.8,>=2.0.0"
+    },
+    {
+      "compatible": true,
+      "installed": "2.5.3",
+      "package": "scikit-learn",
+      "requirement": "numpy>=1.24.1"
+    },
+    {
+      "compatible": true,
+      "installed": "1.18.1",
+      "package": "scikit-learn",
+      "requirement": "scipy>=1.10.0"
+    },
+    {
+      "compatible": true,
+      "installed": "1.6.0",
+      "package": "scikit-learn",
+      "requirement": "joblib>=1.4.0"
+    },
+    {
+      "compatible": true,
+      "installed": "2.25.0",
+      "package": "scikit-learn",
+      "requirement": "narwhals>=2.0.1"
+    },
+    {
+      "compatible": true,
+      "installed": "3.6.0",
+      "package": "scikit-learn",
+      "requirement": "threadpoolctl>=3.5.0"
+    },
+    {
+      "compatible": true,
+      "installed": "1.3.3",
+      "package": "matplotlib",
+      "requirement": "contourpy>=1.0.1"
+    },
+    {
+      "compatible": true,
+      "installed": "0.12.1",
+      "package": "matplotlib",
+      "requirement": "cycler>=0.10"
+    },
+    {
+      "compatible": true,
+      "installed": "4.64.0",
+      "package": "matplotlib",
+      "requirement": "fonttools>=4.28.2"
+    },
+    {
+      "compatible": true,
+      "installed": "1.5.1",
+      "package": "matplotlib",
+      "requirement": "kiwisolver>=1.3.1"
+    },
+    {
+      "compatible": true,
+      "installed": "2.5.3",
+      "package": "matplotlib",
+      "requirement": "numpy>=1.25"
+    },
+    {
+      "compatible": true,
+      "installed": "26.3",
+      "package": "matplotlib",
+      "requirement": "packaging>=20.0"
+    },
+    {
+      "compatible": true,
+      "installed": "12.3.0",
+      "package": "matplotlib",
+      "requirement": "pillow>=9"
+    },
+    {
+      "compatible": true,
+      "installed": "3.3.2",
+      "package": "matplotlib",
+      "requirement": "pyparsing>=3"
+    },
+    {
+      "compatible": true,
+      "installed": "2.9.0.post0",
+      "package": "matplotlib",
+      "requirement": "python-dateutil>=2.7"
+    },
+    {
+      "compatible": true,
+      "installed": "3.1.2",
+      "package": "joblib",
+      "requirement": "cloudpickle>=3.0"
+    },
+    {
+      "compatible": true,
+      "installed": "2.22.2",
+      "package": "nbformat",
+      "requirement": "fastjsonschema>=2.15"
+    },
+    {
+      "compatible": true,
+      "installed": "4.26.0",
+      "package": "nbformat",
+      "requirement": "jsonschema>=2.6"
+    },
+    {
+      "compatible": true,
+      "installed": "5.9.1",
+      "package": "nbformat",
+      "requirement": "jupyter-core!=5.0.*,>=4.12"
+    },
+    {
+      "compatible": true,
+      "installed": "5.16.1",
+      "package": "nbformat",
+      "requirement": "traitlets>=5.1"
+    },
+    {
+      "compatible": true,
+      "installed": "0.4.6",
+      "package": "ipython",
+      "requirement": "colorama>=0.4.4; sys_platform == \"win32\""
+    },
+    {
+      "compatible": true,
+      "installed": "1.1.1",
+      "package": "ipython",
+      "requirement": "ipython-pygments-lexers>=1.0.0"
+    },
+    {
+      "compatible": true,
+      "installed": "0.20.0",
+      "package": "ipython",
+      "requirement": "jedi>=0.18.2"
+    },
+    {
+      "compatible": true,
+      "installed": "0.2.2",
+      "package": "ipython",
+      "requirement": "matplotlib-inline>=0.1.6"
+    },
+    {
+      "compatible": true,
+      "installed": "3.0.53",
+      "package": "ipython",
+      "requirement": "prompt_toolkit<3.1.0,>=3.0.41"
+    },
+    {
+      "compatible": true,
+      "installed": "7.2.2",
+      "package": "ipython",
+      "requirement": "psutil>=7; sys_platform != \"emscripten\" and sys_platform != \"cygwin\""
+    },
+    {
+      "compatible": true,
+      "installed": "2.21.0",
+      "package": "ipython",
+      "requirement": "pygments>=2.14.0"
+    },
+    {
+      "compatible": true,
+      "installed": "0.6.3",
+      "package": "ipython",
+      "requirement": "stack_data>=0.6.0"
+    },
+    {
+      "compatible": true,
+      "installed": "5.16.1",
+      "package": "ipython",
+      "requirement": "traitlets>=5.13.0"
+    }
+  ],
+  "issues": [],
+  "method": "installed package Requires-Dist metadata; no pip available in .venv",
+  "ripper": "missing; compatibility unresolved"
+}

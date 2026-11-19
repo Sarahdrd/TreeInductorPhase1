@@ -1,0 +1,32 @@
+{
+  "svm_rbf": {
+    "C": 1.0,
+    "break_ties": false,
+    "cache_size": 200,
+    "class_weight": null,
+    "coef0": 0.0,
+    "decision_function_shape": "ovr",
+    "degree": 3,
+    "gamma": "scale",
+    "kernel": "rbf",
+    "max_iter": -1,
+    "probability": "deprecated",
+    "random_state": null,
+    "shrinking": true,
+    "tol": 0.001,
+    "verbose": false
+  },
+  "ripper": {
+    "alpha": 1.0,
+    "verbosity": 0,
+    "prune_size": 0.33,
+    "n_discretize_bins": 10,
+    "min_ruleset_samples": null,
+    "max_rule_conds": null,
+    "dl_allowance": 64,
+    "max_rules": null,
+    "random_state": 42,
+    "k": 2,
+    "max_total_conds": null
+  }
+}

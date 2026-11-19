@@ -1,0 +1,84 @@
+{
+  "block3_output_checksums_sha256": "e0ee5dac4f8ee2eed5c07b991cb4bb4412cf144fb6d8bb2d44ae3840c516a19c",
+  "canonical_models": [
+    "decision_tree_default",
+    "decision_tree_balanced",
+    "logistic_regression",
+    "logistic_regression_balanced"
+  ],
+  "canonical_reference": "block3-five-seed-v1/five_seed_primary.csv",
+  "correction_level": "aggregate dataset means, equally weighted four canonical models; not mean fold ratios",
+  "formula": "E_cc=(1-F)/(1-F_dummy); D_cc=0.70*minmax(E_cc)+0.30*Block3_V_norm",
+  "frozen_config_note": "Archival planning fields remain unchanged; the user-approved Block 4 formula is recorded here.",
+  "models_fitted": 0,
+  "numerical_checks": {
+    "clipping": false,
+    "instability_threshold": 1.4901161193847656e-08,
+    "minimum_denominator": 0.40304968034572664,
+    "negative_improvements": 0,
+    "out_of_range_errors": 0
+  },
+  "original_score_replaced": false,
+  "pool": [
+    "banknote",
+    "tic_tac_toe",
+    "breast_cancer",
+    "iris",
+    "semeion",
+    "car",
+    "ionosphere",
+    "credit_approval",
+    "balance_scale",
+    "cylinder_bands",
+    "anneal",
+    "parkinsons",
+    "sonar",
+    "haberman",
+    "glass",
+    "wine_red",
+    "heart_disease"
+  ],
+  "reference_model": "dummy_stratified",
+  "seeds": [
+    42,
+    7,
+    21,
+    84,
+    123
+  ],
+  "source": "official/revision2-five-seed-v1/block2b-five-seed",
+  "source_sha256": {
+    "block3_analysis.py": "c264f10b7b563d6d02c39744dacc4870dafed42ed3de4056e7efb12924e6c05b",
+    "block4_analysis.py": "dbcca82134b79b6475ad72aace157784f2f0aa68b4a30689efcd92f5d4e8efee",
+    "block4_figures.py": "211c91fd0ebc10e93f79ceb70465547f2ac63c2aecaffea5d83cacf3bfadcb16",
+    "canonical_scoring.py": "181f38234ebefe0b004d280d91e6013c1ef8e48d58349090bf85ce2e79eec80b"
+  },
+  "splits_generated": 0,
+  "validation": {
+    "canonical_records": 5100,
+    "datasets": 17,
+    "dummy_records": 2550,
+    "environment_id": "fb2fa26df42df065c94dfc5dc9c149a4c7b0cd241c5925e6da1c506a9ce07d5a",
+    "exact_seed_and_partition_matching": true,
+    "failed_or_pilot_included": 0,
+    "models": 16,
+    "record_files": 20400,
+    "record_inventory_sha256": "18c4eddd4074b9220f7aa55d156653131e0a4b0ed3df06ab527152d8d418c05a",
+    "run_manifest_sha256": "88f8cb9415479380290438ddcfaeaaebad030032ea921e8f5cd0232fd53e5000",
+    "scores_per_dataset_model": 75,
+    "scores_per_dataset_model_seed": 15,
+    "selected_canonical_models": [
+      "decision_tree_default",
+      "decision_tree_balanced",
+      "logistic_regression",
+      "logistic_regression_balanced"
+    ],
+    "successful_records": 20400,
+    "unique_evaluation_ids": 20400
+  },
+  "variability": "unchanged Block 3 mean within-seed sample SD; ddof=1",
+  "weights": [
+    0.7,
+    0.3
+  ]
+}

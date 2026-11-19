@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "dataset": {
+      "enum": [
+        "banknote",
+        "tic_tac_toe",
+        "breast_cancer",
+        "iris",
+        "semeion",
+        "car",
+        "ionosphere",
+        "credit_approval",
+        "balance_scale",
+        "cylinder_bands",
+        "anneal",
+        "parkinsons",
+        "sonar",
+        "haberman",
+        "glass",
+        "wine_red",
+        "heart_disease"
+      ],
+      "type": "string"
+    },
+    "dataset_fingerprint": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "environment_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "experiment_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "fold": {
+      "maximum": 5,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "macro_f1": {
+      "maximum": 1,
+      "minimum": 0,
+      "type": "number"
+    },
+    "model": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "model_configuration": {
+      "minProperties": 1,
+      "type": "object"
+    },
+    "protocol_version": {
+      "const": "revision2-five-seed-v1"
+    },
+    "repeat": {
+      "maximum": 3,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "seed": {
+      "enum": [
+        42,
+        7,
+        21,
+        84,
+        123
+      ],
+      "type": "integer"
+    },
+    "split_id": {
+      "minLength": 1,
+      "type": "string"
+    }
+  },
+  "required": [
+    "experiment_id",
+    "protocol_version",
+    "dataset",
+    "dataset_fingerprint",
+    "model",
+    "model_configuration",
+    "seed",
+    "repeat",
+    "fold",
+    "split_id",
+    "macro_f1",
+    "environment_id"
+  ],
+  "title": "Revision 2 fold result",
+  "type": "object"
+}

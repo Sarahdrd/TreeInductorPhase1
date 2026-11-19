@@ -1,0 +1,235 @@
+def cross_atomic_json(path, value):
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    temporary.write_text(json.dumps(value, indent=2, default=str, allow_nan=False), encoding="utf-8")
+    temporary.replace(path)
+
+def cross_csv(frame, filename):
+    path = CROSS_DIR / filename
+    temporary = path.with_suffix(".csv.tmp")
+    frame.to_csv(temporary, index=False)
+    temporary.replace(path)
+
+if not (output_dir / "baseline_results.csv").exists():
+    baseline_export = baseline_df.copy()
+    baseline_export["scores"] = baseline_export.scores.map(json.dumps)
+    baseline_export.to_csv(output_dir / "baseline_results.csv", index=False)
+cross_profile = dataset_profile_df.copy(deep=True)
+cross_eligible = cross_profile.loc[cross_profile.ranking_eligible, "dataset"].tolist()
+assert all(np.bincount(loaded[d]["y"]).min() >= 5 for d in cross_eligible)
+cross_csv(cross_profile[["dataset", "ranking_eligible", "ranking_exclusion_reason"]], "eligibility.csv")
+CROSS_MANIFEST = dict(versions=CROSS_VERSIONS, svm=SVC(**SVM_CONFIG).get_params(),
+    ripper=RIPPER_CONFIG, ripper_compatibility=RIPPER_COMPATIBILITY,
+    cv=dict(folds=5, repeats=3, random_state=42, scoring="f1_macro", ddof=1),
+    preprocessing="SVM: original linear preprocessor; RIPPER: median/mode + nominal strings", cache_schema=1)
+# Ignore filenames and line numbers: notebook execution counters change between sessions.
+def cross_code_signature(function):
+    import types
+    def signature(code):
+        return [code.co_code.hex(), code.co_names, code.co_varnames,
+                [signature(c) if isinstance(c, types.CodeType) else repr(c) for c in code.co_consts]]
+    return signature(function.__code__)
+# Python 3.12 optimizes imported-module calls differently; retain the original import context.
+if not RIPPER_IMPORT_ERROR:
+    import wittgenstein
+
+# Frozen schema-1 factory: used ONLY to verify old SVM cache identities, never fitted.
+def _legacy_cross_factory_v1(model, X, y):
+    if model == "svm_rbf":
+        return Pipeline([("preprocess", build_preprocessor(X, for_linear=True)),
+                         ("model", SVC(**SVM_CONFIG))])
+    if model != "ripper":
+        raise ValueError(f"Unknown model: {model}")
+    if RIPPER_IMPORT_ERROR:
+        raise ImportError(RIPPER_IMPORT_ERROR)
+    estimator = wittgenstein.RIPPER(random_state=42)
+    if len(np.unique(y)) > 2:
+        estimator = OneVsRestClassifier(estimator, n_jobs=1)
+    return Pipeline([("preprocess", RipperPreprocessor()), ("model", estimator)])
+
+def cross_implementation(functions):
+    return hashlib.sha256(json.dumps([cross_code_signature(f) for f in functions]).encode()).hexdigest()
+
+# Preserve the old fingerprint under the CURRENT versions/data/configuration.
+# A different Python/sklearn/numpy version still invalidates old results intentionally.
+CROSS_LEGACY_MANIFEST = dict(CROSS_MANIFEST)
+CROSS_LEGACY_MANIFEST["implementation"] = cross_implementation([
+    build_preprocessor, RipperPreprocessor.fit, RipperPreprocessor.transform,
+    _legacy_cross_factory_v1, check_cross_predictions])
+CROSS_MODEL_CONFIGS = {
+    "svm_rbf": dict(versions={k: v for k, v in CROSS_VERSIONS.items() if k != "wittgenstein"},
+        estimator=SVC(**SVM_CONFIG).get_params(), cv=CROSS_MANIFEST["cv"], cache_schema=2,
+        implementation=cross_implementation([build_preprocessor, make_svm_model, check_cross_predictions])),
+    "ripper": dict(versions=CROSS_VERSIONS, estimator=RIPPER_CONFIG, cv=CROSS_MANIFEST["cv"],
+        cache_schema=2, adapter="ClassifierMixin/RIPPER/BaseEstimator-v1",
+        implementation=cross_implementation([RipperPreprocessor.fit, RipperPreprocessor.transform,
+            make_cross_model, check_cross_predictions] +
+            ([SklearnRIPPER.__sklearn_tags__] if not RIPPER_IMPORT_ERROR else []))),
+}
+CROSS_MANIFEST.update(cache_schema=2, model_configs=CROSS_MODEL_CONFIGS)
+cross_atomic_json(CROSS_DIR / "manifest.json", CROSS_MANIFEST)
+
+def cross_identity(dataset, model, legacy=False):
+    obj = loaded[dataset]
+    digest = hashlib.sha256(pd.util.hash_pandas_object(obj["X"], index=True).values.tobytes())
+    digest.update(np.asarray(obj["y"]).tobytes())
+    digest.update(str(list(zip(obj["X"].columns, obj["X"].dtypes.astype(str)))).encode())
+    config = ({k: v for k, v in CROSS_LEGACY_MANIFEST.items() if k != "ripper_compatibility"}
+              if legacy else CROSS_MODEL_CONFIGS[model])
+    digest.update(json.dumps([dataset, model, config], sort_keys=True, default=str).encode())
+    return digest.hexdigest()
+
+def valid_cross_fold(row, index):
+    try:
+        return (row["fold_index"] == index and row["status"] == "complete"
+                and np.isfinite(row["f1_macro"]) and 0 <= row["f1_macro"] <= 1
+                and np.isfinite(row["runtime_seconds"]) and row["runtime_seconds"] >= 0)
+    except (KeyError, TypeError):
+        return False
+
+def cross_summary(state):
+    good = [r for k, r in state["folds"].items() if valid_cross_fold(r, int(k))]
+    complete = len(good) == 15
+    scores = [r["f1_macro"] for r in good]
+    return dict(dataset=state["dataset"], model=state["model"],
+        evaluation_status="complete" if complete else state["status"], n_scores=len(good),
+        f1_macro_mean=float(np.mean(scores)) if complete else np.nan,
+        f1_macro_std=float(np.std(scores, ddof=1)) if complete else np.nan,
+        runtime_seconds=sum(a["runtime_seconds"] for a in state["attempts"]), error=state.get("error", ""),
+        warnings="\n".join(sorted({w for a in state["attempts"] for w in a["warnings"]})))
+
+cross_states = {}
+for dataset in cross_eligible:
+    for model in ["svm_rbf", "ripper"]:
+        identity = cross_identity(dataset, model)
+        path = CROSS_DIR / f"{dataset}__{model}__{identity}.json"
+        state = dict(dataset=dataset, model=model, identity=identity, folds={}, attempts=[], status="not_run", error="")
+        # Migrate only SVM schema-1 caches with a fully matching legacy identity.
+        # Old RIPPER caches stay untouched; the adapted estimator has a new identity.
+        cache_path, cache_identity = path, identity
+        if not path.exists() and model == "svm_rbf":
+            cache_identity = cross_identity(dataset, model, legacy=True)
+            cache_path = CROSS_DIR / f"{dataset}__{model}__{cache_identity}.json"
+        if cache_path.exists():
+            try:
+                saved = json.loads(cache_path.read_text(encoding="utf-8"))
+                if (saved["identity"] != cache_identity or saved["dataset"] != dataset or saved["model"] != model
+                    or not isinstance(saved["attempts"], list)):
+                    raise ValueError("Invalid cache identity/schema")
+                for key, row in saved["folds"].items():
+                    if str(int(key)) != key or not 0 <= int(key) < 15:
+                        raise ValueError("Unexpected fold index")
+                    if row["status"] == "complete" and not valid_cross_fold(row, int(key)):
+                        raise ValueError("Invalid cached fold")
+                state = saved
+                if cache_identity != identity:
+                    state.update(identity=identity, migrated_from_identity=cache_identity)
+                    cross_atomic_json(path, state)
+                    print(f"Migrated SVM cache without refitting: {dataset}")
+            except Exception as exc:
+                state.update(status="cache_error", error=traceback.format_exc())
+                print(f"Cache rejected: {dataset}/{model}: {exc}")
+        cross_states[dataset, model] = (path, state)
+
+def export_cross_progress():
+    summaries, folds, attempts = [], [], []
+    for (dataset, model), (_, state) in cross_states.items():
+        summaries.append(cross_summary(state))
+        folds.extend(dict(dataset=dataset, model=model, **r) for r in state["folds"].values())
+        attempts.extend(dict(dataset=dataset, model=model, **r) for r in state["attempts"])
+    for dataset in cross_profile.loc[~cross_profile.ranking_eligible, "dataset"]:
+        for model in ["svm_rbf", "ripper"]:
+            summaries.append(dict(dataset=dataset, model=model, evaluation_status="ineligible", n_scores=0,
+                error=cross_profile.set_index("dataset").loc[dataset, "ranking_exclusion_reason"]))
+    for _, row in baseline_df.loc[baseline_df.model.isin(NON_DUMMY_BASELINE_MODELS)].iterrows():
+        folds.extend(dict(dataset=row.dataset, model=row.model, fold_index=k, repeat_index=k//5,
+            split_index=k%5, f1_macro=float(s), status="complete", runtime_seconds=np.nan, warnings="", error="")
+            for k, s in enumerate(row.scores) if np.isfinite(s))
+    cross_csv(pd.DataFrame(folds, columns=["dataset", "model", "fold_index", "repeat_index", "split_index",
+        "f1_macro", "status", "runtime_seconds", "warnings", "error"]), "fold_results.csv")
+    cross_csv(pd.DataFrame(attempts, columns=["dataset", "model", "fold_index", "status", "f1_macro",
+        "runtime_seconds", "warnings", "error"]), "attempt_log.csv")
+    result = pd.DataFrame(summaries)
+    cross_csv(result, "new_model_summary.csv")
+    original_summary = baseline_df.loc[baseline_df.model.isin(NON_DUMMY_BASELINE_MODELS)].copy()
+    original_summary["evaluation_status"] = np.where(successful_rows(original_summary), "complete", "error")
+    original_summary.loc[~original_summary.dataset.isin(cross_eligible), "evaluation_status"] = "ineligible"
+    cross_csv(pd.concat([original_summary.reindex(columns=result.columns), result], ignore_index=True),
+              "model_summary.csv")
+    return result
+
+def evaluate_cross_models(dataset_names, models=None):
+    models = CROSS_MODELS if models is None else models
+    if not set(dataset_names) <= set(cross_eligible):
+        raise ValueError("Select only originally ranking-eligible datasets")
+    if not set(models) <= {"svm_rbf", "ripper"}:
+        raise ValueError("Unknown model")
+    for dataset in dataset_names:
+        X, y = loaded[dataset]["X"], loaded[dataset]["y"]
+        splits = list(RepeatedStratifiedKFold(n_splits=5, n_repeats=3, random_state=42).split(X, y))
+        for model in models:
+            path, state = cross_states[dataset, model]
+            if cross_summary(state)["evaluation_status"] == "complete":
+                print(f"Cached: {dataset}/{model} (15/15)")
+                continue
+            if model == "ripper" and RIPPER_COMPATIBILITY["status"] != "complete":
+                state.update(status="compatibility_error", error=RIPPER_COMPATIBILITY["error"])
+                cross_atomic_json(path, state)
+                export_cross_progress()
+                print(f"RIPPER unavailable: {dataset}; see manifest and summary")
+                continue
+            for k, (train, test) in enumerate(splits):
+                if valid_cross_fold(state["folds"].get(str(k), {}), k):
+                    continue
+                start = time.perf_counter()
+                caught, interrupted = [], False
+                record = dict(fold_index=k, repeat_index=k//5, split_index=k%5, f1_macro=None,
+                              status="error", error="", warnings=[])
+                try:
+                    with warnings.catch_warnings(record=True) as caught:
+                        warnings.simplefilter("always")
+                        estimator = make_cross_model(model, X, y)
+                        estimator.fit(X.iloc[train], y[train])
+                        record.update(f1_macro=check_cross_predictions(y[test], estimator.predict(X.iloc[test])),
+                                      status="complete")
+                except KeyboardInterrupt:
+                    interrupted = True
+                    record.update(status="interrupted", error="Interrupted fold; rerun to resume")
+                except Exception:
+                    record["error"] = traceback.format_exc()
+                finally:
+                    record["runtime_seconds"] = time.perf_counter() - start
+                    record["warnings"] = [f"{w.category.__name__}: {w.message}" for w in caught]
+                    if record["runtime_seconds"] > SLOW_FOLD_SECONDS:
+                        record["warnings"].append(f"Slow fold: {record['runtime_seconds']:.1f} seconds")
+                    state["folds"][str(k)] = record
+                    state["attempts"].append(record.copy())
+                    state.update(status="partial" if record["status"] == "complete" else record["status"],
+                                 error=record["error"])
+                    cross_atomic_json(path, state)
+                    export_cross_progress()
+                print(f"{dataset}/{model}: fold {k+1}/15 {record['status']}", flush=True)
+                if record["error"] or record["warnings"]:
+                    print(record["error"] or "\n".join(record["warnings"]))
+                if interrupted:
+                    raise KeyboardInterrupt(record["error"])
+                if record["status"] != "complete":
+                    break
+    return export_cross_progress()
+
+if CROSS_MODE == "quick":
+    cross_requested = ["banknote", "iris", "glass"]
+elif CROSS_MODE == "full":
+    cross_requested = cross_eligible
+elif CROSS_MODE == "resume":
+    cross_requested = CROSS_DATASETS
+else:
+    raise ValueError("CROSS_MODE must be quick, full or resume")
+cross_model_summary_df = evaluate_cross_models(cross_requested)
+if CROSS_MODE == "quick":
+    quick_validation_df = cross_model_summary_df.loc[cross_model_summary_df.dataset.isin(cross_requested)
+        & cross_model_summary_df.model.isin(CROSS_MODELS)]
+    display(quick_validation_df)
+    print("Quick validation passed:", bool(len(quick_validation_df)==len(cross_requested)*len(CROSS_MODELS)
+        and quick_validation_df.evaluation_status.eq("complete").all()
+        and quick_validation_df.n_scores.eq(15).all()
+        and np.isfinite(quick_validation_df[["f1_macro_mean", "f1_macro_std"]]).all().all()))

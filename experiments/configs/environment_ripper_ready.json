@@ -1,0 +1,18 @@
+{
+  "environment_id": "fb2fa26df42df065c94dfc5dc9c149a4c7b0cd241c5925e6da1c506a9ce07d5a",
+  "executable": "C:\\Users\\sarah\\OneDrive\\Documentos\\DCC_Thesis_codes\\AutoML_DecisionTrees\\.venv\\Scripts\\python.exe",
+  "packages": {
+    "ipython": "9.17.1",
+    "joblib": "1.6.0",
+    "matplotlib": "3.11.1",
+    "nbformat": "5.11.1",
+    "numpy": "2.5.3",
+    "pandas": "3.0.5",
+    "scikit-learn": "1.9.0",
+    "scipy": "1.18.1",
+    "threadpoolctl": "3.6.0",
+    "wittgenstein": "0.3.5"
+  },
+  "platform": "Windows-11-10.0.26300-SP0",
+  "python": "3.12.14"
+}

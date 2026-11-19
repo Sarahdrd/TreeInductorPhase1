@@ -1,0 +1,22 @@
+{
+  "chance_corrected_ranking.csv": "e2a22aa1f81de5519af116f32dfb7136b0cb6246fc0d55dba13169c36bd3764a",
+  "class_structure.pdf": "8b110dd4002e02bf38f132717200406797567c8f95338dc613ac1fd1c7c5de7d",
+  "class_structure.png": "ee0b2dd1ac142725a93471a6ff538f9d1efcafdcd4676d8075905b499ac40662",
+  "descriptor_correlations.csv": "cd4e6c549251bf2f76489addc5d765d60fef2d26ba651ecf309c9f01ac83091a",
+  "dummy_baselines.csv": "f54156271e7b41bb83723eb8e902007270e81f3b0d8445d97e95bc46b630e6fd",
+  "dummy_fold_scores.csv": "5efe2b4754c527171acf59abe1dfff51dc1781da1cd4cdf5e32705f17fc2cdfd",
+  "dummy_model_statistics.csv": "d7e655d643bb76092382e9d95b16ff907855bc11f5dc7e4257e240f4df45ab3f",
+  "dummy_seed_statistics.csv": "e643a6187f3a3768d9b9913ca543abf5429d0ca15839c06dc67cb89d6e2c1702",
+  "dummy_vs_canonical.pdf": "cdda05dda3f3eeb392f51f620cdf8932758db0e41ae48e5a9bd7679d7c5ae95d",
+  "dummy_vs_canonical.png": "06e896da791d7146eb70a2107f85b8b6802c12e2bdabc717880f35e68b75eb7e",
+  "heart_wine_focus.csv": "f8bbcb01d232cd24885cf07c3bc4549bdc2d38ec9f1198146c14029c09430c86",
+  "improvement_by_original_stratum.csv": "a36268148cbb9511bd3c06395620e5a5db7e7d30b741dd289761ec59e9ac1774",
+  "official_record_checksums.json": "18c4eddd4074b9220f7aa55d156653131e0a4b0ed3df06ab527152d8d418c05a",
+  "original_vs_corrected.csv": "714a5fcfe7817961d5edd4539b7c459abe0998dabed6f906a8fee897fcbc7c19",
+  "provenance.json": "8e79566d95482dd00f456bbb2959b0b29960091c874c8a745a4e1200c4b5a41b",
+  "rank_comparison.pdf": "1f9958705624afb8f63a462310b3dde73d8b8faaf9f78907c2859721a009877b",
+  "rank_comparison.png": "e151bc7257253ad5aff3743e0e6933265910b13a86e707ad1297de4ad3b40e9e",
+  "rank_comparison_summary.csv": "9ee5030409e95c686fca43f2395b494adc7bbb8d233117462fee1ce9e3a776d9",
+  "score_comparison.pdf": "96b344d03975010f9bc71162f66b68921d26316b7008256a3bdc2974c85d8fe0",
+  "score_comparison.png": "1ed01d97a6c1c7ae489cd0fe02beb37f520fc530e53b47c87cb79c61da0efb95"
+}

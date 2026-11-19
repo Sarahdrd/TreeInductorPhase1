@@ -1,0 +1,134 @@
+{
+  "pilot_budget": 7,
+  "pilot_folds_executed": 7,
+  "pilot_failures": 0,
+  "resume_executions": [
+    {
+      "executed": 3,
+      "skipped": 0
+    },
+    {
+      "executed": 4,
+      "skipped": 3
+    },
+    {
+      "executed": 0,
+      "skipped": 7
+    }
+  ],
+  "pilot_folds": [
+    {
+      "dataset": "banknote",
+      "model": "decision_tree_default",
+      "seed": 42,
+      "repeat": 1,
+      "fold": 1,
+      "execution_status": "success",
+      "warnings": [],
+      "runtime_seconds": 0.012526999998954125,
+      "split_id": "4ea559be97e13559aa956547031583267a438be921d47ee106e0b22537185028"
+    },
+    {
+      "dataset": "banknote",
+      "model": "dummy_most_frequent",
+      "seed": 42,
+      "repeat": 1,
+      "fold": 1,
+      "execution_status": "success",
+      "warnings": [],
+      "runtime_seconds": 0.0028808000060962513,
+      "split_id": "4ea559be97e13559aa956547031583267a438be921d47ee106e0b22537185028"
+    },
+    {
+      "dataset": "banknote",
+      "model": "dummy_stratified",
+      "seed": 42,
+      "repeat": 1,
+      "fold": 1,
+      "execution_status": "success",
+      "warnings": [],
+      "runtime_seconds": 0.002882000000681728,
+      "split_id": "4ea559be97e13559aa956547031583267a438be921d47ee106e0b22537185028"
+    },
+    {
+      "dataset": "banknote",
+      "model": "logistic_regression",
+      "seed": 42,
+      "repeat": 1,
+      "fold": 1,
+      "execution_status": "success",
+      "warnings": [
+        {
+          "category": "FutureWarning",
+          "count": 1,
+          "message": "'penalty' was deprecated in version 1.8 and will be removed in 1.10. To avoid this warning, leave 'penalty' set to its default value and use 'l1_ratio' or 'C' instead. Use l1_ratio=0 instead of penalty='l2', l1_ratio=1 instead of penalty='l1', l1_ratio set to a float between 0 and 1 instead of penalty='elasticnet', and C=np.inf instead of penalty=None."
+        }
+      ],
+      "runtime_seconds": 0.014312500003143214,
+      "split_id": "4ea559be97e13559aa956547031583267a438be921d47ee106e0b22537185028"
+    },
+    {
+      "dataset": "car",
+      "model": "ripper",
+      "seed": 42,
+      "repeat": 1,
+      "fold": 1,
+      "execution_status": "success",
+      "warnings": [
+        {
+          "category": "Pandas4Warning",
+          "count": 4,
+          "message": "For backward compatibility, 'str' dtypes are included by select_dtypes when 'object' dtype is specified. This behavior is deprecated and will be removed in a future version. Explicitly pass 'str' to `include` to select them, or to `exclude` to remove them and silence this warning.\nSee https://pandas.pydata.org/docs/user_guide/migration-3-strings.html#string-migration-select-dtypes for details on how to write code that works with pandas 2 and 3."
+        }
+      ],
+      "runtime_seconds": 4.246025999993435,
+      "split_id": "290b5085a9c1140e4084512a93271a8aed82bf6003eac2e2a510428ebdee4251"
+    },
+    {
+      "dataset": "car",
+      "model": "svm_rbf",
+      "seed": 42,
+      "repeat": 1,
+      "fold": 1,
+      "execution_status": "success",
+      "warnings": [],
+      "runtime_seconds": 0.049004800006514415,
+      "split_id": "290b5085a9c1140e4084512a93271a8aed82bf6003eac2e2a510428ebdee4251"
+    },
+    {
+      "dataset": "iris",
+      "model": "decision_tree_leaf_2_balanced",
+      "seed": 42,
+      "repeat": 1,
+      "fold": 1,
+      "execution_status": "success",
+      "warnings": [],
+      "runtime_seconds": 0.006804999997257255,
+      "split_id": "d4faf145e0fb6875ac45d5305e9ac072debb22502b812faa5bae7dc34608c947"
+    }
+  ],
+  "schema_validated_records": 7,
+  "full_workload": 20400,
+  "full_benchmark_executed": false,
+  "ranking_calculated": false,
+  "infrastructure_tests": {
+    "command": ".venv/Scripts/python.exe -m unittest experiments.protocol.test_runner -v",
+    "passed": 10,
+    "failed": 0,
+    "actual_fits": 0
+  },
+  "full_dry_run": {
+    "planned": 20400,
+    "pending": 20400,
+    "corrupt": 0,
+    "fits": 0
+  },
+  "preservation": {
+    "historical_files_checked": 5065,
+    "split_files_checked": 170,
+    "changed": []
+  },
+  "environment_unchanged": true,
+  "notebook_code_cells_parsed": 58,
+  "official_store_created": false
+}

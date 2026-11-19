@@ -1,0 +1,20 @@
+[
+  {
+    "name": "minmax_normalize_on_pool",
+    "notebook": "New_Characterization_Experiments.ipynb",
+    "cell_zero_based": 12,
+    "source_sha256": "e8d2357ad6162af13d22fef1896e7adc74f022a25fc0e4288e4fc17dadbd7a62"
+  },
+  {
+    "name": "assign_predictive_difficulty_groups",
+    "notebook": "New_Characterization_Experiments.ipynb",
+    "cell_zero_based": 12,
+    "source_sha256": "4456eb7ca2b0b7841f008896ad5516f07f364b5f7bff49bc7830f0efa58e335b"
+  },
+  {
+    "name": "score_profile",
+    "notebook": "Dataset_Characterization.ipynb",
+    "cell_zero_based": 60,
+    "source_sha256": "37180b089edfd06ff4029da4d4131f28cc3d512a64702f2cb77a880251996b1c"
+  }
+]

@@ -1,0 +1,127 @@
+{
+  "cache_schema": 2,
+  "cv": {
+    "ddof": 1,
+    "folds": 5,
+    "random_state": 42,
+    "repeats": 3,
+    "scoring": "f1_macro"
+  },
+  "model_configs": {
+    "ripper": {
+      "adapter": "ClassifierMixin/RIPPER/BaseEstimator-v1",
+      "cache_schema": 2,
+      "cv": {
+        "ddof": 1,
+        "folds": 5,
+        "random_state": 42,
+        "repeats": 3,
+        "scoring": "f1_macro"
+      },
+      "estimator": {
+        "alpha": 1.0,
+        "dl_allowance": 64,
+        "k": 2,
+        "max_rule_conds": null,
+        "max_rules": null,
+        "max_total_conds": null,
+        "min_ruleset_samples": null,
+        "n_discretize_bins": 10,
+        "prune_size": 0.33,
+        "random_state": 42,
+        "verbosity": 0
+      },
+      "implementation": "818c22ab75049c9b5a764ad1e8318b2c5974313ccf3c675713450d3bb43bb22b",
+      "versions": {
+        "matplotlib": "3.10.8",
+        "numpy": "2.4.1",
+        "pandas": "2.3.3",
+        "python": "3.12.12",
+        "scikit-learn": "1.8.0",
+        "scipy": "1.17.0",
+        "wittgenstein": "0.3.5"
+      }
+    },
+    "svm_rbf": {
+      "cache_schema": 2,
+      "cv": {
+        "ddof": 1,
+        "folds": 5,
+        "random_state": 42,
+        "repeats": 3,
+        "scoring": "f1_macro"
+      },
+      "estimator": {
+        "C": 1.0,
+        "break_ties": false,
+        "cache_size": 200,
+        "class_weight": null,
+        "coef0": 0.0,
+        "decision_function_shape": "ovr",
+        "degree": 3,
+        "gamma": "scale",
+        "kernel": "rbf",
+        "max_iter": -1,
+        "probability": false,
+        "random_state": null,
+        "shrinking": true,
+        "tol": 0.001,
+        "verbose": false
+      },
+      "implementation": "a8265edbc23b5e326418298ed733b22c447eb9bc483f41df42154f8d1b1536e9",
+      "versions": {
+        "matplotlib": "3.10.8",
+        "numpy": "2.4.1",
+        "pandas": "2.3.3",
+        "python": "3.12.12",
+        "scikit-learn": "1.8.0",
+        "scipy": "1.17.0"
+      }
+    }
+  },
+  "preprocessing": "SVM: original linear preprocessor; RIPPER: median/mode + nominal strings",
+  "ripper": {
+    "alpha": 1.0,
+    "dl_allowance": 64,
+    "k": 2,
+    "max_rule_conds": null,
+    "max_rules": null,
+    "max_total_conds": null,
+    "min_ruleset_samples": null,
+    "n_discretize_bins": 10,
+    "prune_size": 0.33,
+    "random_state": 42,
+    "verbosity": 0
+  },
+  "ripper_compatibility": {
+    "error": "",
+    "status": "complete",
+    "warnings": []
+  },
+  "svm": {
+    "C": 1.0,
+    "break_ties": false,
+    "cache_size": 200,
+    "class_weight": null,
+    "coef0": 0.0,
+    "decision_function_shape": "ovr",
+    "degree": 3,
+    "gamma": "scale",
+    "kernel": "rbf",
+    "max_iter": -1,
+    "probability": false,
+    "random_state": null,
+    "shrinking": true,
+    "tol": 0.001,
+    "verbose": false
+  },
+  "versions": {
+    "matplotlib": "3.10.8",
+    "numpy": "2.4.1",
+    "pandas": "2.3.3",
+    "python": "3.12.12",
+    "scikit-learn": "1.8.0",
+    "scipy": "1.17.0",
+    "wittgenstein": "0.3.5"
+  }
+}

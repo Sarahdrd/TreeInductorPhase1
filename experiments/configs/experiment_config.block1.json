@@ -1,0 +1,515 @@
+{
+  "analyses": {
+    "alternative_inducers": {
+      "concerns": [
+        "binary feature/target support must be verified",
+        "any discretization or binarization must be trained on training fold only",
+        "multiclass coverage, missing values, capacity and time budgets must be specified",
+        "report incompatible datasets without changing benchmark membership"
+      ],
+      "models": [
+        "MurTree",
+        "Quant-BnB"
+      ],
+      "protocol": "revision2-alternative-inducers-v1",
+      "status": "not installed or integrated"
+    },
+    "canonical": {
+      "error": "1 - mean of four non-dummy model means",
+      "formula": "0.70 * normalized_error + 0.30 * normalized_variability",
+      "groups": "numpy.array_split sorted eligible pool into easy/intermediate/hard (6/6/5)",
+      "normalization": "min-max on eligible pool separately for E and V; constant component -> 0",
+      "protocol": "canonical-seed42-historical",
+      "ties": "exact score, descending F, ascending V, dataset name; stable mergesort",
+      "variability": "mean of four within-model standard deviations over 15 scores; ddof=1"
+    },
+    "chance_corrected": {
+      "formula": null,
+      "protocol": "revision2-chance-corrected-v1",
+      "reference_model": "dummy_stratified",
+      "status": "comparison only; finalize formula before execution"
+    },
+    "five_seed": {
+      "protocol": "revision2-five-seed-v1",
+      "selected_variability": null,
+      "status": "Block 3; not calculated",
+      "variability_options": [
+        "pooled_75_std_ddof1",
+        "mean_of_5_within_seed_std_ddof1"
+      ]
+    },
+    "label_stability": {
+      "ablation_alphas": [
+        0.0,
+        0.7,
+        1.0
+      ],
+      "alpha_values": [
+        0.51,
+        0.6,
+        0.7,
+        0.8,
+        0.9
+      ],
+      "definition": null,
+      "status": "pending"
+    },
+    "subsampling": {
+      "base_seed": null,
+      "dataset": null,
+      "protocol": "revision2-subsampling-v1",
+      "replacement": false,
+      "replicates": null,
+      "seed_policy": "explicit independent integer seed per size and replicate; freeze before sampling",
+      "sizes": [
+        200,
+        500,
+        1000,
+        1500,
+        2000,
+        5000,
+        10000
+      ],
+      "status": "not executed",
+      "stratified": true
+    }
+  },
+  "canonical_models": [
+    "decision_tree_default",
+    "decision_tree_balanced",
+    "logistic_regression",
+    "logistic_regression_balanced"
+  ],
+  "cv": {
+    "evaluations_per_configuration": 75,
+    "evaluations_per_seed": 15,
+    "folds": 5,
+    "repeats": 3,
+    "seeds": [
+      42,
+      7,
+      21,
+      84,
+      123
+    ],
+    "splitter": "RepeatedStratifiedKFold"
+  },
+  "dataset_specs": {
+    "abalone": {
+      "canonical_name": "Abalone",
+      "id_columns": [],
+      "path": "data/abalone.csv",
+      "target_spec": "target"
+    },
+    "anneal": {
+      "canonical_name": "Anneal",
+      "id_columns": [],
+      "path": "data/anneal.csv",
+      "target_spec": "target"
+    },
+    "arrhythmia": {
+      "canonical_name": "Arrhythmia",
+      "id_columns": [],
+      "path": "data/arrhythmia.csv",
+      "target_spec": "target"
+    },
+    "balance_scale": {
+      "canonical_name": "Balance Scale",
+      "id_columns": [],
+      "path": "data/balance_scale.csv",
+      "target_spec": [
+        "class",
+        "Class",
+        "balance",
+        "Balance",
+        0
+      ]
+    },
+    "banknote": {
+      "canonical_name": "Banknote Authentication",
+      "id_columns": [],
+      "path": "data/banknote_authentication.csv",
+      "target_spec": "4"
+    },
+    "breast_cancer": {
+      "canonical_name": "Breast Cancer",
+      "id_columns": [],
+      "path": "data/breast_cancer.csv",
+      "target_spec": "target"
+    },
+    "bridges": {
+      "canonical_name": "Bridges",
+      "id_columns": [],
+      "path": "data/bridges_version1.csv",
+      "target_spec": "target"
+    },
+    "car": {
+      "canonical_name": "Car Evaluation",
+      "id_columns": [],
+      "path": "data/car.csv",
+      "target_spec": "target"
+    },
+    "credit_approval": {
+      "canonical_name": "Credit Approval",
+      "id_columns": [],
+      "path": "data/credit_approval.csv",
+      "target_spec": "15"
+    },
+    "cylinder_bands": {
+      "canonical_name": "Cylinder Bands",
+      "id_columns": [
+        "feature_001"
+      ],
+      "path": "data/cylinder_bands.csv",
+      "target_spec": "target"
+    },
+    "glass": {
+      "canonical_name": "Glass",
+      "id_columns": [],
+      "path": "data/glass.csv",
+      "target_spec": "target"
+    },
+    "haberman": {
+      "canonical_name": "Haberman",
+      "id_columns": [],
+      "path": "data/haberman.csv",
+      "target_spec": "3"
+    },
+    "heart_disease": {
+      "canonical_name": "Heart Disease",
+      "id_columns": [],
+      "path": "data/heart_disease.csv",
+      "target_spec": "13"
+    },
+    "ionosphere": {
+      "canonical_name": "Ionosphere",
+      "id_columns": [],
+      "path": "data/ionosphere.csv",
+      "target_spec": "34"
+    },
+    "iris": {
+      "canonical_name": "Iris",
+      "id_columns": [],
+      "path": "data/iris.csv",
+      "target_spec": "target"
+    },
+    "parkinsons": {
+      "canonical_name": "Parkinsons",
+      "id_columns": [
+        [
+          "name",
+          "Name"
+        ]
+      ],
+      "path": "data/parkinsons.csv",
+      "target_spec": [
+        "status",
+        "Status"
+      ]
+    },
+    "semeion": {
+      "canonical_name": "Semeion",
+      "id_columns": [],
+      "path": "data/semeion.csv",
+      "target_spec": "target"
+    },
+    "sonar": {
+      "canonical_name": "Sonar",
+      "id_columns": [],
+      "path": "data/sonar.csv",
+      "target_spec": "60"
+    },
+    "tic_tac_toe": {
+      "canonical_name": "Tic-Tac-Toe",
+      "id_columns": [],
+      "path": "data/tic_tac_toe.csv",
+      "target_spec": "9"
+    },
+    "wine_red": {
+      "canonical_name": "Wine Quality Red",
+      "id_columns": [],
+      "path": "data/winequality_red.csv",
+      "target_spec": "target"
+    }
+  },
+  "excluded_datasets": [
+    "abalone",
+    "arrhythmia",
+    "bridges"
+  ],
+  "historical_pairing": "Verify exact indices and dataset identities; same seed alone is insufficient",
+  "historical_protocol": "canonical-seed42-historical",
+  "missing_tokens": [
+    "?",
+    "NA",
+    "N/A",
+    "na",
+    "n/a",
+    "",
+    " ",
+    "null",
+    "None"
+  ],
+  "model_parameter_sources": {
+    "dt_lr_dummy": "New_Characterization_Experiments.ipynb cell 9 (zero-based)",
+    "regularization": "cell 18 and results/new_characterization_experiments/all_model_configurations.json",
+    "svm_ripper": "results/dataset_statistics/cross_model_validation/manifest.json; adapter source absent"
+  },
+  "model_randomness": "Preserve estimator seeds from configs independently of CV seed",
+  "models": {
+    "decision_tree_balanced": {
+      "ccp_alpha": 0.0,
+      "class_weight": "balanced",
+      "criterion": "gini",
+      "max_depth": null,
+      "max_features": null,
+      "max_leaf_nodes": null,
+      "min_impurity_decrease": 0.0,
+      "min_samples_leaf": 1,
+      "min_samples_split": 2,
+      "min_weight_fraction_leaf": 0.0,
+      "random_state": 42,
+      "splitter": "best"
+    },
+    "decision_tree_ccp_001_balanced": {
+      "ccp_alpha": 0.001,
+      "class_weight": "balanced",
+      "criterion": "gini",
+      "max_depth": null,
+      "max_features": null,
+      "max_leaf_nodes": null,
+      "min_impurity_decrease": 0.0,
+      "min_samples_leaf": 1,
+      "min_samples_split": 2,
+      "min_weight_fraction_leaf": 0.0,
+      "random_state": 42,
+      "splitter": "best"
+    },
+    "decision_tree_ccp_001_default": {
+      "ccp_alpha": 0.001,
+      "class_weight": null,
+      "criterion": "gini",
+      "max_depth": null,
+      "max_features": null,
+      "max_leaf_nodes": null,
+      "min_impurity_decrease": 0.0,
+      "min_samples_leaf": 1,
+      "min_samples_split": 2,
+      "min_weight_fraction_leaf": 0.0,
+      "random_state": 42,
+      "splitter": "best"
+    },
+    "decision_tree_ccp_01_balanced": {
+      "ccp_alpha": 0.01,
+      "class_weight": "balanced",
+      "criterion": "gini",
+      "max_depth": null,
+      "max_features": null,
+      "max_leaf_nodes": null,
+      "min_impurity_decrease": 0.0,
+      "min_samples_leaf": 1,
+      "min_samples_split": 2,
+      "min_weight_fraction_leaf": 0.0,
+      "random_state": 42,
+      "splitter": "best"
+    },
+    "decision_tree_ccp_01_default": {
+      "ccp_alpha": 0.01,
+      "class_weight": null,
+      "criterion": "gini",
+      "max_depth": null,
+      "max_features": null,
+      "max_leaf_nodes": null,
+      "min_impurity_decrease": 0.0,
+      "min_samples_leaf": 1,
+      "min_samples_split": 2,
+      "min_weight_fraction_leaf": 0.0,
+      "random_state": 42,
+      "splitter": "best"
+    },
+    "decision_tree_default": {
+      "ccp_alpha": 0.0,
+      "class_weight": null,
+      "criterion": "gini",
+      "max_depth": null,
+      "max_features": null,
+      "max_leaf_nodes": null,
+      "min_impurity_decrease": 0.0,
+      "min_samples_leaf": 1,
+      "min_samples_split": 2,
+      "min_weight_fraction_leaf": 0.0,
+      "random_state": 42,
+      "splitter": "best"
+    },
+    "decision_tree_leaf_2_balanced": {
+      "ccp_alpha": 0.0,
+      "class_weight": "balanced",
+      "criterion": "gini",
+      "max_depth": null,
+      "max_features": null,
+      "max_leaf_nodes": null,
+      "min_impurity_decrease": 0.0,
+      "min_samples_leaf": 2,
+      "min_samples_split": 2,
+      "min_weight_fraction_leaf": 0.0,
+      "random_state": 42,
+      "splitter": "best"
+    },
+    "decision_tree_leaf_2_default": {
+      "ccp_alpha": 0.0,
+      "class_weight": null,
+      "criterion": "gini",
+      "max_depth": null,
+      "max_features": null,
+      "max_leaf_nodes": null,
+      "min_impurity_decrease": 0.0,
+      "min_samples_leaf": 2,
+      "min_samples_split": 2,
+      "min_weight_fraction_leaf": 0.0,
+      "random_state": 42,
+      "splitter": "best"
+    },
+    "decision_tree_leaf_5_balanced": {
+      "ccp_alpha": 0.0,
+      "class_weight": "balanced",
+      "criterion": "gini",
+      "max_depth": null,
+      "max_features": null,
+      "max_leaf_nodes": null,
+      "min_impurity_decrease": 0.0,
+      "min_samples_leaf": 5,
+      "min_samples_split": 2,
+      "min_weight_fraction_leaf": 0.0,
+      "random_state": 42,
+      "splitter": "best"
+    },
+    "decision_tree_leaf_5_default": {
+      "ccp_alpha": 0.0,
+      "class_weight": null,
+      "criterion": "gini",
+      "max_depth": null,
+      "max_features": null,
+      "max_leaf_nodes": null,
+      "min_impurity_decrease": 0.0,
+      "min_samples_leaf": 5,
+      "min_samples_split": 2,
+      "min_weight_fraction_leaf": 0.0,
+      "random_state": 42,
+      "splitter": "best"
+    },
+    "dummy_most_frequent": {
+      "random_state": 42,
+      "strategy": "most_frequent"
+    },
+    "dummy_stratified": {
+      "random_state": 42,
+      "strategy": "stratified"
+    },
+    "logistic_regression": {
+      "C": 1.0,
+      "class_weight": null,
+      "fit_intercept": true,
+      "max_iter": 5000,
+      "penalty": "l2",
+      "random_state": 42,
+      "solver": "lbfgs",
+      "tol": 0.0001
+    },
+    "logistic_regression_balanced": {
+      "C": 1.0,
+      "class_weight": "balanced",
+      "fit_intercept": true,
+      "max_iter": 5000,
+      "penalty": "l2",
+      "random_state": 42,
+      "solver": "lbfgs",
+      "tol": 0.0001
+    },
+    "ripper": {
+      "alpha": 1.0,
+      "dl_allowance": 64,
+      "k": 2,
+      "max_rule_conds": null,
+      "max_rules": null,
+      "max_total_conds": null,
+      "min_ruleset_samples": null,
+      "n_discretize_bins": 10,
+      "prune_size": 0.33,
+      "random_state": 42,
+      "verbosity": 0
+    },
+    "svm_rbf": {
+      "C": 1.0,
+      "break_ties": false,
+      "cache_size": 200,
+      "class_weight": null,
+      "coef0": 0.0,
+      "decision_function_shape": "ovr",
+      "degree": 3,
+      "gamma": "scale",
+      "kernel": "rbf",
+      "max_iter": -1,
+      "probability": false,
+      "random_state": null,
+      "shrinking": true,
+      "tol": 0.001,
+      "verbose": false
+    }
+  },
+  "n_jobs": 1,
+  "preprocessing": {
+    "categorical": "most_frequent imputation then dense OneHotEncoder(handle_unknown=ignore)",
+    "fit_scope": "training fold only, inside estimator pipeline",
+    "numeric": "median imputation; StandardScaler only for LR/SVM",
+    "ripper": {
+      "historical_description": "SVM: original linear preprocessor; RIPPER: median/mode + nominal strings",
+      "n_discretize_bins": 10,
+      "status": "adapter source unavailable; numeric representation/discretization semantics and multiclass handling unresolved; construction blocked"
+    }
+  },
+  "primary_datasets": [
+    "banknote",
+    "tic_tac_toe",
+    "breast_cancer",
+    "iris",
+    "semeion",
+    "car",
+    "ionosphere",
+    "credit_approval",
+    "balance_scale",
+    "cylinder_bands",
+    "anneal",
+    "parkinsons",
+    "sonar",
+    "haberman",
+    "glass",
+    "wine_red",
+    "heart_disease"
+  ],
+  "protocol_version": "revision2-five-seed-v1",
+  "regularization_panels": {
+    "ccp_001": [
+      "decision_tree_ccp_001_balanced",
+      "decision_tree_ccp_001_default"
+    ],
+    "ccp_01": [
+      "decision_tree_ccp_01_balanced",
+      "decision_tree_ccp_01_default"
+    ],
+    "leaf_2": [
+      "decision_tree_leaf_2_balanced",
+      "decision_tree_leaf_2_default"
+    ],
+    "leaf_5": [
+      "decision_tree_leaf_5_balanced",
+      "decision_tree_leaf_5_default"
+    ]
+  },
+  "results_directory": "experiments/results/revision2-five-seed-v1/folds",
+  "scoring": {
+    "metric": "macro_f1",
+    "std_ddof": 1,
+    "zero_division": 0
+  },
+  "status": "preparation_only"
+}

@@ -1,0 +1,87 @@
+{
+  "dataset": "semeion",
+  "dataset_fingerprint": "8831e5d41fc07a8bc018d6d9d72eaac6e5749fbbf45a0fd4f965d389584ed1a9",
+  "environment_id": "ace526dac3dfa856db171d41ed22d01130ce438535dc90d736e157e3e7977294",
+  "file_sha256": "11680b0c39387fe80b2064c8340300e47ec27769be01379cb58f58ed4bd725f3",
+  "index_base": 0,
+  "partitions": [
+    {
+      "fold": 1,
+      "repeat": 1,
+      "split_id": "34b04b4aa53ec9d10e8dd55ce3fe3db8ec2f680b899a6776be21913b58557e8d"
+    },
+    {
+      "fold": 2,
+      "repeat": 1,
+      "split_id": "db830900ef275b77109660a0160c8fb8055ff99176f465c89d4398ce329eb2ac"
+    },
+    {
+      "fold": 3,
+      "repeat": 1,
+      "split_id": "f8f4c3af4e2743883d820705d26c1f0e92718a66fafcc46cf41c47e341d163cc"
+    },
+    {
+      "fold": 4,
+      "repeat": 1,
+      "split_id": "99099a8900b939ba61db03b5ea294f3fe3179fc8cedddb3d2bea5ffb02158dc2"
+    },
+    {
+      "fold": 5,
+      "repeat": 1,
+      "split_id": "4c9bf0353b9fecc648b7180fa69c1c99ccdc2965c2a8b835ec7fb2f81a33b929"
+    },
+    {
+      "fold": 1,
+      "repeat": 2,
+      "split_id": "9b463f79ae0d641e05a5c3633d5a5d42b5c82886970f786af18800071b32d213"
+    },
+    {
+      "fold": 2,
+      "repeat": 2,
+      "split_id": "1e7afb7b844eb4845dcb9fdfc3133e2ef5f60bb1bd2935ce2494a63de4c545b6"
+    },
+    {
+      "fold": 3,
+      "repeat": 2,
+      "split_id": "5db58cfe1276ea7dfc9d60ce67f1280dd0889bf8b39fbe033a4aa1117d4e30f6"
+    },
+    {
+      "fold": 4,
+      "repeat": 2,
+      "split_id": "8f3939754794c07bad16cd6697cdcfb51fa5a0e5ca2ec31643804765abc59b4c"
+    },
+    {
+      "fold": 5,
+      "repeat": 2,
+      "split_id": "04d3c46a2637975364102628360b0d5ebc33ef5c5a7ed45a7495d9373a447c87"
+    },
+    {
+      "fold": 1,
+      "repeat": 3,
+      "split_id": "310c1a7d1b033f557257cf60ab5ac74fba4080dfada5904a4947cacfcbcbe641"
+    },
+    {
+      "fold": 2,
+      "repeat": 3,
+      "split_id": "59ab0b882c4b7b438aa967289616d6483ad4372412621f6f656cbce282a93020"
+    },
+    {
+      "fold": 3,
+      "repeat": 3,
+      "split_id": "22fb028ba2c87172d3825fe1e254401dee83e8bf8f0a351951710b0b96ec31bf"
+    },
+    {
+      "fold": 4,
+      "repeat": 3,
+      "split_id": "47cc87d52345e42b346658e71152cd0b81a20b8c275b02820e088d91c567b08d"
+    },
+    {
+      "fold": 5,
+      "repeat": 3,
+      "split_id": "66365eabe458a0831b021d5c880619cfe182046c102e280084e4c464c534c5da"
+    }
+  ],
+  "protocol_version": "revision2-five-seed-v1",
+  "row_order": "CSV order after missing-target filtering and index reset",
+  "seed": 7
+}
