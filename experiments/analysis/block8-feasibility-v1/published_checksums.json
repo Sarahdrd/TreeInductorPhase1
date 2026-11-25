@@ -1,0 +1,17 @@
+{
+  "excluded_local_files": [],
+  "files": {
+    "algorithm_compatibility.csv": "1b4c6308c10f6d6ecb247300d9c3c7b98884605bf8928063e50d25caa063623a",
+    "algorithm_environment_manifest.json": "4e67fceec061a6855242d9d97b12a1289728eb745fde5993dfa75a5158213bc9",
+    "evaluation_coverage.csv": "f336bd95d22658cfa91ff3cd539dc8b6ca1179ba7bd4cb4cbf9753d0f8347a3f",
+    "feasibility_report.csv": "29176f17190793c5f3769e6d9206f87658c6b8eef87b6350559cbea5d837089c",
+    "julia_Manifest.toml": "a11b236d8d539e6ddcf1448bbb56ff78021f6895ea1863805bdb0746718d1848",
+    "julia_Project.toml": "accb7ee8dd804dbb11123533463ea0076bf3427cc8f2b1de4bc9191f4281b086",
+    "matched_cart_pilot.csv": "06ca070a9eeef0ab83baacd0021b58473c4c394827d06962f9f52d44b0b52488",
+    "output_checksums.json": "484d4c35a9d54c2b4580f60de97ae36cb3b70357b8fb12764b3d847615ed8f30",
+    "pilot_matched_cart_differences.csv": "c6d0e50da72a60fea9031aba1a729a2b96feeee0f1a9d7c39af48dcf81362556",
+    "proposed_protocol.json": "7744503cae175b2d090752b8734167019c99837f2998ba37a546ad2fe963bb88",
+    "provenance.json": "7d62f612b6d7477307bf8dd95b27323a56d735faa2e4d10e0837e03727850a60"
+  },
+  "purpose": "Portable display subset; original full manifest may reference locally archived intermediates."
+}

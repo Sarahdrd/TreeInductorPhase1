@@ -1,0 +1,43 @@
+{
+  "frozen_solver_pilot_configuration_sha256": "c5976e1cd5b257ecb3f0ae97c43b9df44dba48feaa758f2b2eb690a8f10726c0",
+  "interpretation": "Same depth and same training-only representation per solver; CART Gini heuristic versus misclassification optimization, no equal node-count enforcement beyond depth",
+  "parameters": {
+    "ccp_alpha": 0.0,
+    "class_weight": null,
+    "criterion": "gini",
+    "max_depth": 2,
+    "max_features": null,
+    "max_leaf_nodes": null,
+    "min_impurity_decrease": 0.0,
+    "min_samples_leaf": 1,
+    "min_samples_split": 2,
+    "min_weight_fraction_leaf": 0.0,
+    "random_state": 42,
+    "splitter": "best"
+  },
+  "representations": [
+    "murtree",
+    "quant_bnb"
+  ],
+  "resolved_parameters": {
+    "class": "sklearn.tree._classes.DecisionTreeClassifier",
+    "parameters": {
+      "ccp_alpha": 0.0,
+      "class_weight": null,
+      "criterion": "gini",
+      "max_depth": 2,
+      "max_features": null,
+      "max_leaf_nodes": null,
+      "min_impurity_decrease": 0.0,
+      "min_samples_leaf": 1,
+      "min_samples_split": 2,
+      "min_weight_fraction_leaf": 0.0,
+      "monotonic_cst": null,
+      "random_state": 42,
+      "splitter": "best"
+    }
+  },
+  "source_sha256": "aba8f51c366707442cd27718ea757bc1adbb9601f7ee2232aca1b7a9c589e355",
+  "threads": 1,
+  "version": "block8-depth2-cart-pilot-v1"
+}

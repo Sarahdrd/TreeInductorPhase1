@@ -1,0 +1,91 @@
+{
+  "approximate_zero_tolerance": 1e-12,
+  "canonical_modified": false,
+  "chance_corrected_labels_used": false,
+  "class_weight_pairing": "regularized balanced vs unpruned balanced; regularized default vs unpruned default",
+  "configuration_identity": "both resolved configuration IDs and evaluation IDs retained in every pair",
+  "dataset_effect": "equal mean of five seed mean deltas and two class-weight configurations",
+  "delta": "regularized macro-F1 minus matching unpruned macro-F1, constructed before aggregation",
+  "dt_models": [
+    "decision_tree_default",
+    "decision_tree_balanced"
+  ],
+  "models_fitted": 0,
+  "outliers": "descriptive 1.5 IQR flags within panel/weight/stratum; all datasets retained; leave-one/two-out means check dominance",
+  "pairing_keys": [
+    "dataset",
+    "dataset_fingerprint",
+    "seed",
+    "repeat",
+    "fold",
+    "split_id",
+    "environment_id",
+    "protocol_version",
+    "purpose"
+  ],
+  "pooled_sd_note": "descriptive spread of 75 per-weight or 150 combined paired scores; never an independent-replicate standard error",
+  "previous_output_checksums": {
+    "block3-five-seed-v1": "e0ee5dac4f8ee2eed5c07b991cb4bb4412cf144fb6d8bb2d44ae3840c516a19c",
+    "block4-chance-correction-v1": "0e08cadea0575dd58e3d9b7578a3e3bb2e588d93f6005a61428673cef3b16075",
+    "block5-label-stability-v1": "32c1071f1fc55b773d6fb2c8f6d84e1630856481047de2334c25f37541f34b80"
+  },
+  "reference": "Block 3 five-seed mixed canonical labels",
+  "regularization_panels": {
+    "ccp_001": [
+      "decision_tree_ccp_001_balanced",
+      "decision_tree_ccp_001_default"
+    ],
+    "ccp_01": [
+      "decision_tree_ccp_01_balanced",
+      "decision_tree_ccp_01_default"
+    ],
+    "leaf_2": [
+      "decision_tree_leaf_2_balanced",
+      "decision_tree_leaf_2_default"
+    ],
+    "leaf_5": [
+      "decision_tree_leaf_5_balanced",
+      "decision_tree_leaf_5_default"
+    ]
+  },
+  "seeds": [
+    42,
+    7,
+    21,
+    84,
+    123
+  ],
+  "source_sha256": {
+    "block3_analysis.py": "c264f10b7b563d6d02c39744dacc4870dafed42ed3de4056e7efb12924e6c05b",
+    "block6_analysis.py": "28ba69a2c447cd7e9e6155210291c4292b2c7ec4a9c5cce3bd6fc66cd5418c7d",
+    "block6_figures.py": "bb984a7081aa88f81c605345b35f34588ac3d428177cb5c2a2fcdddc6edf3cb1",
+    "canonical_scoring.py": "181f38234ebefe0b004d280d91e6013c1ef8e48d58349090bf85ce2e79eec80b"
+  },
+  "splits_generated": 0,
+  "std_ddof": 1,
+  "stratum_weighting": "equal dataset weighting, fixed original mixed canonical labels",
+  "validation": {
+    "canonical_records": 5100,
+    "datasets": 17,
+    "environment_id": "fb2fa26df42df065c94dfc5dc9c149a4c7b0cd241c5925e6da1c506a9ce07d5a",
+    "failed_or_pilot_included": 0,
+    "models": 16,
+    "paired_records": 10200,
+    "record_files": 20400,
+    "record_inventory_sha256": "18c4eddd4074b9220f7aa55d156653131e0a4b0ed3df06ab527152d8d418c05a",
+    "run_manifest_sha256": "88f8cb9415479380290438ddcfaeaaebad030032ea921e8f5cd0232fd53e5000",
+    "scores_per_dataset_model": 75,
+    "scores_per_dataset_model_seed": 15,
+    "selected_canonical_models": [
+      "decision_tree_default",
+      "decision_tree_balanced",
+      "logistic_regression",
+      "logistic_regression_balanced"
+    ],
+    "selected_tree_records": 12750,
+    "successful_records": 20400,
+    "unique_evaluation_ids": 20400
+  },
+  "variability": "mean of within-seed sample SDs, then equal mean of panel models",
+  "zero_tolerance_note": "numerical zero only; not a substantive equivalence margin; fold signs use exact zero"
+}

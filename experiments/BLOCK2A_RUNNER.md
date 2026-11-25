@@ -1,3 +1,5 @@
+> **Final status — repository review:** Block 2B subsequently completed all 20,400 official evaluations. This report preserves the original seven-fold pilot and handoff; its pending counts and unexecuted-command statements are historical. See BLOCK3_FIVE_SEED_RANKING.md and EXPERIMENT_INDEX.md.
+
 # Block 2A: saved-fold runner and Block 2B handoff
 
 The runner is ready for Block 2B execution under the pinned `.venv`. Block 2A ran

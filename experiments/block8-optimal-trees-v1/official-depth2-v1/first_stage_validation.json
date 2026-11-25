@@ -1,0 +1,15 @@
+{
+  "environment_verified": true,
+  "first_stage_configuration_id": "61be9b209866b127a38981d819b856dd2b72df7f85f442ed97b1cc87742deff7",
+  "first_stage_keys_exact": true,
+  "first_stage_records": 68,
+  "full_plan": 5100,
+  "matched_cart_representations_and_folds_verified": true,
+  "prediction_scores_recomputed_exactly": true,
+  "prior_files_unchanged": 31821,
+  "process_controller": "v2 Windows job object",
+  "production_and_controller_tests_passed": 14,
+  "remaining_unattempted": 5032,
+  "successful": 68,
+  "timed_out": 0
+}

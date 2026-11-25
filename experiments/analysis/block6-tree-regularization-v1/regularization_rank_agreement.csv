@@ -1,0 +1,9 @@
+comparison,spearman_rank,kendall_tau_b,changed_ranks,changed_strata,changed_strata_percent,mean_absolute_rank_displacement,maximum_absolute_rank_displacement,boundary_crossers,easy_intermediate_crossers,intermediate_hard_crossers,panel,reference
+mixed_vs_leaf_2,0.96078431372549022,0.86764705882352933,7,2,11.764705882352942,0.82352941176470584,3,semeion;ionosphere,semeion;ionosphere,,leaf_2,mixed
+mixed_vs_leaf_5,0.95833333333333348,0.86764705882352933,12,4,23.529411764705884,1.0588235294117647,3,semeion;credit_approval;sonar;parkinsons,semeion;credit_approval,sonar;parkinsons,leaf_5,mixed
+mixed_vs_ccp_001,0.96323529411764719,0.8529411764705882,10,4,23.529411764705884,0.94117647058823528,3,semeion;ionosphere;sonar;parkinsons,semeion;ionosphere,sonar;parkinsons,ccp_001,mixed
+mixed_vs_ccp_01,0.92401960784313741,0.80882352941176461,11,6,35.294117647058826,1.411764705882353,4,semeion;car;credit_approval;ionosphere;balance_scale;parkinsons,semeion;car;credit_approval;ionosphere,balance_scale;parkinsons,ccp_01,mixed
+dt_only_vs_leaf_2,0.99509803921568629,0.97058823529411753,4,2,11.764705882352942,0.23529411764705882,1,parkinsons;sonar,,parkinsons;sonar,leaf_2,dt_only
+dt_only_vs_leaf_5,0.98284313725490202,0.91176470588235292,11,2,11.764705882352942,0.70588235294117652,2,ionosphere;credit_approval,ionosphere;credit_approval,,leaf_5,dt_only
+dt_only_vs_ccp_001,0.99754901960784326,0.98529411764705876,2,0,0,0.11764705882352941,1,,,,ccp_001,dt_only
+dt_only_vs_ccp_01,0.91421568627450978,0.79411764705882348,12,4,23.529411764705884,1.411764705882353,6,car;credit_approval;balance_scale;sonar,car;credit_approval,balance_scale;sonar,ccp_01,dt_only

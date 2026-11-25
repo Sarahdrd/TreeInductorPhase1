@@ -1,0 +1,72 @@
+# Portable review repository: local scientific evidence is preserved, not deleted.
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials*.json
+*.log
+*.tmp
+.writer.lock
+*.exe
+*.dll
+*.pdb
+*.o
+*.obj
+*.zip
+*.tar.gz
+.DS_Store
+Thumbs.db
+
+# Curated input data and historical output archives are not redistributed.
+/data/*
+!/data/README.md
+/results/
+/Figures/
+/core/
+/evolution/
+/utils/
+/*.png
+/experiments/results/
+/experiments/canonical_alignment/
+/experiments/DatasetPool_analysis/
+/experiments/EvolutionFigs/
+
+# Preserve external source trees, runtimes and execution stores locally.
+/experiments/block8-optimal-trees-v1/sources/
+/experiments/block8-optimal-trees-v1/sidecars/
+/experiments/block8-optimal-trees-v1/build/
+/experiments/block8-optimal-trees-v1/work/
+/experiments/block8-optimal-trees-v1/results/
+/experiments/block8-optimal-trees-v1/official-depth2-v1/work/
+/experiments/block8-optimal-trees-v1/official-depth2-v1/results/
+/experiments/block7-magic-subsampling-v1/results/
+/experiments/block7-magic-subsampling-v1/samples/
+/experiments/block7-magic-subsampling-v1/splits/
+
+# Review artifacts override this checkout's old .git/info/exclude CSV/image rules.
+!/experiments/analysis/**/*.csv
+!/experiments/analysis/**/*.png
+!/experiments/analysis/**/*.pdf
+# Large intermediate tables remain local; published_checksums.json names the
+# exact portable subset. Original full output_checksums.json remains evidence.
+/experiments/analysis/**/canonical_fold_scores.csv
+/experiments/analysis/**/fold_level_scores.csv
+/experiments/analysis/**/dummy_fold_scores.csv
+/experiments/analysis/**/paired_fold_deltas.csv
+/experiments/analysis/**/official_record_checksums.json
+/experiments/analysis/**/first_stage_records.csv
+
+# Large local preservation inventories and backups are not review artifacts.
+/experiments/protocol/*preservation.json
+/experiments/protocol/block7b_figure_review.png
+/experiments/block8-optimal-trees-v1/preservation.json
+/experiments/repository_review/local_*
+/experiments/repository_review/*.ipynb
+
+# Retain all scientific source, frozen metadata, saved benchmark splits and reports.

@@ -1,0 +1,5 @@
+model,execution_status,termination_status,fits
+cart_depth2_murtree,success,heuristic_complete,1275
+cart_depth2_quant_bnb,success,heuristic_complete,1275
+murtree,success,certified_optimal,1275
+quant_bnb,success,feasible_uncertified,1275

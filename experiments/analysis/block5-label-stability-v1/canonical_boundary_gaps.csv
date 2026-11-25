@@ -1,0 +1,3 @@
+boundary,lower_rank,upper_rank,easier_dataset,harder_dataset,easier_score,harder_score,score_gap,descriptive_midpoint
+Easy–Intermediate,6,7,car,credit_approval,0.21594761854064445,0.25331070198407002,0.037363083443425565,0.23462916026235725
+Intermediate–Hard,12,13,sonar,parkinsons,0.46175479164650179,0.48951071219468212,0.027755920548180324,0.47563275192059196

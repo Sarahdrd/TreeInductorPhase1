@@ -1,0 +1,18 @@
+{
+  "block7_saved_files_unchanged": 10940,
+  "canonical_reference_verified": true,
+  "environment_verified": true,
+  "figures_visually_reviewed": 5,
+  "models_fitted": 0,
+  "nbformat_valid": true,
+  "new_display_cells_executed": 4,
+  "new_notebook_cells": 8,
+  "old_notebook_cells_unchanged": 56,
+  "original_benchmark_datasets_validated": 17,
+  "original_figures_preserved": true,
+  "prepared_samples_and_cv_verified": true,
+  "prior_protected_files_unchanged": 20734,
+  "samples_or_splits_regenerated": 0,
+  "successful_main_records": 10500,
+  "unique_main_records": 10500
+}

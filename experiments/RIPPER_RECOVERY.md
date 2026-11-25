@@ -1,3 +1,5 @@
+> **Final status — repository review:** The recovered implementation was used in the completed official five-seed evaluation. The earlier readiness and remaining-work statements below describe the recovery stage, not current blockers. See EXPERIMENT_INDEX.md.
+
 # Recovered SVM/RIPPER implementation and Block 2 readiness
 
 **Block 2A update:** the common fold runner is now implemented; its seven-fold

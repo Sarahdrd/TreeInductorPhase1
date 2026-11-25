@@ -1,0 +1,7 @@
+{
+  "tests": 31,
+  "failures": 0,
+  "errors": 0,
+  "historical_snapshot_test_excluded": "experiments.protocol.test_block4.Block4Tests.test_no_fit_or_cv_calls_and_preserved_canonical",
+  "reason": "Original whole-notebook byte hash differs after explicitly authorized cached-output cleanup. Current source/metadata preservation validated separately. Initial 32-test run: 31 passed, this one failed."
+}

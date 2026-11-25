@@ -1,0 +1,23 @@
+{
+  "boundary_analysis.csv": "be1a8ce905e30d365f014fadddb62ef53a147741b009fe52d58a97140ec927f5",
+  "boundary_exchanges.csv": "f44f8fdf2949a0071698f7f0b4d99fcf3d4b474a49be9c150c20e1cc136d1db1",
+  "boundary_sensitivity.pdf": "aac04c7e43bf20b20c8048a497d8019e7803ae2a69e735b0c18be6f0c7030519",
+  "boundary_sensitivity.png": "fcbd217d0ca630ef68c3af0688408acf18acaf00482311a4da10fb05db53e036",
+  "canonical_boundary_gaps.csv": "a91b3bf7fdbb3230cdf2c1edd8227f207e217d595320fa531da36b33154956d1",
+  "canonical_ranking_with_stability.csv": "3f3ff31dc856a81f10103f1760787fd641d9aab232e5e0a7eabc2aaf25c4ce0b",
+  "combined_stability.csv": "54835b91460a8815a3e8337dc04a18139e83816dda6c84363c92c20366662491",
+  "label_stability.pdf": "3f6efb3a8890de0668603d23df91acfae6df8ebdf7ff416737922b6f86cc51e5",
+  "label_stability.png": "da2630759e473146f9c9b6b6a1df9b6fd2b83574a578219cf225219489d1a2c4",
+  "label_transition_details.csv": "7adca0c427a0604a4d232a8b982dbb07f9639388aed3645050930d63eddef5b7",
+  "official_record_checksums.json": "18c4eddd4074b9220f7aa55d156653131e0a4b0ed3df06ab527152d8d418c05a",
+  "provenance.json": "e9e8133ced31eb11e0c518810b66db99a0dcf2dddd4a0cd42db6f0611eb5f6de",
+  "rank_agreement_by_family.csv": "fcec163f4e4cf8c9c561c9711a497e4e44709dc8f24f905d8e7cbe50f65575ed",
+  "rank_agreement_summary.csv": "1a4e3674c791890a98047184875e448266a27f39f831b02e58f4f098e5165f97",
+  "rank_vs_label_agreement.pdf": "6bb2330e99f5f93e291ed0202cf53ecb704d0d3e80de06b8a93ce208f9636463",
+  "rank_vs_label_agreement.png": "b0a0ea26918f38ec33c7a80f0e73d4f7adb5535be404ee4e119576ef12c8b42e",
+  "scenario_heatmap.pdf": "0d8d529843e2dcc176ef9f3363cde181bc4cb801835ab54e9b7dcc4465f7ad2a",
+  "scenario_heatmap.png": "b924020643507138612992108fd7c5d9257f7a12365655b540ba9c5d2f3f2580",
+  "scenario_rankings.csv": "1ced51000514bada52be846c7d6af36c288f116e748924abe279a51e74dd5bb7",
+  "seed_stability.csv": "76668992179e6d47c7ce5334d75ff1d50f9c7e738685c6f8db1caa60c363270c",
+  "weight_stability.csv": "cf164a5b41e7ee0f53ba24fdb7620cc2db602ead0a1ab178c526ff9d705a0b27"
+}

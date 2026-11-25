@@ -1,0 +1,117 @@
+{
+  "prospective_file_count": 487,
+  "tracked": 239,
+  "untracked": 248,
+  "prospective_bytes": 23905890,
+  "files_over_10_MiB": [],
+  "largest_files": [
+    {
+      "path": "experiments/analysis/block3-five-seed-v1/official_record_checksums.json",
+      "git_state": "tracked",
+      "bytes": 3039602,
+      "sha256": "18c4eddd4074b9220f7aa55d156653131e0a4b0ed3df06ab527152d8d418c05a"
+    },
+    {
+      "path": "experiments/analysis/block4-chance-correction-v1/official_record_checksums.json",
+      "git_state": "tracked",
+      "bytes": 3039602,
+      "sha256": "18c4eddd4074b9220f7aa55d156653131e0a4b0ed3df06ab527152d8d418c05a"
+    },
+    {
+      "path": "experiments/analysis/block7-magic-subsampling-v1/provenance.json",
+      "git_state": "untracked",
+      "bytes": 1658267,
+      "sha256": "3ff3d1c398439890ca298c72f325cb113bb427d716f880eef3c4d621f5cfb34d"
+    },
+    {
+      "path": "experiments/analysis/block8-scientific-v1/provenance.json",
+      "git_state": "untracked",
+      "bytes": 1385781,
+      "sha256": "f7fae3bcc76f3d2447a6ce403c9d9544e4a4754518056a52cc452cf1bf5eb8e9"
+    },
+    {
+      "path": "experiments/analysis/block7-magic-subsampling-v1/model_specific_trends.png",
+      "git_state": "untracked",
+      "bytes": 1223320,
+      "sha256": "313649ee7cafcff5b2c035219829898617e35a168546080a4d03eb0551dbf4e3"
+    },
+    {
+      "path": "experiments/protocol/historical_checksums.json",
+      "git_state": "tracked",
+      "bytes": 949255,
+      "sha256": "4fc3d00fcfca22bc3a6ee20eb04f6cc2542e44cc401b20fb7634f6f090800901"
+    },
+    {
+      "path": "experiments/protocol/block4_preservation.json",
+      "git_state": "tracked",
+      "bytes": 924370,
+      "sha256": "adf7f518ec3ee974b5f550f7d6380150c3b9cfdbc682da7d982cf86df441911a"
+    },
+    {
+      "path": "experiments/analysis/block7-magic-subsampling-v1/joint_components.png",
+      "git_state": "untracked",
+      "bytes": 475585,
+      "sha256": "dae9940a36e7e059e9390bb56faf3e8f3ef8e9fa95002c66bdb2aee2ab6a6757"
+    },
+    {
+      "path": "experiments/New_Characterization_Experiments.ipynb",
+      "git_state": "tracked",
+      "bytes": 471136,
+      "sha256": "19e1247879af28c9e9a4e58eff25cfcabce5fa48b22948070317d9883f9cf058"
+    },
+    {
+      "path": "experiments/Dataset_Characterization.ipynb",
+      "git_state": "tracked",
+      "bytes": 370505,
+      "sha256": "f8617b831ced397ca04b937da92ed5627486a4ab9006e49c39dee11d87bfb997"
+    }
+  ],
+  "credential_pattern_findings": [],
+  "machine_specific_provenance_locations": [
+    {
+      "path": "experiments/RIPPER_RECOVERY.md",
+      "line": 19
+    },
+    {
+      "path": "experiments/analysis/block7-magic-subsampling-v1/provenance.json",
+      "line": 10518
+    },
+    {
+      "path": "experiments/analysis/block8-feasibility-v1/algorithm_environment_manifest.json",
+      "line": 89
+    },
+    {
+      "path": "experiments/analysis/block8-feasibility-v1/provenance.json",
+      "line": 64
+    },
+    {
+      "path": "experiments/block7-magic-subsampling-v1/configuration.json",
+      "line": 12
+    },
+    {
+      "path": "experiments/block8-optimal-trees-v1/official-depth2-v1/configuration.json",
+      "line": 14
+    },
+    {
+      "path": "experiments/block8-optimal-trees-v1/pilot_configuration.json",
+      "line": 62
+    },
+    {
+      "path": "experiments/configs/environment.json",
+      "line": 3
+    },
+    {
+      "path": "experiments/configs/environment_ripper_ready.json",
+      "line": 3
+    },
+    {
+      "path": "experiments/configs/recovered_source_provenance.json",
+      "line": 2
+    },
+    {
+      "path": "experiments/protocol/recovery_validation_report.json",
+      "line": 92
+    }
+  ],
+  "note": "Pattern scan is not a guarantee of absence of secrets. Immutable historical provenance may retain recorded executable/source paths. No git mutation performed."
+}

@@ -1,3 +1,5 @@
+> **Final status — repository review:** The later label-stability, regularization, subsampling and additional-inductor analyses are complete (Blocks 5–8). Its historical A archive remains separately identified; manuscript H is the verified later historical profile. F is the primary five-seed reference. See EXPERIMENT_INDEX.md.
+
 # Block 3 — Five-seed aggregated canonical difficulty ranking
 
 ## Findings

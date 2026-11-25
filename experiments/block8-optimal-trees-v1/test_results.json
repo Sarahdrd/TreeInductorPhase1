@@ -1,0 +1,7 @@
+{
+  "block8_tests": 7,
+  "command": ".venv/Scripts/python.exe -m unittest experiments.protocol.test_block3 experiments.protocol.test_block4 experiments.protocol.test_block5 experiments.protocol.test_block6 experiments.protocol.test_block7b experiments.protocol.test_block8",
+  "errors": 0,
+  "failures": 0,
+  "tests_run": 36
+}

@@ -1,0 +1,86 @@
+{
+  "changes_zero_based_cells": [
+    [
+      "Dataset_Characterization",
+      2,
+      "removed cached large or machine-specific output; source unchanged"
+    ],
+    [
+      "Dataset_Characterization",
+      4,
+      "removed cached large or machine-specific output; source unchanged"
+    ],
+    [
+      "Dataset_Characterization",
+      12,
+      "removed cached large or machine-specific output; source unchanged"
+    ],
+    [
+      "Dataset_Characterization",
+      23,
+      "removed cached large or machine-specific output; source unchanged"
+    ],
+    [
+      "Dataset_Characterization",
+      27,
+      "removed cached large or machine-specific output; source unchanged"
+    ],
+    [
+      "Dataset_Characterization",
+      29,
+      "removed cached large or machine-specific output; source unchanged"
+    ],
+    [
+      "New_Characterization_Experiments",
+      30,
+      "removed cached large or machine-specific output; source unchanged"
+    ],
+    [
+      "New_Characterization_Experiments",
+      39,
+      "removed cached large or machine-specific output; source unchanged"
+    ],
+    [
+      "New_Characterization_Experiments",
+      47,
+      "removed cached large or machine-specific output; source unchanged"
+    ],
+    [
+      "New_Characterization_Experiments",
+      55,
+      "removed cached large or machine-specific output; source unchanged"
+    ],
+    [
+      "New_Characterization_Experiments",
+      63,
+      "removed cached large or machine-specific output; source unchanged"
+    ],
+    [
+      "New_Characterization_Experiments",
+      24,
+      "display-only loader uses curated checksums; scientific calculations unchanged"
+    ],
+    [
+      "New_Characterization_Experiments",
+      33,
+      "display-only loader uses curated checksums; scientific calculations unchanged"
+    ],
+    [
+      "New_Characterization_Experiments",
+      41,
+      "display-only loader uses curated checksums; scientific calculations unchanged"
+    ],
+    [
+      "New_Characterization_Experiments",
+      49,
+      "display-only loader uses curated checksums; scientific calculations unchanged"
+    ],
+    [
+      "New_Characterization_Experiments",
+      57,
+      "display-only curated loader; existing reporting arithmetic unchanged"
+    ]
+  ],
+  "backups": "local_notebooks (ignored); all pre-existing source unchanged except five display-loader imports/calls",
+  "default_tree_notebook": "unchanged"
+}

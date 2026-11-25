@@ -1,0 +1,18 @@
+{
+  "canonical_environment_unchanged": true,
+  "checkpoint_resume_with_fit_blocked": true,
+  "compatibility_pairs": 34,
+  "full_scope_datasets": 17,
+  "main_evaluations": 0,
+  "matched_cart_pilot_successes": 10,
+  "native_multiclass_tested_up_to_classes": 10,
+  "notebooks_unchanged": true,
+  "original_official_evaluations_validated": 20400,
+  "pilot_scope_datasets": 5,
+  "prior_files_unchanged": 31723,
+  "process_controller_v2_tests": 7,
+  "quant_bnb_certification": "not asserted",
+  "quant_training_objectives_match_returned_predictions": true,
+  "solver_pilot_reused_without_refits": true,
+  "solver_pilot_successes": 10
+}

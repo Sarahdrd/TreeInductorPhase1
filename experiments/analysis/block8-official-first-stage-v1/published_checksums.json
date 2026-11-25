@@ -1,0 +1,13 @@
+{
+  "excluded_local_files": [
+    "first_stage_records.csv"
+  ],
+  "files": {
+    "execution_coverage.csv": "562cc3990b100fe1457d0f2976ba22816f5734896d9ab2ffef7d417d69f56ffd",
+    "execution_difficulties.csv": "7816fc27c3d6da185e7c70d12e8ebaf513e0e9a66a9d77fb9acdf12206a92048",
+    "feasibility_report.csv": "f1c58cea8319bef8b782b75da6f95c00a1359c38619a9a47e9c9d6f8f1680d8d",
+    "output_checksums.json": "080cab8a99a6351df5df6597b8893551e982fc49725ac99faef95cb550acd725",
+    "provenance.json": "79beb63d2e1f3d229ff5e31a585f8b1e5b57964e2ef9456576ef4f7e1b649570"
+  },
+  "purpose": "Portable display subset; original full manifest may reference locally archived intermediates."
+}

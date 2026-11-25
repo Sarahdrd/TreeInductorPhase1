@@ -1,0 +1,46 @@
+{
+  "configuration_id": "61be9b209866b127a38981d819b856dd2b72df7f85f442ed97b1cc87742deff7",
+  "environment_verified": true,
+  "failures": [],
+  "matched_pairs_verified": 2550,
+  "missing_keys": [],
+  "models": {
+    "cart_depth2_murtree": {
+      "maximum_job_memory_MiB": 116.484375,
+      "maximum_wall_seconds": 23.941546400019433,
+      "records": 1275,
+      "statuses": {
+        "heuristic_complete": 1275
+      }
+    },
+    "cart_depth2_quant_bnb": {
+      "maximum_job_memory_MiB": 116.4609375,
+      "maximum_wall_seconds": 4.188871900027152,
+      "records": 1275,
+      "statuses": {
+        "heuristic_complete": 1275
+      }
+    },
+    "murtree": {
+      "maximum_job_memory_MiB": 9.63671875,
+      "maximum_wall_seconds": 0.6285220999852754,
+      "records": 1275,
+      "statuses": {
+        "certified_optimal": 1275
+      }
+    },
+    "quant_bnb": {
+      "maximum_job_memory_MiB": 487.15625,
+      "maximum_wall_seconds": 43.42701440001838,
+      "records": 1275,
+      "statuses": {
+        "feasible_uncertified": 1275
+      }
+    }
+  },
+  "planned": 5100,
+  "prediction_scores_recomputed_exactly": 5100,
+  "prior_files_unchanged": 31821,
+  "recorded": 5100,
+  "successful": 5100
+}

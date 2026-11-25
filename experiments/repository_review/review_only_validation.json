@@ -1,0 +1,50 @@
+{
+  "notebooks_valid": {
+    "Dataset_Characterization.ipynb": 61,
+    "Default_Tree_Canonical_Strata.ipynb": 21,
+    "New_Characterization_Experiments.ipynb": 71
+  },
+  "original_source_and_metadata_preserved": true,
+  "authorized_changes": "five display-loader imports/calls, cached outputs, appended Block 8 cells",
+  "published_table_counts": {
+    "block3-five-seed-v1": 11,
+    "block4-chance-correction-v1": 9,
+    "block5-label-stability-v1": 11,
+    "block6-tree-regularization-v1": 18,
+    "block7-magic-report-v1": 5,
+    "block7-magic-subsampling-v1": 12,
+    "block8-feasibility-v1": 5,
+    "block8-official-first-stage-v1": 3,
+    "block8-scientific-v1": 7
+  },
+  "analysis_cells_executed": [
+    24,
+    26,
+    28,
+    30,
+    33,
+    35,
+    37,
+    39,
+    41,
+    43,
+    45,
+    47,
+    49,
+    51,
+    53,
+    55,
+    57,
+    59,
+    61,
+    63,
+    65,
+    67,
+    69
+  ],
+  "display_calls": 71,
+  "fits_or_solver_calls": 0,
+  "F_H_boundary_checks": true,
+  "review_only_checkout": true,
+  "raw_records_datasets_and_sidecars_absent": true
+}

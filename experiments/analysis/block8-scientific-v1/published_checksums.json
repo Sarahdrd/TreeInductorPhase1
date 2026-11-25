@@ -1,0 +1,24 @@
+{
+  "excluded_local_files": [],
+  "files": {
+    "configuration_summary.json": "b166bf843061a8b1ccb51ef9631b9ffa5081e9f4661112a4119f7d9206b46b51",
+    "dataset_matched_differences.pdf": "022144af9d6b0f944917e1cb41aeb6079ec41450637be6b861a29bf4025222e1",
+    "dataset_matched_differences.png": "6da6a55fee6f003d6832aac280231101bdf9317ccac49447f72fe7e88f64a82e",
+    "dataset_paired_deltas.csv": "a35dbaf4c6786cd538c2d6780ec20180017b2ec407a382f41cdfefaf0dac8830",
+    "dataset_performance.csv": "ee280f8f3daaf96a91297438a9b4175ccb1f7e8d12ab61e227f71de0fa9d1db4",
+    "output_checksums.json": "1b41a38e28f63c4d4c2a4fc7670324a35cdb59f429b4ccbe25c88460017906a0",
+    "performance_by_stratum.pdf": "03efeba5f3ad3d685f4c1222aaed677a767894af220b5e54fd3d71bf2a9681c6",
+    "performance_by_stratum.png": "42bdfb60d6588632e35991a4a2a6946a907b3d005a08fa143359c9ba36caaf24",
+    "provenance.json": "f7fae3bcc76f3d2447a6ce403c9d9544e4a4754518056a52cc452cf1bf5eb8e9",
+    "runtime_by_method.pdf": "bc62ddf1ec761c875a364e33cb27d2d11bdd54587624f4cbb2c92b9ba37a4e8b",
+    "runtime_by_method.png": "4d50b5cf6c08d4d20eb23abcc066f9b57ab2bde782933a4548981745b21006ea",
+    "runtime_summary.csv": "1f4aed343cca9e4955945d0d046a7730eb10605eb2f2b6c3221739c31d0246fa",
+    "solver_status.csv": "5416893ee46db585fb0aa1958673fb332998b2f8f07d445811663c0f933b8db4",
+    "solver_status.pdf": "619eae5a15ee58f885ba23902ea0d03602736ca7b7e2e1392e11fc7d783d1702",
+    "solver_status.png": "f338c45dc25a7577fdfc0d58392c1d146d83ca5b02f0728955ffe9f62b193908",
+    "stratum_labels.csv": "eef4e9ef03d2e8b1214361c44729e7a3f1a3fd4363c4b853164c95f8f2ea5e88",
+    "stratum_paired_deltas.csv": "6fc95033791199664118789eea84a070ac08ca70a3ac3518142cc521cf4d405f",
+    "stratum_performance.csv": "a32b02d34d636ebe961765c6f551dc4935a156d3dc07d55ffbe408867332d5a3"
+  },
+  "purpose": "Portable display subset; original full manifest may reference locally archived intermediates."
+}

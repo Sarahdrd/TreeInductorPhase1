@@ -1,0 +1,76 @@
+{
+  "benchmark_config_sha256": "f4e6560c81c74942ce6fb2b618c03d783da9e81744ba74018428f124a44b6d1d",
+  "cv_seeds": [
+    42,
+    7,
+    21,
+    84,
+    123
+  ],
+  "environment": {
+    "environment_id": "fb2fa26df42df065c94dfc5dc9c149a4c7b0cd241c5925e6da1c506a9ce07d5a",
+    "executable": "C:\\Users\\sarah\\OneDrive\\Documentos\\DCC_Thesis_codes\\AutoML_DecisionTrees\\.venv\\Scripts\\python.exe",
+    "packages": {
+      "ipython": "9.17.1",
+      "joblib": "1.6.0",
+      "matplotlib": "3.11.1",
+      "nbformat": "5.11.1",
+      "numpy": "2.5.3",
+      "pandas": "3.0.5",
+      "scikit-learn": "1.9.0",
+      "scipy": "1.18.1",
+      "threadpoolctl": "3.6.0",
+      "wittgenstein": "0.3.5"
+    },
+    "platform": "Windows-11-10.0.26300-SP0",
+    "python": "3.12.14"
+  },
+  "expected_evaluations": 10500,
+  "experiment_id": "magic-nested-v1",
+  "folds": 5,
+  "models": [
+    "decision_tree_default",
+    "decision_tree_balanced",
+    "logistic_regression",
+    "logistic_regression_balanced"
+  ],
+  "normalization": {
+    "E_max_ref": 0.703213787821136,
+    "E_min_ref": 0.017872678841215017,
+    "V_max_ref": 0.07944060073210513,
+    "V_min_ref": 0.007066193748940045,
+    "clip": false,
+    "reference_sha256": "d38fc24676fb265d2464d287fcd9ef01a604979dd4d4eb6a0e7231356bb54609",
+    "weights": [
+      0.7,
+      0.3
+    ]
+  },
+  "optional_full_reference": false,
+  "repetitions": 3,
+  "sampling": "PCG64 default_rng; one permutation per sorted class; largest-remainder integer allocation; label-order ties; sorted original row IDs",
+  "sizes": [
+    200,
+    500,
+    1000,
+    1500,
+    2000,
+    5000,
+    10000
+  ],
+  "source_sha256": {
+    "block7.py": "a46951bf15cb388b286be8cfd67ad7d7b1dd8bc182ab34f885e9a9e0668e9b1f",
+    "checkpoints.py": "d868be0b682aef49bfc604a28fa47576e154977c4f9a43d1f9be03dac7257437",
+    "infrastructure.py": "058183245c50cace3d0359ede0edcccea1e746db0663cd69ffec1b8add274e66",
+    "models.py": "a8212b1f2a267bb2a1c42fd817490c906aa0c836e90800650d4b4e030f705e7f",
+    "preprocessing.py": "c6145c461cc3a1358f9008164621b7b52142890e4b41259e7a70378b05862a67",
+    "runner.py": "5bbe383df2955a8a363cf92994b1416a0edd6afc71c587a750317b7407b51327"
+  },
+  "subsample_seeds": [
+    101,
+    202,
+    303,
+    404,
+    505
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "analysis_unit": "dataset (n=17)",
+  "appended_display_cells_executed": 4,
+  "appended_notebook_cells": 8,
+  "canonical_records": 5100,
+  "canonical_results_changed": false,
+  "environment_unchanged": true,
+  "models_fitted": 0,
+  "nbformat_valid": true,
+  "notebook_code_cells_parsed": 70,
+  "official_record_files_unchanged": 20400,
+  "official_successes": 20400,
+  "previous_notebook_cells_unchanged": 40,
+  "protected_files_unchanged": 4877,
+  "scenario_rows": 510,
+  "splits_generated": 0
+}

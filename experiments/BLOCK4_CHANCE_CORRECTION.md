@@ -1,3 +1,5 @@
+> **Final status — repository review:** This analysis remains complete and unchanged. The notebook now uses the curated display manifest; original full checksum manifests and all local experimental records are preserved. See EXPERIMENT_INDEX.md.
+
 # Block 4 — Chance-corrected predictive difficulty
 
 The corrected composite ranking changes 13 of 17 ranks and 2 of 17 strata (11.76%). Glass moves from rank 15 Hard to rank 12 Intermediate; Sonar moves from rank 12 Intermediate to rank 13 Hard. No dataset crosses the Easy–Intermediate boundary. Spearman agreement is 0.9608 and Kendall tau-b is 0.8676; mean absolute displacement is 1.0588 ranks and the maximum is 3. Heart Disease and Wine Quality Red both remain Hard.

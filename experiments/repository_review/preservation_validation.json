@@ -1,0 +1,22 @@
+{
+  "protected_files_verified_unchanged": 41951,
+  "authorized_existing_files": [
+    "experiments/BLOCK2A_RUNNER.md",
+    "experiments/BLOCK3_FIVE_SEED_RANKING.md",
+    "experiments/BLOCK4_CHANCE_CORRECTION.md",
+    "experiments/BLOCK5_LABEL_STABILITY.md",
+    "experiments/BLOCK6_TREE_REGULARIZATION.md",
+    "experiments/BLOCK7_MAGIC_SUBSAMPLING.md",
+    "experiments/BLOCK8B_FIRST_STAGE.md",
+    "experiments/BLOCK8_OPTIMAL_TREES.md",
+    "experiments/Dataset_Characterization.ipynb",
+    "experiments/New_Characterization_Experiments.ipynb",
+    "experiments/REPRODUCIBILITY.md",
+    "experiments/RIPPER_RECOVERY.md"
+  ],
+  "unexpected_changes": [],
+  "environment_exact_match": true,
+  "manuscript_present_at_initial_snapshot": false,
+  "original_official_records": 36043,
+  "saved_split_files": 170
+}

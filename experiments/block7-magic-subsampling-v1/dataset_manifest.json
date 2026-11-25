@@ -1,0 +1,43 @@
+{
+  "class_counts": {
+    "g": 12332,
+    "h": 6688
+  },
+  "dataset": "MAGIC Gamma Telescope",
+  "dataset_fingerprint": "4d96d539c116adfa067a7efbd228303728b6b6bf078a0c395bd950b650a9475e",
+  "doi": "10.24432/C52C8B",
+  "duplicate_feature_rows": 115,
+  "duplicate_full_rows": 115,
+  "features": [
+    "fLength",
+    "fWidth",
+    "fSize",
+    "fConc",
+    "fConc1",
+    "fAsym",
+    "fM3Long",
+    "fM3Trans",
+    "fAlpha",
+    "fDist"
+  ],
+  "file_sha256": "e9314b7ebd4b4b59a3b3d65f7316663963777b16a46786877651dbbaa640b36a",
+  "malformed_rows": 0,
+  "missing_values": 0,
+  "observations": 19020,
+  "parsing": "ASCII comma-separated, no header; fixed UCI feature order; pandas round_trip; original g/h targets",
+  "row_order": "Unchanged local physical line order; zero-based row_id = line number minus 1; duplicates retained",
+  "source": "https://archive.ics.uci.edu/dataset/159/magic+gamma+telescope",
+  "source_file": "data\\magic04.data",
+  "source_verification": "Local structure/counts match UCI documentation; no claim of remote byte identity.",
+  "target": "class",
+  "target_runs": [
+    {
+      "label": "g",
+      "start": 0
+    },
+    {
+      "label": "h",
+      "start": 12332
+    }
+  ]
+}

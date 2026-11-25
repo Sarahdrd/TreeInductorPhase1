@@ -1,0 +1,13 @@
+{
+  "excluded_local_files": [],
+  "files": {
+    "adjacent_size_rates.csv": "fa9b89bf7b39ad193cb8e188af53d59370a7042129342fd33a81ee9db2cd0a10",
+    "endpoint_changes.csv": "84bb76e2cbb713e177024528680619f0eab44900012fe0d49a4bf05f3d4617ec",
+    "model_size_summary.csv": "04d9e65f2601245f9018745d0829d653e3bf425048f29af93959afd8dbb2553b",
+    "output_checksums.json": "901ab6e084b2703f5ebaf3f0b41921ca074958a1a03a2add985a868ae276873a",
+    "provenance.json": "f87397a528b49dd21f846b73297f913ab033133349b93f37ed78a1c64c1e8d2f",
+    "score_change_decomposition.csv": "940fe4216803e2d63c5bb522f0ebfb615aaf1ece9124033d94238a0bba1c025f",
+    "variability_diagnostics.csv": "cef51cc28ed82be61dfe39491e97a9afa315689ff6c645457929c92a19002346"
+  },
+  "purpose": "Portable display subset; original full manifest may reference locally archived intermediates."
+}

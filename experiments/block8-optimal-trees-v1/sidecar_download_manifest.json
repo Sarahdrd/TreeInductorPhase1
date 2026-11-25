@@ -1,0 +1,18 @@
+{
+  "julia": {
+    "arch": "x86_64",
+    "extension": "zip",
+    "kind": "archive",
+    "os": "winnt",
+    "sha256": "035c084d69046722a0b2ceda31e00065f7512380ffd0f03b33ef4429eec92a7c",
+    "size": 178861490,
+    "triplet": "x86_64-w64-mingw32",
+    "url": "https://julialang-s3.julialang.org/bin/winnt/x64/1.10/julia-1.10.10-win64.zip",
+    "version": "1.10.10"
+  },
+  "zig": {
+    "shasum": "d859994725ef9402381e557c60bb57497215682e355204d754ee3df75ee3c158",
+    "size": "79163968",
+    "tarball": "https://ziglang.org/download/0.13.0/zig-windows-x86_64-0.13.0.zip"
+  }
+}

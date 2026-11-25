@@ -1,0 +1,26 @@
+{
+  "canonical_cv_seeds": [
+    42,
+    7,
+    21,
+    84,
+    123
+  ],
+  "depth": 2,
+  "external_wall_seconds": 120,
+  "folds": 5,
+  "full_run_enabled": false,
+  "matched_cart_configurations": 2,
+  "matched_cart_evaluations": 2550,
+  "max_decision_nodes": 3,
+  "memory_limit_bytes": 4294967296,
+  "murtree_internal_seconds": 120,
+  "numeric_threshold_cap": 16,
+  "optimality": "MurTree solver flag; Quant-BnB feasible but uncertified unless independently established without changing optimizer",
+  "repetitions": 3,
+  "solver_evaluations": 2550,
+  "solver_wall_ceiling_hours": 85,
+  "status": "proposal only; needs explicit Phase 8B approval",
+  "threads": 1,
+  "total_new_fits": 5100
+}

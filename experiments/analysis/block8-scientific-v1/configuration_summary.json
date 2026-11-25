@@ -1,0 +1,76 @@
+{
+  "cart_parameters": {
+    "ccp_alpha": 0.0,
+    "class_weight": null,
+    "criterion": "gini",
+    "max_depth": 2,
+    "max_features": null,
+    "max_leaf_nodes": null,
+    "min_impurity_decrease": 0.0,
+    "min_samples_leaf": 1,
+    "min_samples_split": 2,
+    "min_weight_fraction_leaf": 0.0,
+    "random_state": 42,
+    "splitter": "best"
+  },
+  "cpp": "C++14 via portable Zig 0.13.0",
+  "julia": "1.10.10",
+  "packages": {
+    "ipython": "9.17.1",
+    "joblib": "1.6.0",
+    "matplotlib": "3.11.1",
+    "nbformat": "5.11.1",
+    "numpy": "2.5.3",
+    "pandas": "3.0.5",
+    "scikit-learn": "1.9.0",
+    "scipy": "1.18.1",
+    "threadpoolctl": "3.6.0",
+    "wittgenstein": "0.3.5"
+  },
+  "policy": {
+    "budgets": "same external wall and job-memory envelope also applied to separate CART worker; preprocessing outside fit wall envelope",
+    "cv_seeds": [
+      42,
+      7,
+      21,
+      84,
+      123
+    ],
+    "depth": 2,
+    "estimator_seed": 42,
+    "external_wall_seconds": 120,
+    "first_stage": {
+      "fold": 1,
+      "repeat": 1,
+      "seed": 42
+    },
+    "first_stage_expected": 68,
+    "folds": 5,
+    "full_expected": 5100,
+    "job_committed_memory_bytes": 4294967296,
+    "max_decision_nodes": 3,
+    "murtree_internal_seconds": 120,
+    "numeric_threshold_cap": 16,
+    "outcomes": "default resume skips all committed non-interrupted outcomes; explicit --retry-failed retries non-success",
+    "purpose": "official",
+    "quant": {
+      "certification": "feasible but uncertified",
+      "depth": 2,
+      "mid_method": 2,
+      "mid_ratio": 0.2,
+      "s": 3,
+      "treetype": "C",
+      "upper_bound": "original greedy misclassifications * (1+1e-6)"
+    },
+    "repetitions": 3,
+    "serial": true,
+    "sparsity_penalty": 0,
+    "threads": 1,
+    "version": "block8-official-depth2-v1"
+  },
+  "python": "3.12.14",
+  "source_commits": {
+    "murtree": "129e0466acf43f5b4759fba8222800ce40aa32a3",
+    "quant_bnb": "0a381a5bc6d689f66e5fca34a767da2c21918da0"
+  }
+}
